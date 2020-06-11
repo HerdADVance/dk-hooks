@@ -1,38 +1,413 @@
-.App {
+/* http://meyerweb.com/eric/tools/css/reset/ v2.0 | 20110126 License: none (public domain) */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, input, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block; 
+}
+body {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1; 
+  overflow-y: hidden;
+}
+ol, ul {
+  list-style: none; 
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0; 
+  width: 100%;
+}
+*{
+  box-sizing: border-box;
+}
+body{
+  background: #666;
+  font-family: 'Montserrat', sans-serif;
+}
+td{
+  border: 1px solid #CCC;
+  padding: 8px;
   text-align: center;
+  vertical-align: middle;
+}
+button{
+  cursor: pointer;
+}
+.clickable tr:hover, .clickable li:hover{
+  cursor: pointer;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+.positive{
+  background: lightgreen !important;
+}
+.negative{
+  background: lightcoral !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
+/* MAIN WRAPPER */
+.wrapper{
+  margin: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+
+/* TOP LEVEL DIVS AND WRAPPERS */
+.list{
+  float: left;
+  min-height: 100%;
+  position: fixed;
+  width: 49.5%;
+}
+.lineups{
+  color: #FFF;
+  float: right;
+  width: 49.5%;
+}
+.list-wrap{
+  clear: both;
+  display: block;
+  max-height: calc(100% - 40px);
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: absolute;
+  width: 97%;
+}
+.lineups-wrap{
+  clear: both;
+  display: block;
+  max-height: calc(100% - 40px);
+  overflow-y: scroll;
+  position: fixed;
+}
+.positions{
+  position: fixed;
+  width: 48%;
+}
+
+
+/* PLAYERS TABLE HEADERS AND WRAP */
+.positions ul{
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  width: 100%;
+}
+.positions li{
+  background: #FF6C00;
+  border: 1px solid #FFF;
+  color: #FFF;
+  flex-basis: 0;
+  flex-grow: 1;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  user-select: none;
+}
+.positions li.selected{
+  background: #9AE200;
+}
+.games{
+  position: fixed;
+  top: 55px;
+  width: 48%;
+  z-index: 2;
+}
+.game{
+  border-right: 1px solid #CCC;
+  float: left;
+  width: 33.3333%;
+}
+.game span{
+  background: #333;
   color: white;
+  cursor: pointer;
+  display: block;
+  float: left;
+  font-size: 12px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  user-select: none;
+  width: 50%;
 }
 
-.App-link {
-  color: #61dafb;
+.game:last-child span{
+  width: 100%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.game span:hover{
+  background: #444;
 }
+
+.game span.selected{
+  background: steelblue;
+}
+
+.players-wrap{
+  clear: both;
+  display: block;
+  height: 100%;
+  padding-bottom: 0px;
+  margin-top: 94px;
+  width: 100%;
+}
+
+/* PLAYERS TABLE ROWS AND CELLS */
+.players th{
+  background: hotpink;
+  color: white;
+  font-size: 14px;
+  padding: 10px 1px;
+}
+.players tr{
+  background: #FFF;
+  user-select: none;
+}
+.players tr:nth-child(odd){
+  background: #EEE;
+}
+.players tr:hover{
+  background: #999;
+}
+td.name{
+  font-size: 14px;
+  font-weight: bold;
+  text-align: left
+}
+td.ppg{
+  font-size: 10px;
+}
+td.gameinfo{
+  font-size: 10px;
+}
+td.apps{
+  font-size: 13px;
+}
+
+tr.player{
+  width: 100% !important;
+}
+
+tr.player td.position{
+  font-size: 14px;
+  width: 7% !important;
+}
+tr.player td.name{
+  width: 30% !important;
+}
+tr.player td.team{
+  font-size: 12px;
+  font-weight: bold;
+  width: 8% !important;
+}
+tr.player td.salary{
+  font-size: 14px;
+  width: 11% !important;
+}
+tr.player td.apps{
+  width: 20% !important;
+}
+tr.player td.ppg{
+  width: 5% !important;
+}
+tr.player td.gameinfo{
+  width: 19% !important;
+}
+
+
+/* PLAYER EXPANDED */
+.player-action{
+  background: lightcyan !important;
+}
+.player-action:hover{
+  background: lightcyan !important;
+}
+.player-action-button{
+  background: mediumseagreen;
+  color: white;
+  font-size: 14px;
+  margin: 5px 0;
+  padding: 5px 15px;
+}
+
+/* PLAYER ADD EXPANDED AREA ON CLICK */
+.player-add{
+  background: #666 !important;
+  color: #FFF;
+  display: none;
+  min-height: 100px;
+}
+.player-add-currently-in{
+  font-size: 12px;
+  font-weight: bold;
+}
+.player-add-slider{
+  margin: 10px 5%;
+  width: 90%;
+}
+.player-add-slider span{
+  border: 0 !important;
+}
+.player-add-slider-number{
+  background: none;
+  border: none;
+  color: #FF6C00;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  width: 40px;
+}
+.player-add-slider-pct{
+  font-size: 16px;
+  line-height: 24px;
+}
+.player-add-button{
+  color: 000;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 10px 0;
+  padding: 5px;
+}
+#delta-minus{
+  background: lightcoral;
+}
+.rc-slider{
+  padding-top: 10px;
+}
+.player-add-random{
+  cursor: pointer;
+  height: 28px;
+  margin-left: 20px;
+}
+
+/* PLAYER CORRELATIONS */
+.player-correlations{
+  border-top: 1px solid #CCC;
+  padding-top: 10px;
+}
+.add-correlations{
+  background: lightblue;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 8px 0;
+  width: 100%;
+}
+.correlation-row{
+  margin-bottom: 20px;
+  overflow: auto;
+}
+.correlation-row div{
+  float: left;
+  text-align: center;
+  width: 25%;
+}
+
+
+
+/* OPTIONS IN PLAYER ADD SECTION */
+.player-add-options button{
+  background: #333;
+  color: white;
+  float: left;
+  margin: 0 1.25%;
+  width: 22.5%;
+}
+
+.correlation{
+  margin-left: 1.25%;
+  width: 97.5%;
+}
+
+/*
+
+/* LINEUP TABLES */
+.lineup{
+  float: left;
+  margin: 0 0.66% 20px 0.66%;
+  width: 32%;
+}
+.lineup th{
+  background: #333;
+  color: #FFF;
+  font-size: 12px;
+  padding: 5px 0;
+}
+.lineup tr{
+  background: #FFF;
+}
+.lineup td{
+  color: #000;
+  font-size: 10px;
+  height: 23px;
+  padding: 0;
+}
+
+/* INDIVIDUAL LINEUP PLAYER ROWS */
+.lineup tr td:first-child{
+  width: 30px;
+}
+.lineup tr td:nth-child(3){
+  font-size: 12px;
+  width: 50px;
+}
+.lineup tr td:last-child{
+  cursor: pointer;
+  width: 25px;
+}
+
+/* LINEUP TOTALS ROW */
+.total td{
+  font-size: 12px;
+}
+.total span{
+  display: inline-block;
+  font-weight: bold;
+  padding-left: 5px;
+}
+.total td:last-child{
+  font-weight: bold;
+}
+
+/* LATEST UPDATE */
+.latest-update{
+  background: rgba(79,130,87,0.9);
+  bottom: 0;
+  color: #FFF;
+  display: none;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 15px 0;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  width: 100%;
+}
+
+/* BUNDESLIGA TEAMS */
+.S04{background: blue; color: white;}
+.BAY{background: red; color: blue;}
+.LEV{background: yellow; color: red;}
+.BVB{background: yellow; color: black;}
+.FCA{background: green; color: orangered;}
+.KOE{background: white; color: crimson;}
+.FCU{background: crimson; color: yellow;}
+.F95{background: crimson; color: white;}
+.SGE{background: black; color: crimson;}
+.WOB{background: #58bf1d; color: white;}
+.BSC{background: dodgerblue; color: black;}
+.SVW{background: darkgreen; color: white;}
+.SCP{background: black; color: dodgerblue;}
+.SCF{background: red; color: black;}
