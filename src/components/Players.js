@@ -18,7 +18,7 @@ const Players = ({ players, filteredPlayers, numLineups, lineups }) => {
     }
 
     function onAfterSliderChange() {
-
+        setSliderDelta()
     }
 
     function onRandomChange() {
@@ -64,7 +64,7 @@ const Players = ({ players, filteredPlayers, numLineups, lineups }) => {
                         player === clickedPlayer?
                             <tr className="player-action">
                                 <td colSpan="7">
-                                    <p>{players[player].name} is currently in {} of {numLineups} lineups</p>
+                                    <p>{players[player].name} is currently in {players[player].lineupsIn.length} of {numLineups} lineups</p>
                                     
                                     <Slider 
                                         value={sliderValue}

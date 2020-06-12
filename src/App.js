@@ -31,8 +31,6 @@ const App = () => {
     const [filteredPlayers, setFilteredPlayers] = useState({})
     const [lineups, setLineups] = useState([])
 
-    const [test, setTest] = useState({})
-
     
     useEffect(() => {
 
@@ -46,20 +44,20 @@ const App = () => {
 
     }, [])
 
-    useEffect(() => {
+    // useEffect(() => {
         
-        lineups.forEach(function(lineup){
-            lineup.roster.forEach(function(slot){
-                if(slot.player){
-                    players[slot.player].lineupsIn.push({
-                        lineup: lineup.id,
-                        slot: slot.id
-                    })
-                }
-            })
-        })
+    //     lineups.forEach(function(lineup){
+    //         lineup.roster.forEach(function(slot){
+    //             if(slot.player){
+    //                 players[slot.player].lineupsIn.push({
+    //                     lineup: lineup.id,
+    //                     slot: slot.id
+    //                 })
+    //             }
+    //         })
+    //     })
 
-    }, [lineups])
+    // }, [lineups])
 
 
 
@@ -68,14 +66,14 @@ const App = () => {
 
         let result = {...players}
         
-        if(clickedPosition != 'ALL'){
+        if(clickedPosition !== 'ALL'){
             result = Object.keys(result).reduce(function(r, e) {
                 if (result[e].positions.includes(clickedPosition)) r[e] = result[e]
                 return r;
             }, {})
         }
 
-        if(clickedTeam != 'ALL'){
+        if(clickedTeam !== 'ALL'){
             result = Object.keys(result).reduce(function(r, e) {
                 if (result[e].team === clickedTeam) r[e] = result[e]
                 return r;
