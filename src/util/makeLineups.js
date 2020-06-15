@@ -9,10 +9,15 @@ const makeLineups = (num) => {
             {
                 position: 'F',
                 player: null,
-                id: 1
+                id: 0
             },
             {
                 position: 'F',
+                player: null,
+                id: 1
+            },
+            {
+                position: 'M',
                 player: null,
                 id: 2
             },
@@ -22,7 +27,7 @@ const makeLineups = (num) => {
                 id: 3
             },
             {
-                position: 'M',
+                position: 'D',
                 player: null,
                 id: 4
             },
@@ -32,19 +37,14 @@ const makeLineups = (num) => {
                 id: 5
             },
             {
-                position: 'D',
+                position: 'GK',
                 player: null,
                 id: 6
             },
             {
-                position: 'GK',
-                player: null,
-                id: 7
-            },
-            {
                 position: 'UTIL',
                 player: null,
-                id: 8
+                id: 7
             }
         ]
         lineups.push(lineup)

@@ -12,6 +12,7 @@ const initializePlayers = (players) => {
 		let formattedPlayer = {}
 
 		// Collect the player data we want
+		formattedPlayer.id = player.ID.toString()
 		formattedPlayer.name = player.Name
 		formattedPlayer.position = player.Position
 		formattedPlayer.positions= player['Roster Position'].split('/')

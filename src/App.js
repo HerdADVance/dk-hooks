@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './App.css';
 //import axios from 'axios'
+import findIndex from 'lodash/findIndex'
 
 // DATA
 import POSITIONS from './data/POSITIONS'
@@ -9,6 +10,7 @@ import PLAYERS from './data/PLAYERS'
 // UTILS
 import makeLineups from './util/makeLineups'
 import initializePlayersAndGames from './util/initializePlayersAndGames'
+import addToLineups from './util/addToLineups'
 
 // COMPONENTS
 import Positions from './components/Positions'
@@ -85,6 +87,25 @@ const App = () => {
     }, [clickedPosition, clickedTeam, players])
 
 
+    function addPlayerToLineups(pid, toAdd){
+
+        let result = [...lineups]
+
+        console.log(result)
+        
+        toAdd.forEach(function(lid){
+            let lineupIndex = findIndex(result, function(o) { return o.id == lid })
+            result[lineupIndex].roster[0].player = pid
+        })
+
+        setLineups(result)
+    }
+
+    function handlePlayerActionClick(id, positions, random, delta) {
+        const toAdd = addToLineups(id, positions, random, delta, lineups)
+        addPlayerToLineups(id, toAdd)
+    }
+
     function handlePositionClick(position){
         setClickedPosition(position)
     }
@@ -115,9 +136,9 @@ const App = () => {
                     />
                     
                     <Players 
-                        players={players}
                         filteredPlayers={filteredPlayers}
                         numLineups={numLineups}
+                        handlePlayerActionClick={handlePlayerActionClick}
                     />
 
                 </div>
