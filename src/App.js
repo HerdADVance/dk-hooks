@@ -10,7 +10,7 @@ import PLAYERS from './data/PLAYERS'
 // UTILS
 import makeLineups from './util/makeLineups'
 import initializePlayersAndGames from './util/initializePlayersAndGames'
-import addToLineups from './util/addToLineups'
+import findLineupsToAdd from './util/findLineupsToAdd'
 
 // COMPONENTS
 import Positions from './components/Positions'
@@ -31,6 +31,7 @@ const App = () => {
     const [games, setGames] = useState([])
     const [players, setPlayers] = useState({})
     const [filteredPlayers, setFilteredPlayers] = useState({})
+    const [referencePlayers, setReferencePlayers] = useState({})
     const [lineups, setLineups] = useState([])
 
     
@@ -42,6 +43,7 @@ const App = () => {
         setGames(init.games)
         setPlayers(init.players)
         setFilteredPlayers(init.players)
+        setReferencePlayers(init.players)
         setLineups(makeLineups(numLineups))
 
     }, [])
@@ -86,24 +88,34 @@ const App = () => {
 
     }, [clickedPosition, clickedTeam, players])
 
+    function addLineupsInToPlayer(pid, toAdd){
+        let result = {...players}
+
+        toAdd.forEach(function(slot){
+            result[pid].lineupsIn.push(toAdd)
+        })
+
+        setPlayers(result)
+
+    }
 
     function addPlayerToLineups(pid, toAdd){
 
         let result = [...lineups]
-
-        console.log(result)
         
-        toAdd.forEach(function(lid){
-            let lineupIndex = findIndex(result, function(o) { return o.id == lid })
-            result[lineupIndex].roster[0].player = pid
+        toAdd.forEach(function(slot){
+            let lineupIndex = findIndex(result, function(o) { return o.id == slot.lid })
+            result[lineupIndex].roster[slot.sid].player = pid
         })
 
         setLineups(result)
     }
 
     function handlePlayerActionClick(id, positions, random, delta) {
-        const toAdd = addToLineups(id, positions, random, delta, lineups)
+        const toAdd = findLineupsToAdd(id, positions, random, delta, lineups, players[id].lineupsIn)
+        console.log(toAdd)
         addPlayerToLineups(id, toAdd)
+        addLineupsInToPlayer(id, toAdd)
     }
 
     function handlePositionClick(position){
@@ -147,6 +159,7 @@ const App = () => {
                 
                 <Lineups 
                     lineups={lineups}
+                    referencePlayers={referencePlayers}
                     handleSlotClick={handleSlotClick}
                 />
 

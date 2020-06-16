@@ -1,7 +1,7 @@
 import shuffle from 'lodash/shuffle'
 import findAcceptedSlotIds from './findAcceptedSlotIds'
 
-const addToLineups = (pid, positions, random, delta, lineups) => {
+const findLineupsToAdd = (pid, positions, random, delta, lineups, lineupsIn) => {
 
 	// Array to return
 	let toAdd = []
@@ -12,17 +12,24 @@ const addToLineups = (pid, positions, random, delta, lineups) => {
 	// Shuffle lineups if random is selected
 	if(random === 'random') lineups = shuffle(lineups)
 
-	// Looping through lineups
+	// Start the main loop through lineups
 	for(let i = 0; i < lineups.length; i++){
-		
-		// Looping through accepted slots in lineup
+
+		// Skip this lineup if player already in it
+		if (lineupsIn.includes(lineups[i].id)) continue
+
+		// Looping through potential slots in each lineup
 		for(let j = 0; j < acceptedSlotIds.length; j++){
 			
+			// Making current iteration more readable
 			const slot = lineups[i].roster[acceptedSlotIds[j]]
 
 			// If slot is empty, push slot to toAdd array
-			if(slot !== pid){
-				toAdd.push(lineups[i].id)
+			if(!slot.player && slot.player != pid){
+				toAdd.push({
+					lid: lineups[i].id,
+					sid: slot.id
+				})
 				break
 			}
 
@@ -37,4 +44,4 @@ const addToLineups = (pid, positions, random, delta, lineups) => {
 
 }
 
-export default addToLineups
+export default findLineupsToAdd

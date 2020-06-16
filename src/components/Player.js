@@ -9,7 +9,7 @@ const Player = ({ player, numLineups, handlePlayerClick }) => {
             <td className="name">{player.name}</td>
             <td className={`team ${player.team}`}>{player.team}</td>
             <td className="salary">${player.salary}</td>
-            <td className="apps">0 ({Math.round(0 / numLineups * 100)}%)</td>
+            <td className="apps">{player.lineupsIn.length} ({Math.round(player.lineupsIn.length / numLineups * 100)}%)</td>
             <td className="ppg">{player.ppg}</td>
             <td className="gameinfo">{player.gameInfo}</td>
         </tr>
