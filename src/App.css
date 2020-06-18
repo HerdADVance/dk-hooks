@@ -337,6 +337,7 @@ tr.player td.gameinfo{
 .lineup{
   float: left;
   margin: 0 0.66% 20px 0.66%;
+  user-select: none;
   width: 32%;
 }
 .lineup th{
@@ -347,12 +348,19 @@ tr.player td.gameinfo{
 }
 .lineup tr{
   background: #FFF;
+  cursor: pointer;
+}
+.lineup tr.selected{
+  background: lightblue;
 }
 .lineup td{
-  color: #000;
+  color: black;
   font-size: 10px;
   height: 23px;
   padding: 0;
+}
+.lineup td.team{
+  font-weight: bold;
 }
 
 /* INDIVIDUAL LINEUP PLAYER ROWS */
@@ -397,17 +405,17 @@ tr.player td.gameinfo{
 }
 
 /* BUNDESLIGA TEAMS */
-.S04{background: blue; color: white;}
-.BAY{background: red; color: blue;}
-.LEV{background: yellow; color: red;}
-.BVB{background: yellow; color: black;}
-.FCA{background: green; color: orangered;}
-.KOE{background: white; color: crimson;}
-.FCU{background: crimson; color: yellow;}
-.F95{background: crimson; color: white;}
-.SGE{background: black; color: crimson;}
-.WOB{background: #58bf1d; color: white;}
-.BSC{background: dodgerblue; color: black;}
-.SVW{background: darkgreen; color: white;}
-.SCP{background: black; color: dodgerblue;}
-.SCF{background: red; color: black;}
+.S04{background: blue; color: white !important;}
+.BAY{background: red; color: blue !important;}
+.LEV{background: yellow; color: red !important;}
+.BVB{background: yellow; color: black !important;}
+.FCA{background: green; color: orangered !important;}
+.KOE{background: white; color: crimson !important;}
+.FCU{background: crimson; color: yellow !important;}
+.F95{background: crimson; color: white !important;}
+.SGE{background: black; color: crimson !important;}
+.WOB{background: #58bf1d; color: white !important;}
+.BSC{background: white; color: dodgerblue !important;}
+.SVW{background: darkgreen; color: white !important;}
+.SCP{background: black; color: dodgerblue !important;}
+.SCF{background: red; color: black !important;}

@@ -9,42 +9,50 @@ const makeLineups = (num) => {
             {
                 position: 'F',
                 player: null,
-                id: 0
+                id: 0,
+                selected: false
             },
             {
                 position: 'F',
                 player: null,
-                id: 1
+                id: 1,
+                selected: false
             },
             {
                 position: 'M',
                 player: null,
-                id: 2
+                id: 2,
+                selected: false
             },
             {
                 position: 'M',
                 player: null,
-                id: 3
+                id: 3,
+                selected: false
             },
             {
                 position: 'D',
                 player: null,
-                id: 4
+                id: 4,
+                selected: false
             },
             {
                 position: 'D',
                 player: null,
-                id: 5
+                id: 5,
+                selected: false
             },
             {
                 position: 'GK',
                 player: null,
-                id: 6
+                id: 6,
+                selected: false
             },
             {
                 position: 'UTIL',
                 player: null,
-                id: 7
+                id: 7,
+                selected: false
             }
         ]
         lineups.push(lineup)

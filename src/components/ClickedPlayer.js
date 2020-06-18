@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
@@ -8,8 +8,17 @@ const ClickedPlayer = ({ player, numLineups, random, handlePlayerActionClick, on
     const [sliderValue, setSliderValue] = useState(0)
     const [sliderDelta, setSliderDelta] = useState(0)
 
+    // Update the slider with correct info when lineupsIn length changes
+    useEffect(() => {
+        setSliderValue(player.lineupsIn.length)
+        setSliderDelta(0)
+    }, [player.lineupsIn.length])
+
+    
+    // FUNCTIONS
+
     function onAfterSliderChange() {
-        setSliderDelta(sliderValue - player.lineupsIn)
+        setSliderDelta(sliderValue - player.lineupsIn.length)
     }
 
     function onSliderChange(value) {

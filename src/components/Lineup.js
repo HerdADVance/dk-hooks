@@ -27,12 +27,16 @@ const Lineup = ({ lineup, referencePlayers, handleSlotClick }) => {
             {
             lineup.roster.map((slot, index) => (
 
-                <tr key={slot.id} onClick={() => handleSlotClick(lineup.id, slot.id)}>
+                <tr 
+                    className={slot.selected? 'selected' : ''} 
+                    key={slot.id} 
+                    onClick={() => handleSlotClick(lineup.id, slot.id, slot.player)}
+                >
                     <td>{slot.position}</td>
                     {slot.player ? 
                         <>
                         <td>{referencePlayers[slot.player].name}</td>
-                        <td className={referencePlayers[slot.player].team}>{referencePlayers[slot.player].team}</td>
+                        <td className={`team ${referencePlayers[slot.player].team}`}>{referencePlayers[slot.player].team}</td>
                         <td>{referencePlayers[slot.player].salary}</td>
                         </>
                     :

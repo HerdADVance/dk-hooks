@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './App.css';
 //import axios from 'axios'
-import findIndex from 'lodash/findIndex'
+import remove from 'lodash/remove'
 
 // DATA
 import POSITIONS from './data/POSITIONS'
@@ -11,6 +11,7 @@ import PLAYERS from './data/PLAYERS'
 import makeLineups from './util/makeLineups'
 import initializePlayersAndGames from './util/initializePlayersAndGames'
 import findLineupsToAdd from './util/findLineupsToAdd'
+import findLineupIndex from './util/findLineupIndex'
 
 // COMPONENTS
 import Positions from './components/Positions'
@@ -34,7 +35,7 @@ const App = () => {
     const [referencePlayers, setReferencePlayers] = useState({})
     const [lineups, setLineups] = useState([])
 
-    
+    // Init
     useEffect(() => {
 
         const init = initializePlayersAndGames(PLAYERS)
@@ -47,23 +48,6 @@ const App = () => {
         setLineups(makeLineups(numLineups))
 
     }, [])
-
-    // useEffect(() => {
-        
-    //     lineups.forEach(function(lineup){
-    //         lineup.roster.forEach(function(slot){
-    //             if(slot.player){
-    //                 players[slot.player].lineupsIn.push({
-    //                     lineup: lineup.id,
-    //                     slot: slot.id
-    //                 })
-    //             }
-    //         })
-    //     })
-
-    // }, [lineups])
-
-
 
     // Filter Players
     useEffect(() => {
@@ -88,13 +72,14 @@ const App = () => {
 
     }, [clickedPosition, clickedTeam, players])
 
+
+    // FUNCTIONS
+
     function addLineupsInToPlayer(pid, toAdd){
         let result = {...players}
-
         toAdd.forEach(function(slot){
-            result[pid].lineupsIn.push(toAdd)
+            result[pid].lineupsIn.push(slot)
         })
-
         setPlayers(result)
 
     }
@@ -102,18 +87,15 @@ const App = () => {
     function addPlayerToLineups(pid, toAdd){
 
         let result = [...lineups]
-        
         toAdd.forEach(function(slot){
-            let lineupIndex = findIndex(result, function(o) { return o.id == slot.lid })
+            const lineupIndex = findLineupIndex(result, slot.lid)
             result[lineupIndex].roster[slot.sid].player = pid
         })
-
         setLineups(result)
     }
 
     function handlePlayerActionClick(id, positions, random, delta) {
         const toAdd = findLineupsToAdd(id, positions, random, delta, lineups, players[id].lineupsIn)
-        console.log(toAdd)
         addPlayerToLineups(id, toAdd)
         addLineupsInToPlayer(id, toAdd)
     }
@@ -122,12 +104,40 @@ const App = () => {
         setClickedPosition(position)
     }
 
-    function handleSlotClick(lid, sid){
-        //setLineups
+    function handleSlotClick(lid, sid, pid){
+        if(pid){
+            removePlayerFromLineup(lid, sid, pid)
+            removeLineupInFromPlayer(pid, lid)
+        }
+        else{
+            markSlotAsSelected(lid, sid)
+        }
     }
 
     function handleTeamClick(team){
         setClickedTeam(team)   
+    }
+
+    function markSlotAsSelected(lid, sid){
+        let result = [...lineups]
+        const lineupIndex = findLineupIndex(result, lid)
+        result[lineupIndex].roster[sid].selected = ! result[lineupIndex].roster[sid].selected
+        setLineups(result)
+    }
+
+    function removeLineupInFromPlayer(pid, lid){
+        let result = {...players}
+        let lineupsIn = result[pid].lineupsIn
+        remove(lineupsIn, {lid: lid})
+        result[pid].lineupsIn = lineupsIn
+        setPlayers(result)
+    }
+
+    function removePlayerFromLineup(lid, sid){
+        let result = [...lineups]
+        const lineupIndex = findLineupIndex(result, lid)
+        result[lineupIndex].roster[sid].player = null
+        setLineups(result)
     }
 
     return (
