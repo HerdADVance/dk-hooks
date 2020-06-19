@@ -34,6 +34,7 @@ const App = () => {
     const [filteredPlayers, setFilteredPlayers] = useState({})
     const [referencePlayers, setReferencePlayers] = useState({})
     const [lineups, setLineups] = useState([])
+    const [selectedSlots, setSelectedSlots] = useState([])
 
     // Init
     useEffect(() => {
@@ -71,6 +72,26 @@ const App = () => {
         setFilteredPlayers(result)
 
     }, [clickedPosition, clickedTeam, players])
+
+    // Slots
+    useEffect(() => {
+        let foundLineups = [...lineups]
+        let result = []
+
+        foundLineups.forEach(function(lineup){
+            lineup.roster.forEach(function(slot){
+                if(slot.selected){
+                    result.push({
+                        lid: lineup.id,
+                        sid: slot.id
+                    })
+                }
+            }) 
+        })
+
+        setSelectedSlots(result)
+
+    }, [lineups])
 
 
     // FUNCTIONS
