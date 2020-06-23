@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './App.css';
 //import axios from 'axios'
-import remove from 'lodash/remove'
+import pull from 'lodash/pull'
 
 // DATA
 import POSITIONS from './data/POSITIONS'
@@ -99,7 +99,7 @@ const App = () => {
     function addLineupsInToPlayer(pid, toAdd){
         let result = {...players}
         toAdd.forEach(function(slot){
-            result[pid].lineupsIn.push(slot)
+            result[pid].lineupsIn.push(slot.lid)
         })
         setPlayers(result)
 
@@ -149,7 +149,7 @@ const App = () => {
     function removeLineupInFromPlayer(pid, lid){
         let result = {...players}
         let lineupsIn = result[pid].lineupsIn
-        remove(lineupsIn, {lid: lid})
+        pull(lineupsIn, lid)
         result[pid].lineupsIn = lineupsIn
         setPlayers(result)
     }
