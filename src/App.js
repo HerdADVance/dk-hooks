@@ -12,6 +12,7 @@ import makeLineups from './util/makeLineups'
 import initializePlayersAndGames from './util/initializePlayersAndGames'
 import findLineupsToAdd from './util/findLineupsToAdd'
 import findLineupIndex from './util/findLineupIndex'
+import isSlotInLineupSelected from './util/isSlotInLineupSelected'
 
 // COMPONENTS
 import Positions from './components/Positions'
@@ -125,13 +126,18 @@ const App = () => {
         setClickedPosition(position)
     }
 
-    function handleSlotClick(lid, sid, pid){
+    function handleSlotClick(lid, sid, pid, selected){
         if(pid){
             removePlayerFromLineup(lid, sid, pid)
             removeLineupInFromPlayer(pid, lid)
         }
         else{
-            markSlotAsSelected(lid, sid)
+            if(selected){
+                markSlotAsUnselected(lid, sid)
+            } else{
+                markOtherSlotsAsUnselected(lid)
+                markSlotAsSelected(lid, sid)
+            }
         }
     }
 
@@ -139,10 +145,28 @@ const App = () => {
         setClickedTeam(team)   
     }
 
+    function markOtherSlotsAsUnselected(lid){
+        let result = [...lineups]
+        const lineupIndex = findLineupIndex(result, lid)
+        let roster = result[lineupIndex].roster
+        roster.forEach(function(slot){
+            slot.selected = false
+        })
+        result[lineupIndex] = roster
+        setLineups(result)
+    }
+
     function markSlotAsSelected(lid, sid){
         let result = [...lineups]
         const lineupIndex = findLineupIndex(result, lid)
-        result[lineupIndex].roster[sid].selected = ! result[lineupIndex].roster[sid].selected
+        result[lineupIndex].roster[sid].selected = true
+        setLineups(result)
+    }
+
+    function markSlotAsUnselected(lid, sid){
+        let result = [...lineups]
+        const lineupIndex = findLineupIndex(result, lid)
+        result[lineupIndex].roster[sid].selected = false
         setLineups(result)
     }
 
@@ -182,6 +206,7 @@ const App = () => {
                         filteredPlayers={filteredPlayers}
                         numLineups={numLineups}
                         handlePlayerActionClick={handlePlayerActionClick}
+                        selectedSlots={selectedSlots}
                     />
 
                 </div>

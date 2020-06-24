@@ -30,7 +30,7 @@ const Lineup = ({ lineup, referencePlayers, handleSlotClick }) => {
                 <tr 
                     className={slot.selected? 'selected' : ''} 
                     key={slot.id} 
-                    onClick={() => handleSlotClick(lineup.id, slot.id, slot.player)}
+                    onClick={() => handleSlotClick(lineup.id, slot.id, slot.player, slot.selected)}
                 >
                     <td>{slot.position}</td>
                     {slot.player ? 

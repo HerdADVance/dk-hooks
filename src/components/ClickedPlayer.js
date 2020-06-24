@@ -3,7 +3,7 @@ import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
 
-const ClickedPlayer = ({ player, numLineups, random, handlePlayerActionClick, onRandomChange }) => {
+const ClickedPlayer = ({ player, numLineups, random, handlePlayerActionClick, onRandomChange, selectedSlots }) => {
 
     const [sliderValue, setSliderValue] = useState(0)
     const [sliderDelta, setSliderDelta] = useState(0)
@@ -31,36 +31,44 @@ const ClickedPlayer = ({ player, numLineups, random, handlePlayerActionClick, on
             <td colSpan="7">
                 <p>{player.name} is currently in {player.lineupsIn.length} of {numLineups} lineups</p>
                 
-                <Slider 
-                    value={sliderValue}
-                    min={0}
-                    max={numLineups}
-                    onChange={onSliderChange} 
-                    onAfterChange={onAfterSliderChange}
-                />
-                <button
-                    className={"player-add-button " + (sliderDelta >= 0 ? 'positive' : 'negative') }
-                    onClick={() => handlePlayerActionClick(player.id, player.positions, random, sliderDelta) }
-                >
-                    {
-                    sliderDelta >= 0 ?
-                        'Add to '
-                    :
-                        'Remove from '  
-                    }
-                    {Math.abs(sliderDelta)} Lineups
-                </button>
+                {selectedSlots.length > 0 ?
 
-                <select 
-                    className="player-add-random" 
-                    onChange={onRandomChange}
-                    value={random}
-                >
-                    <option value="ordered">Ordered</option>
-                    <option value="random">Random</option>
-                </select>
+                    <button>Add to {selectedSlots.length} lineups</button>
 
-                
+                :
+
+                    <>
+                    <Slider 
+                        value={sliderValue}
+                        min={0}
+                        max={numLineups}
+                        onChange={onSliderChange} 
+                        onAfterChange={onAfterSliderChange}
+                    />
+                    <button
+                        className={"player-add-button " + (sliderDelta >= 0 ? 'positive' : 'negative') }
+                        onClick={() => handlePlayerActionClick(player.id, player.positions, random, sliderDelta) }
+                    >
+                        {
+                        sliderDelta >= 0 ?
+                            'Add to '
+                        :
+                            'Remove from '  
+                        }
+                        {Math.abs(sliderDelta)} Lineups
+                    </button>
+
+                    <select 
+                        className="player-add-random" 
+                        onChange={onRandomChange}
+                        value={random}
+                    >
+                        <option value="ordered">Ordered</option>
+                        <option value="random">Random</option>
+                    </select>
+                    </>
+
+                }
 
             </td>
         </tr>
