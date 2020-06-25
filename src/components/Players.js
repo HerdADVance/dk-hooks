@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Player from './Player'
 import ClickedPlayer from './ClickedPlayer'
 
-const Players = ({ filteredPlayers, numLineups, handlePlayerActionClick, selectedSlots }) => {
+const Players = ({ filteredPlayers, numLineups, selectedSlots, handlePlayerActionClick, handlePlayerAddToSelectedClick }) => {
 
     const [clickedPlayer, setClickedPlayer] = useState(null)
     const [randomValue, setRandomValue] = useState(false)
@@ -49,9 +49,10 @@ const Players = ({ filteredPlayers, numLineups, handlePlayerActionClick, selecte
                                 player={filteredPlayers[player]}
                                 numLineups={numLineups}
                                 random={randomValue}
-                                handlePlayerActionClick={handlePlayerActionClick}
                                 onRandomChange={onRandomChange}
                                 selectedSlots={selectedSlots}
+                                handlePlayerActionClick={handlePlayerActionClick}
+                                handlePlayerAddToSelectedClick={handlePlayerAddToSelectedClick}
                             />
                         :
                             ''

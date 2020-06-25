@@ -47,7 +47,7 @@ const Lineup = ({ lineup, referencePlayers, handleSlotClick }) => {
             ))
             }
 
-            <tr className={"total " + (salary <= 50000 ? 'positive' : 'negative') }>
+            <tr className={"total " + (salary >= 50000 ? 'negative' : 'positive') }>
                 <td colSpan="2">Remaining: {50000 - salary}</td>
                 <td colSpan="2">{salary}</td>
             </tr>

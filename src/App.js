@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import './App.css';
 //import axios from 'axios'
 import pull from 'lodash/pull'
+import orderBy from 'lodash/orderBy'
 
 // DATA
 import POSITIONS from './data/POSITIONS'
@@ -12,7 +13,6 @@ import makeLineups from './util/makeLineups'
 import initializePlayersAndGames from './util/initializePlayersAndGames'
 import findLineupsToAdd from './util/findLineupsToAdd'
 import findLineupIndex from './util/findLineupIndex'
-import isSlotInLineupSelected from './util/isSlotInLineupSelected'
 
 // COMPONENTS
 import Positions from './components/Positions'
@@ -70,6 +70,9 @@ const App = () => {
             }, {})
         }
 
+        //result = orderBy(result, 'salary', ['desc'])
+        //console.log(result)
+
         setFilteredPlayers(result)
 
     }, [clickedPosition, clickedTeam, players])
@@ -84,7 +87,8 @@ const App = () => {
                 if(slot.selected){
                     result.push({
                         lid: lineup.id,
-                        sid: slot.id
+                        sid: slot.id,
+                        position: slot.position
                     })
                 }
             }) 
@@ -107,7 +111,6 @@ const App = () => {
     }
 
     function addPlayerToLineups(pid, toAdd){
-
         let result = [...lineups]
         toAdd.forEach(function(slot){
             const lineupIndex = findLineupIndex(result, slot.lid)
@@ -116,10 +119,19 @@ const App = () => {
         setLineups(result)
     }
 
-    function handlePlayerActionClick(id, positions, random, delta) {
-        const toAdd = findLineupsToAdd(id, positions, random, delta, lineups, players[id].lineupsIn)
-        addPlayerToLineups(id, toAdd)
-        addLineupsInToPlayer(id, toAdd)
+    function handlePlayerActionClick(pid, positions, random, delta) {
+        const toAdd = findLineupsToAdd(pid, positions, random, delta, lineups, players[pid].lineupsIn)
+        addPlayerToLineups(pid, toAdd)
+        addLineupsInToPlayer(pid, toAdd)
+    }
+
+    function handlePlayerAddToSelectedClick(pid, positions, slots){
+        // Maybe validate slots for position and player just to be sure
+        addPlayerToLineups(pid, slots)
+        addLineupsInToPlayer(pid, slots)
+        selectedSlots.forEach(function(slot){
+            markSlotAsUnselected(slot.lid, slot.sid)
+        })
     }
 
     function handlePositionClick(position){
@@ -205,8 +217,9 @@ const App = () => {
                     <Players 
                         filteredPlayers={filteredPlayers}
                         numLineups={numLineups}
-                        handlePlayerActionClick={handlePlayerActionClick}
                         selectedSlots={selectedSlots}
+                        handlePlayerActionClick={handlePlayerActionClick}
+                        handlePlayerAddToSelectedClick={handlePlayerAddToSelectedClick}
                     />
 
                 </div>

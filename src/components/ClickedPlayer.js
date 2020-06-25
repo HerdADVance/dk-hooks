@@ -3,10 +3,21 @@ import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
 
-const ClickedPlayer = ({ player, numLineups, random, handlePlayerActionClick, onRandomChange, selectedSlots }) => {
+
+const ClickedPlayer = ({ 
+    player, 
+    numLineups, 
+    random, 
+    onRandomChange, 
+    selectedSlots,
+    handlePlayerActionClick, 
+    handlePlayerAddToSelectedClick
+}) => {
+
 
     const [sliderValue, setSliderValue] = useState(0)
     const [sliderDelta, setSliderDelta] = useState(0)
+    const [selectableSlots, setSelectableSlots] = useState([])
 
     // Update the slider with correct info when lineupsIn length changes
     useEffect(() => {
@@ -14,7 +25,18 @@ const ClickedPlayer = ({ player, numLineups, random, handlePlayerActionClick, on
         setSliderDelta(0)
     }, [player.lineupsIn.length])
 
+
+    // Make sure all selected slots are right position for clicked player and don't already have player
+    useEffect(() => {
+        let result = []
+        selectedSlots.forEach(function(slot){
+            if (player.positions.includes(slot.position) && !player.lineupsIn.includes(slot.lid)) result.push(slot)
+        })
+        setSelectableSlots(result)
+    }, [selectedSlots])
     
+    
+
     // FUNCTIONS
 
     function onAfterSliderChange() {
@@ -33,7 +55,11 @@ const ClickedPlayer = ({ player, numLineups, random, handlePlayerActionClick, on
                 
                 {selectedSlots.length > 0 ?
 
-                    <button>Add to {selectedSlots.length} lineups</button>
+                    <button
+                        onClick={() => handlePlayerAddToSelectedClick(player.id, player.positions, selectableSlots)}
+                    >
+                        Add to {selectableSlots.length} lineups
+                    </button>
 
                 :
 
