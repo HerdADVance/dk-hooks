@@ -32,7 +32,7 @@ const App = () => {
     const [positions, setPositions] = useState([])
     const [games, setGames] = useState([])
     const [players, setPlayers] = useState({})
-    const [filteredPlayers, setFilteredPlayers] = useState({})
+    const [filteredPlayers, setFilteredPlayers] = useState([])
     const [referencePlayers, setReferencePlayers] = useState({})
     const [lineups, setLineups] = useState([])
     const [selectedSlots, setSelectedSlots] = useState([])
@@ -70,8 +70,8 @@ const App = () => {
             }, {})
         }
 
-        //result = orderBy(result, 'salary', ['desc'])
-        //console.log(result)
+        result = orderBy(result, 'salary', ['desc'])
+        console.log(result)
 
         setFilteredPlayers(result)
 

@@ -9,6 +9,7 @@ const Players = ({ filteredPlayers, numLineups, selectedSlots, handlePlayerActio
     const [randomValue, setRandomValue] = useState(false)
 
     function handlePlayerClick(id) {
+        console.log(id)
         setClickedPlayer(id)
     }
 
@@ -32,21 +33,21 @@ const Players = ({ filteredPlayers, numLineups, selectedSlots, handlePlayerActio
             </tr></thead><tbody>
                 {
                 filteredPlayers?
-                    Object.keys(filteredPlayers).map((player, index) => (
+                    filteredPlayers.map((player, index) => (
 
                         <>
                        
                         <Player 
-                            player={filteredPlayers[player]}
+                            player={player}
                             numLineups={numLineups}
                             handlePlayerClick={handlePlayerClick}
                         />
 
                         {
-                        player === clickedPlayer?
+                        player.id === clickedPlayer?
                             
                             <ClickedPlayer
-                                player={filteredPlayers[player]}
+                                player={player}
                                 numLineups={numLineups}
                                 random={randomValue}
                                 onRandomChange={onRandomChange}
