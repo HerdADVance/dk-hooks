@@ -15,6 +15,7 @@ import findLineupsToAdd from './util/findLineupsToAdd'
 import findLineupIndex from './util/findLineupIndex'
 
 // COMPONENTS
+import Exposures from './components/Exposures'
 import Positions from './components/Positions'
 import Games from './components/Games'
 import Players from './components/Players'
@@ -25,6 +26,8 @@ import Lineups from './components/Lineups'
 const App = () => {
 
     const numLineups = 20
+
+    const [showExposures, setShowExposures] = useState(false)
 
     const [clickedPosition, setClickedPosition] = useState('ALL')
     const [clickedTeam, setClickedTeam] = useState('ALL')
@@ -199,40 +202,53 @@ const App = () => {
 
     return (
         <div className="wrapper">
-            <div className="list">
-                <div className="list-wrap">
-                    
-                    <Positions 
-                        positions={positions} 
-                        handlePositionClick={handlePositionClick}
-                        clickedPosition={clickedPosition}
-                    />
-                    
-                    <Games 
-                        games={games}
-                        handleTeamClick={handleTeamClick}
-                        clickedTeam={clickedTeam}
-                    />
-                    
-                    <Players 
+
+            {showExposures ?
+                <div className="exposures">
+                    <Exposures
                         filteredPlayers={filteredPlayers}
-                        numLineups={numLineups}
-                        selectedSlots={selectedSlots}
-                        handlePlayerActionClick={handlePlayerActionClick}
-                        handlePlayerAddToSelectedClick={handlePlayerAddToSelectedClick}
                     />
-
                 </div>
-            </div>
-            <div className="lineups">
-                
-                <Lineups 
-                    lineups={lineups}
-                    referencePlayers={referencePlayers}
-                    handleSlotClick={handleSlotClick}
-                />
+            :
 
-            </div>
+                <div className="selector">
+                    <div className="list">
+                        <div className="list-wrap">
+                            
+                            <Positions 
+                                positions={positions} 
+                                handlePositionClick={handlePositionClick}
+                                clickedPosition={clickedPosition}
+                            />
+                            
+                            <Games 
+                                games={games}
+                                handleTeamClick={handleTeamClick}
+                                clickedTeam={clickedTeam}
+                            />
+                            
+                            <Players 
+                                filteredPlayers={filteredPlayers}
+                                numLineups={numLineups}
+                                selectedSlots={selectedSlots}
+                                handlePlayerActionClick={handlePlayerActionClick}
+                                handlePlayerAddToSelectedClick={handlePlayerAddToSelectedClick}
+                            />
+
+                        </div>
+                    </div>
+                    <div className="lineups">
+                        
+                        <Lineups 
+                            lineups={lineups}
+                            referencePlayers={referencePlayers}
+                            handleSlotClick={handleSlotClick}
+                        />
+
+                    </div>
+                </div>
+            }
+
         </div>
     );
 }
