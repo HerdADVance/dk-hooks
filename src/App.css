@@ -404,6 +404,16 @@ tr.player td.gameinfo{
   width: 100%;
 }
 
+
+/* PREMIER LEAGUE TEAMS */
+.ARS{background: white; color: #d5131d !important;}
+.LEI{background: #fdbe10; color: #0153a0 !important;}
+.NEW{background: #231e20; color: white !important;}
+.NOR{background: #00a650; color: #fff200 !important;}
+.BOU{background: black; color: #b90e01 !important;}
+.EVE{background: #264289; color: white !important;}
+
+
 /* BUNDESLIGA TEAMS */
 .S04{background: blue; color: white !important;}
 .BAY{background: red; color: blue !important;}

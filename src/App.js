@@ -206,7 +206,7 @@ const App = () => {
             {showExposures ?
                 <div className="exposures">
                     <Exposures
-                        filteredPlayers={filteredPlayers}
+                        filteredPlayers={players}
                     />
                 </div>
             :
