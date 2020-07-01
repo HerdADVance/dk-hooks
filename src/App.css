@@ -389,6 +389,39 @@ tr.player td.gameinfo{
   font-weight: bold;
 }
 
+
+/* EXPOSURES */
+.exposure-group{
+  float: left;
+  margin-right: 20px;
+  width: 20%;
+}
+.exposure-group h1{
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+.exposure-players th{
+  font-size: 12px;
+}
+.exposure-players td{
+  font-size: 12px;
+  padding: 2px;
+}
+.exposure-players input{
+  height: 24px;
+  text-align: center;
+  width: 40px;
+}
+.exposure-totals-range{
+  border: none;
+  font-size: 11px;
+}
+.no-borders td{
+  border: none;
+  font-size: 11px;
+}
+
 /* LATEST UPDATE */
 .latest-update{
   background: rgba(79,130,87,0.9);

@@ -27,7 +27,7 @@ const App = () => {
 
     const numLineups = 20
 
-    const [showExposures, setShowExposures] = useState(false)
+    const [showExposures, setShowExposures] = useState(true)
 
     const [clickedPosition, setClickedPosition] = useState('ALL')
     const [clickedTeam, setClickedTeam] = useState('ALL')
@@ -74,7 +74,6 @@ const App = () => {
         }
 
         result = orderBy(result, 'salary', ['desc'])
-        console.log(result)
 
         setFilteredPlayers(result)
 
@@ -120,6 +119,12 @@ const App = () => {
             result[lineupIndex].roster[slot.sid].player = pid
         })
         setLineups(result)
+    }
+
+    function handleExposureChange(pid, pct){
+        let result = {...players}
+        result[pid].exposure = pct
+        setPlayers(result)
     }
 
     function handlePlayerActionClick(pid, positions, random, delta) {
@@ -206,7 +211,9 @@ const App = () => {
             {showExposures ?
                 <div className="exposures">
                     <Exposures
-                        filteredPlayers={players}
+                        handleExposureChange={handleExposureChange}
+                        players={players}
+                        numLineups={numLineups}
                     />
                 </div>
             :

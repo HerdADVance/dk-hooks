@@ -21,6 +21,9 @@ const initializePlayers = (players) => {
 		formattedPlayer.gameInfo = player['Game Info']
 		formattedPlayer.ppg = player.AvgPointsPerGame
 		formattedPlayer.lineupsIn = []
+		formattedPlayer.exposure = 0
+		formattedPlayer.exposureMin = 0
+		formattedPlayer.exposureMax = 0
 
 		// Add player to players
 		formattedPlayers[player.ID] = formattedPlayer
