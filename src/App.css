@@ -439,12 +439,20 @@ tr.player td.gameinfo{
 
 
 /* PREMIER LEAGUE TEAMS */
+.TOT{background: navy; color: white !important;}
+.MU{background: red; color: black !important;}
+.NOR{background: limegreen; color: yellow !important;}
+.SOU{background: black; color: red !important;}
 .ARS{background: white; color: #d5131d !important;}
 .LEI{background: #fdbe10; color: #0153a0 !important;}
 .NEW{background: #231e20; color: white !important;}
 .NOR{background: #00a650; color: #fff200 !important;}
 .BOU{background: black; color: #b90e01 !important;}
 .EVE{background: #264289; color: white !important;}
+.LIV{background: #d11f35; color: white !important;}
+.MCI{background: #60a9dd; color: white !important;}
+.AVL{background: #680c43; color: #94bde6 !important;}
+.WHU{background: #752b3d; color: white !important;}
 
 
 /* BUNDESLIGA TEAMS */
@@ -463,7 +471,3 @@ tr.player td.gameinfo{
 .SCP{background: black; color: dodgerblue !important;}
 .SCF{background: red; color: black !important;}
 
-.TOT{background: navy; color: white !important;}
-.MU{background: red; color: black !important;}
-.NOR{background: limegreen; color: yellow !important;}
-.SOU{background: black; color: red !important;}

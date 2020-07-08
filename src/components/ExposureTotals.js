@@ -17,7 +17,6 @@ const ExposureTotals = ({ exposureGroups, numLineups }) => {
         let salaryTotal = 0
         let exposureTotal = 0
 
-        // Loop through players to sort into right groups
         exposureGroups.forEach(function(group){
             salaryTotal += group.salaryTotal
             exposureTotal += parseInt(group.exposureTotal)
@@ -58,7 +57,7 @@ const ExposureTotals = ({ exposureGroups, numLineups }) => {
                         </tr>
                         <tr className="no-borders">
                             <td></td>
-                            <td>{numLineups * 50000}</td>
+                            <td>{50000}</td>
                             <td>{targetTotal}</td>
                         </tr>
                 </tbody>
