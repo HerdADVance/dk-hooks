@@ -161,6 +161,10 @@ const App = () => {
         }
     }
 
+    function handleSwitchViewClick(){
+        setShowExposures(!showExposures)
+    }
+
     function handleTeamClick(team){
         setClickedTeam(team)   
     }
@@ -206,7 +210,10 @@ const App = () => {
     }
 
     return (
-        <div className="wrapper">
+        <div>
+            <div className="top">
+                <button onClick={handleSwitchViewClick}>Switch View</button>
+            </div>
 
             {showExposures ?
                 <div className="exposures">
@@ -218,22 +225,22 @@ const App = () => {
                 </div>
             :
 
-                <div className="selector">
+                <div className="wrapper">
                     <div className="list">
                         <div className="list-wrap">
-                            
-                            <Positions 
-                                positions={positions} 
-                                handlePositionClick={handlePositionClick}
-                                clickedPosition={clickedPosition}
-                            />
-                            
-                            <Games 
-                                games={games}
-                                handleTeamClick={handleTeamClick}
-                                clickedTeam={clickedTeam}
-                            />
-                            
+                            <div className="sticky">
+                                <Positions 
+                                    positions={positions} 
+                                    handlePositionClick={handlePositionClick}
+                                    clickedPosition={clickedPosition}
+                                />
+                                
+                                <Games 
+                                    games={games}
+                                    handleTeamClick={handleTeamClick}
+                                    clickedTeam={clickedTeam}
+                                />
+                            </div>
                             <Players 
                                 filteredPlayers={filteredPlayers}
                                 numLineups={numLineups}

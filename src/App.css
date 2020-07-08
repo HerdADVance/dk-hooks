@@ -19,7 +19,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 body {
   font-family: 'Montserrat', sans-serif;
   line-height: 1; 
-  overflow-y: hidden;
 }
 ol, ul {
   list-style: none; 
@@ -61,6 +60,7 @@ button{
 /* MAIN WRAPPER */
 .wrapper{
   margin: 20px;
+  overflow-y: hidden;
 }
 
 
@@ -92,13 +92,16 @@ button{
   overflow-y: scroll;
   position: fixed;
 }
-.positions{
-  position: fixed;
-  width: 48%;
-}
 
 
 /* PLAYERS TABLE HEADERS AND WRAP */
+.sticky{
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.positions{
+}
 .positions ul{
   display: flex;
   width: 100%;
@@ -118,10 +121,6 @@ button{
   background: #9AE200;
 }
 .games{
-  position: fixed;
-  top: 55px;
-  width: 48%;
-  z-index: 2;
 }
 .game{
   border-right: 1px solid #CCC;
@@ -159,7 +158,6 @@ button{
   display: block;
   height: 100%;
   padding-bottom: 0px;
-  margin-top: 94px;
   width: 100%;
 }
 

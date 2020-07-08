@@ -50,7 +50,7 @@ const ClickedPlayer = ({
     return(
         
         <tr className="player-action">
-            <td colSpan="7">
+            <td colSpan="8">
                 <p>{player.name} is currently in {player.lineupsIn.length} of {numLineups} lineups</p>
                 
                 {selectedSlots.length > 0 ?

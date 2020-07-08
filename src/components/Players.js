@@ -27,7 +27,8 @@ const Players = ({ filteredPlayers, numLineups, selectedSlots, handlePlayerActio
                 <th>Player</th>
                 <th>Team</th>
                 <th>Salary</th>
-                <th>Lineups</th>
+                <th>Currently In</th>
+                <th>Target</th>
                 <th>PPG</th>
                 <th>Game</th>
             </tr></thead><tbody>
