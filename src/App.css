@@ -391,8 +391,11 @@ tr.player td.gameinfo{
 /* EXPOSURES */
 .exposure-group{
   float: left;
-  margin-right: 20px;
-  width: 20%;
+  margin-right: 2.4%;
+  width: 18%;
+}
+.exposure-group:last-child{
+  margin-right: 0;
 }
 .exposure-group h1{
   font-size: 16px;

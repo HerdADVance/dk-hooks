@@ -3,8 +3,6 @@ import findAcceptedSlotIds from './findAcceptedSlotIds'
 
 const findLineupsToAdd = (pid, positions, random, delta, lineups, lineupsIn) => {
 
-	console.log(lineupsIn)
-
 	// Array to return
 	let toAdd = []
 

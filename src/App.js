@@ -121,6 +121,29 @@ const App = () => {
         setLineups(result)
     }
 
+    function handleCompleteLineupsClick(){
+        let result = {...players}
+        let p = orderBy(result, 'lineupsIn', ['desc'])
+        let l = [...lineups]
+
+        p.forEach(function(player){
+            player.lineupsNeeded = Math.round( (player.exposure/100 * numLineups) - player.lineupsIn.length)
+        })
+
+        p = orderBy(p, 'lineupsNeeded', ['desc'])
+
+        p.forEach(function(player){
+            let toAdd = null
+            if(player.lineupsNeeded > 0) toAdd = findLineupsToAdd(player.id, player.positions, 'random', player.lineupsNeeded, l, player.lineupsIn)
+            console.log(toAdd)
+            //addPlayerToLineups(pid, toAdd)
+            //addLineupsInToPlayer(pid, toAdd)
+        })
+
+
+
+    }
+
     function handleExposureChange(pid, pct){
         let result = {...players}
         result[pid].exposure = pct
@@ -213,6 +236,7 @@ const App = () => {
         <div>
             <div className="top">
                 <button onClick={handleSwitchViewClick}>Switch View</button>
+                <button onClick={handleCompleteLineupsClick}>Complete Lineups</button>
             </div>
 
             {showExposures ?
