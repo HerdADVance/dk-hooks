@@ -121,6 +121,14 @@ const App = () => {
         setLineups(result)
     }
 
+    function addPlayerToTempLineups(pid, toAdd, lineups){
+        toAdd.forEach(function(slot){
+            const lineupIndex = findLineupIndex(lineups, slot.lid)
+            lineups[lineupIndex].roster[slot.sid].player = pid
+        })
+        return lineups
+    }
+
     function handleCompleteLineupsClick(){
         let result = {...players}
         let p = orderBy(result, 'lineupsIn', ['desc'])
@@ -132,15 +140,18 @@ const App = () => {
 
         p = orderBy(p, 'lineupsNeeded', ['desc'])
 
-        p.forEach(function(player){
-            let toAdd = null
-            if(player.lineupsNeeded > 0) toAdd = findLineupsToAdd(player.id, player.positions, 'random', player.lineupsNeeded, l, player.lineupsIn)
-            console.log(toAdd)
-            //addPlayerToLineups(pid, toAdd)
-            //addLineupsInToPlayer(pid, toAdd)
-        })
+        for(var i = 0; i < p.length; i++){
+            if(p[i].lineupsNeeded > 0){
+                const toAdd = findLineupsToAdd(p[i].id, p[i].positions, 'random', p[i].lineupsNeeded, l, p[i].lineupsIn)
+                console.log(toAdd)
+                l = addPlayerToTempLineups(p[i].id, toAdd, l)
+                //addLineupsInToPlayer(p[i].id, toAdd)
+            } else break
+        }
 
+        setLineups(l)
 
+        //console.log(l)
 
     }
 
