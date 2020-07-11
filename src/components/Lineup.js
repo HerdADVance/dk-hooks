@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Lineup = ({ lineup, referencePlayers, handleSlotClick }) => {
+const Lineup = ({ lineup, orderNumber, referencePlayers, handleSlotClick }) => {
 
     const [salary, setSalary] = useState(0)
 
@@ -22,7 +22,7 @@ const Lineup = ({ lineup, referencePlayers, handleSlotClick }) => {
 
         <table className="lineup"><thead>
             <tr>
-                <th colSpan="4">Lineup # {lineup.id}</th>
+                <th colSpan="4">Lineup # {lineup.id} ({orderNumber + 1})</th>
             </tr></thead><tbody>
             {
             lineup.roster.map((slot, index) => (

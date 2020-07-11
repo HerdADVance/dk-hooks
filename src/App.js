@@ -14,6 +14,7 @@ import initializePlayersAndGames from './util/initializePlayersAndGames'
 import findLineupsToAdd from './util/findLineupsToAdd'
 import findLineupIndex from './util/findLineupIndex'
 import findPlayerIndex from './util/findPlayerIndex'
+import calculateLineupSalary from './util/calculateLineupSalary'
 
 // COMPONENTS
 import Exposures from './components/Exposures'
@@ -25,9 +26,9 @@ import Lineups from './components/Lineups'
 
 const App = () => {
 
-    const numLineups = 40
+    const numLineups = 50
 
-    const [showExposures, setShowExposures] = useState(true)
+    const [showExposures, setShowExposures] = useState(false)
 
     const [clickedPosition, setClickedPosition] = useState('ALL')
     const [clickedTeam, setClickedTeam] = useState('ALL')
@@ -151,6 +152,12 @@ const App = () => {
             } else break
         }
 
+        l.forEach(function(lineup){
+            lineup.salary = calculateLineupSalary(lineup.roster, result)
+        })
+
+        l = orderBy(l, 'salary', ['desc'])
+
         setLineups(l)
 
         //console.log(l)
@@ -224,7 +231,7 @@ const App = () => {
             {pid: 14718325, pct: 10},
             {pid: 14718327, pct: 25},
             {pid: 14718339, pct: 15},
-            {pid: 14718269, pct: 15},     // F
+            {pid: 14718269, pct: 15}, // F
             {pid: 14718278, pct: 10},
             {pid: 14718303, pct: 25},
             {pid: 14718322, pct: 25},
