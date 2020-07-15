@@ -1,5 +1,5 @@
 import forEach from 'lodash/forEach'
-const calculateLineupSalery = (roster, players) => {
+const calculateLineupSalary = (roster, players) => {
 	
 	let salary = 0
 
@@ -10,4 +10,4 @@ const calculateLineupSalery = (roster, players) => {
 	return salary
 }
 
-export default calculateLineupSalery
+export default calculateLineupSalary

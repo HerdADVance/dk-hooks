@@ -14,7 +14,11 @@ import initializePlayersAndGames from './util/initializePlayersAndGames'
 import findLineupsToAdd from './util/findLineupsToAdd'
 import findLineupIndex from './util/findLineupIndex'
 import findPlayerIndex from './util/findPlayerIndex'
+import findPlayerSalary from './util/findPlayerSalary'
+import findPlayerTeam from './util/findPlayerTeam'
+import findPlayerPositions from './util/findPlayerPositions'
 import calculateLineupSalary from './util/calculateLineupSalary'
+import switchAutoCompleteSlots from './util/switchAutoCompleteSlots'
 
 // COMPONENTS
 import Exposures from './components/Exposures'
@@ -130,6 +134,32 @@ const App = () => {
         return lineups
     }
 
+    function fitSalaries(lineups){
+        // Lineups received from most to least expensive
+        lineups.forEach(function(lineup){
+            lineup.roster.forEach(function(slot){
+                const pid = slot.player
+                const salary = findPlayerSalary(players, slot.player)
+                const team = findPlayerTeam(players, slot.player)
+                const positions = findPlayerPositions(players, slot.player)
+
+                slot.player = {pid, salary, team, positions}
+            })
+
+            lineup.roster = orderBy(lineup.roster, 'player.salary', ['desc'])
+        })
+
+        let counter = 0
+        while(counter < 1 && lineups[0].salary > 50500){
+            lineups = switchAutoCompleteSlots(lineups)
+            lineups = orderBy(lineups, 'salary', ['desc'])
+            //setTimeout(function(){}, 50);
+            counter ++
+        }
+
+        console.log(lineups)
+    }
+
     function handleCompleteLineupsClick(){
 
         let result = {...players}
@@ -146,19 +176,30 @@ const App = () => {
         for(var i = 0; i < p.length; i++){
             if(p[i].lineupsNeeded > 0){
                 const toAdd = findLineupsToAdd(p[i].id, p[i].positions, 'random', p[i].lineupsNeeded, l, p[i].lineupsIn)
-                console.log(toAdd)
+                //console.log(toAdd)
                 l = addPlayerToTempLineups(p[i].id, toAdd, l)
                 //addLineupsInToPlayer(p[i].id, toAdd)
             } else break
         }
 
-        l.forEach(function(lineup){
-            lineup.salary = calculateLineupSalary(lineup.roster, result)
-        })
+        // l.forEach(function(lineup){
+        //     lineup.salary = calculateLineupSalary(lineup.roster, result)
+        // })
+
+        for(var i = 0; i < l.length; i++){
+            l[i].salary = calculateLineupSalary(l[i].roster, result)
+        }
 
         l = orderBy(l, 'salary', ['desc'])
 
-        setLineups(l)
+       // console.log(l)
+        fitSalaries(l)
+
+        // Time to reorder ideas
+        // 1. Lottery type weighted randomness to take expensive player from expensive lineup but not always most expensive
+        // 2. Add locked spots as part of initial lineups to make sure user's selections stay put
+
+        //setLineups(l)
 
         //console.log(l)
 
