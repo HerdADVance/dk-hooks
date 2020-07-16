@@ -3,54 +3,20 @@ import shuffle from 'lodash/shuffle'
 import returnRandomInteger from './returnRandomInteger'
 import areSlotsSwappable from './areSlotsSwappable'
 
-const switchAutoCompleteSlots = (lineups) => {
+const switchAutoCompleteSlots = (lineups, indexes) => {
 
-	console.log(lineups)
+	let firstLineupIndex = indexes.firstLineupIndex
+	let firstRosterIndex = indexes.firstRosterIndex
+	let lastLineupIndex = indexes.lastLineupIndex
+	let lastRosterIndex = indexes.lastRosterIndex
 
-	// What the main loop will determine
-	let finalFirstLineupIndex = null
-	let finalFirstRosterIndex = null
-	let finalLastLineupIndex = null
-	let finalLastRosterIndex = null
+	console.log(firstLineupIndex)
+	console.log(firstRosterIndex)
+	console.log(lastLineupIndex)
+	console.log(lastRosterIndex)
 
-	// Randomizing lineups and roster spot. Looking to take one of the more expensive slots in an expensive lineup and replace it with a cheape slot in cheap lineup
-	let firstLineupIndexes = shuffle([0,1,2,3,4])
-	let firstRosterIndexes = shuffle([0,1,2,3])
-	let lastLineupIndexes = shuffle([1,2,3,4])
-	let lastRosterIndexes = shuffle([5,6,7])
-
-	loop1:
-	for(var i = 0; i < firstLineupIndexes.length; i++){
-		let firstLineupIndex = firstLineupIndexes[i]
-		for(var j = 0; j < firstRosterIndexes.length; j++){
-			let firstRosterIndex = firstRosterIndexes[j]
-			
-			let firstSlotToCheck = lineups[firstLineupIndex].roster[firstRosterIndex]
-
-			for(var k = 0; k < lastLineupIndexes.length; k++){
-				let lastLineupIndex = lastLineupIndexes[k]
-				for(var l = 0; l < lastRosterIndexes.length; l++){
-					let lastRosterIndex = lastRosterIndexes[j]
-
-					let lastSlotToCheck = lineups[lineups.length - lastLineupIndex].roster[lastRosterIndex]
-
-					console.log(firstSlotToCheck)
-					console.log(lastSlotToCheck)
-					if(areSlotsSwappable(firstSlotToCheck, lastSlotToCheck)){
-
-						finalFirstLineupIndex = firstLineupIndex
-						finalFirstRosterIndex = firstRosterIndex
-						finalLastLineupIndex = lastLineupIndex
-						finalLastRosterIndex = lastRosterIndex
-						break loop1
-					}
-				}
-			}
-		}
-	}
-
-	let firstSlot = lineups[finalFirstLineupIndex].roster[finalFirstRosterIndex]
-	let lastSlot = lineups[lineups.length - finalLastLineupIndex].roster[finalLastRosterIndex]
+	let firstSlot = lineups[firstLineupIndex].roster[firstRosterIndex]
+	let lastSlot = lineups[lineups.length - lastLineupIndex].roster[lastRosterIndex]
 
 	let firstPosition = firstSlot.position
 	let lastPosition = lastSlot.position
@@ -62,18 +28,18 @@ const switchAutoCompleteSlots = (lineups) => {
 	// console.log(lastPlayer)
 
 	// Swap the players (these are the 2 lines messing up the console log first/lastSlotToCheck above)
-	lineups[finalFirstLineupIndex].roster[finalFirstRosterIndex].player = lastPlayer
-	lineups[lineups.length - finalLastLineupIndex].roster[finalLastRosterIndex].player = firstPlayer
+	lineups[firstLineupIndex].roster[firstRosterIndex].player = lastPlayer
+	lineups[lineups.length - lastLineupIndex].roster[lastRosterIndex].player = firstPlayer
 
 	// Change the lineups' salary
-	lineups[finalFirstLineupIndex].salary -= firstPlayer.salary
-	lineups[finalFirstLineupIndex].salary += lastPlayer.salary
-	lineups[lineups.length - finalLastLineupIndex].salary -= lastPlayer.salary
-	lineups[lineups.length - finalLastLineupIndex].salary += firstPlayer.salary
+	lineups[firstLineupIndex].salary -= firstPlayer.salary
+	lineups[firstLineupIndex].salary += lastPlayer.salary
+	lineups[lineups.length - lastLineupIndex].salary -= lastPlayer.salary
+	lineups[lineups.length - lastLineupIndex].salary += firstPlayer.salary
 
 	// Change the lineup roster's order based on salary
-	lineups[finalFirstLineupIndex].roster = orderBy(lineups[finalFirstLineupIndex].roster, 'player.salary', ['desc'])
-	lineups[lineups.length - finalLastLineupIndex].roster = orderBy(lineups[lineups.length - finalLastLineupIndex].roster, 'player.salary', ['desc'])
+	lineups[firstLineupIndex].roster = orderBy(lineups[firstLineupIndex].roster, 'player.salary', ['desc'])
+	lineups[lineups.length - lastLineupIndex].roster = orderBy(lineups[lineups.length - lastLineupIndex].roster, 'player.salary', ['desc'])
 
 	return lineups
 }

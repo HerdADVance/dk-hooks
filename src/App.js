@@ -18,6 +18,7 @@ import findPlayerSalary from './util/findPlayerSalary'
 import findPlayerTeam from './util/findPlayerTeam'
 import findPlayerPositions from './util/findPlayerPositions'
 import calculateLineupSalary from './util/calculateLineupSalary'
+import findAutoCompleteSlotsToSwitch from './util/findAutoCompleteSlotsToSwitch'
 import switchAutoCompleteSlots from './util/switchAutoCompleteSlots'
 
 // COMPONENTS
@@ -135,6 +136,7 @@ const App = () => {
     }
 
     function fitSalaries(lineups){
+
         // Lineups received from most to least expensive
         lineups.forEach(function(lineup){
             lineup.roster.forEach(function(slot){
@@ -150,12 +152,18 @@ const App = () => {
         })
 
         let counter = 0
-        while(counter < 1 && lineups[0].salary > 50500){
-            lineups = switchAutoCompleteSlots(lineups)
-            lineups = orderBy(lineups, 'salary', ['desc'])
-            //setTimeout(function(){}, 50);
-            counter ++
-        }
+
+        console.log(lineups)
+        
+        // while(counter < 1 && lineups[0].salary > 50500){
+        //     let indexes = await findAutoCompleteSlotsToSwitch(lineups)
+        //     lineups = await switchAutoCompleteSlots(lineups, indexes)
+        //     counter ++
+        // }
+
+        let indexes = findAutoCompleteSlotsToSwitch(lineups)
+        lineups = switchAutoCompleteSlots(lineups, indexes)
+        lineups = orderBy(lineups, 'salary', ['desc'])
 
         console.log(lineups)
     }
@@ -192,7 +200,7 @@ const App = () => {
 
         l = orderBy(l, 'salary', ['desc'])
 
-       // console.log(l)
+        // console.log(l)
         fitSalaries(l)
 
         // Time to reorder ideas
