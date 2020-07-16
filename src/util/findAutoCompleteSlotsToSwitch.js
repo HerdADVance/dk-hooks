@@ -3,9 +3,7 @@ import shuffle from 'lodash/shuffle'
 import returnRandomInteger from './returnRandomInteger'
 import areSlotsSwappable from './areSlotsSwappable'
 
-const findAutoCompleteSlotsToSwitch = (lineups) => {
-
-	console.log(lineups)
+const findAutoCompleteSlotsToSwitch = async (lineups) => {
 
 	// What the main loop will determine
 	let firstLineupIndex = null
@@ -35,15 +33,14 @@ const findAutoCompleteSlotsToSwitch = (lineups) => {
 
 						let lastSlotToCheck = lineups[lineups.length - lastLineupIndex].roster[lastRosterIndex]
 
-						console.log(lineups)
-						console.log(firstSlotToCheck)
-						console.log(lastSlotToCheck)
-						//if(areSlotsSwappable(firstSlotToCheck, lastSlotToCheck)){
+						let swappable = false
+						swappable = areSlotsSwappable(firstSlotToCheck, lastSlotToCheck)
+						if(swappable){
 							return {firstLineupIndex, firstRosterIndex, lastLineupIndex, lastRosterIndex}
 
 							//break loop1
 
-						//}
+						}
 					}
 				}
 			}

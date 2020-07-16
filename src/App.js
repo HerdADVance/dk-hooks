@@ -135,7 +135,7 @@ const App = () => {
         return lineups
     }
 
-    function fitSalaries(lineups){
+    async function fitSalaries(lineups){
 
         // Lineups received from most to least expensive
         lineups.forEach(function(lineup){
@@ -152,20 +152,20 @@ const App = () => {
         })
 
         let counter = 0
-
-        console.log(lineups)
         
-        // while(counter < 1 && lineups[0].salary > 50500){
-        //     let indexes = await findAutoCompleteSlotsToSwitch(lineups)
-        //     lineups = await switchAutoCompleteSlots(lineups, indexes)
-        //     counter ++
-        // }
+        while(counter < 2000 && lineups[0].salary > 50000){
+            let indexes = await findAutoCompleteSlotsToSwitch(lineups)
+            lineups = await switchAutoCompleteSlots(lineups, indexes)
+            lineups = orderBy(lineups, 'salary', ['desc'])
+            counter ++
+        }
+        console.log(counter)
 
-        let indexes = findAutoCompleteSlotsToSwitch(lineups)
-        lineups = switchAutoCompleteSlots(lineups, indexes)
+        // let indexes = findAutoCompleteSlotsToSwitch(lineups)
+        // lineups = switchAutoCompleteSlots(lineups, indexes)
         lineups = orderBy(lineups, 'salary', ['desc'])
 
-        console.log(lineups)
+        return lineups
     }
 
     function handleCompleteLineupsClick(){
@@ -201,8 +201,8 @@ const App = () => {
         l = orderBy(l, 'salary', ['desc'])
 
         // console.log(l)
-        fitSalaries(l)
-
+        let swappedLineups = fitSalaries(l)
+        console.log(swappedLineups)
         // Time to reorder ideas
         // 1. Lottery type weighted randomness to take expensive player from expensive lineup but not always most expensive
         // 2. Add locked spots as part of initial lineups to make sure user's selections stay put

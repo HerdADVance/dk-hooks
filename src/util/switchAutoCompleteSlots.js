@@ -3,17 +3,12 @@ import shuffle from 'lodash/shuffle'
 import returnRandomInteger from './returnRandomInteger'
 import areSlotsSwappable from './areSlotsSwappable'
 
-const switchAutoCompleteSlots = (lineups, indexes) => {
+const switchAutoCompleteSlots = async (lineups, indexes) => {
 
 	let firstLineupIndex = indexes.firstLineupIndex
 	let firstRosterIndex = indexes.firstRosterIndex
 	let lastLineupIndex = indexes.lastLineupIndex
 	let lastRosterIndex = indexes.lastRosterIndex
-
-	console.log(firstLineupIndex)
-	console.log(firstRosterIndex)
-	console.log(lastLineupIndex)
-	console.log(lastRosterIndex)
 
 	let firstSlot = lineups[firstLineupIndex].roster[firstRosterIndex]
 	let lastSlot = lineups[lineups.length - lastLineupIndex].roster[lastRosterIndex]
