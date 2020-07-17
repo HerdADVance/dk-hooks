@@ -3,7 +3,7 @@ import shuffle from 'lodash/shuffle'
 import returnRandomInteger from './returnRandomInteger'
 import areSlotsSwappable from './areSlotsSwappable'
 
-const switchAutoCompleteSlots = async (lineups, indexes) => {
+const switchAutoCompleteSlots = (lineups, indexes) => {
 
 	let firstLineupIndex = indexes.firstLineupIndex
 	let firstRosterIndex = indexes.firstRosterIndex

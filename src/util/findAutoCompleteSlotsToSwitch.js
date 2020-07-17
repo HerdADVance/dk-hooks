@@ -1,9 +1,10 @@
 import orderBy from 'lodash/orderBy'
 import shuffle from 'lodash/shuffle'
+import includes from 'lodash/includes'
 import returnRandomInteger from './returnRandomInteger'
 import areSlotsSwappable from './areSlotsSwappable'
 
-const findAutoCompleteSlotsToSwitch = async (lineups) => {
+const findAutoCompleteSlotsToSwitch = (lineups) => {
 
 	// What the main loop will determine
 	let firstLineupIndex = null
@@ -12,15 +13,16 @@ const findAutoCompleteSlotsToSwitch = async (lineups) => {
 	let lastRosterIndex = null
 
 	// Randomizing lineups and roster spot. Looking to take one of the more expensive slots in an expensive lineup and replace it with a cheape slot in cheap lineup
-	let firstLineupIndexes = shuffle([0,1,2,3,4])
-	let firstRosterIndexes = shuffle([0,1,2,3])
-	let lastLineupIndexes = shuffle([1,2,3,4])
-	let lastRosterIndexes = shuffle([5,6,7])
+	let firstLineupIndexes = shuffle([0,1,2,3,4,5])
+	let firstRosterIndexes = shuffle([0,1,2])
+	let lastLineupIndexes = shuffle([1,2,3,4,5])
+	let lastRosterIndexes = shuffle([3,4,5,6,7])
 
 	//function findIndexes(firstLineupIndexes, firstRosterIndexes, lastLineupIndexes, lastRosterIndexes){
 		loop1:
 		for(var i = 0; i < firstLineupIndexes.length; i++){
 			let firstLineupIndex = firstLineupIndexes[i]
+
 			for(var j = 0; j < firstRosterIndexes.length; j++){
 				let firstRosterIndex = firstRosterIndexes[j]
 				
@@ -29,17 +31,30 @@ const findAutoCompleteSlotsToSwitch = async (lineups) => {
 				for(var k = 0; k < lastLineupIndexes.length; k++){
 					let lastLineupIndex = lastLineupIndexes[k]
 					for(var l = 0; l < lastRosterIndexes.length; l++){
-						let lastRosterIndex = lastRosterIndexes[j]
+						let lastRosterIndex = lastRosterIndexes[l]
 
 						let lastSlotToCheck = lineups[lineups.length - lastLineupIndex].roster[lastRosterIndex]
 
-						let swappable = false
-						swappable = areSlotsSwappable(firstSlotToCheck, lastSlotToCheck)
-						if(swappable){
-							return {firstLineupIndex, firstRosterIndex, lastLineupIndex, lastRosterIndex}
+						//console.log(firstSlotToCheck)
+						//console.log(lastSlotToCheck)
 
-							//break loop1
-
+						if(
+							includes(firstSlotToCheck.player.positions, lastSlotToCheck.position) 
+							&& 
+							includes(lastSlotToCheck.player.positions, firstSlotToCheck.position) 
+						){
+							let dupePlayer = false
+							for(var m = 0; m < lineups[firstLineupIndex].roster.length; m++){
+								if(
+									firstSlotToCheck.player.pid == lineups[lastLineupIndex].roster[m].player.pid
+									||
+									lastSlotToCheck.player.pid == lineups[firstLineupIndex].roster[m].player.pid
+								){
+									dupePlayer = true
+									break
+								}
+							}
+							if(!dupePlayer) return {firstLineupIndex, firstRosterIndex, lastLineupIndex, lastRosterIndex}
 						}
 					}
 				}

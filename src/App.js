@@ -135,7 +135,7 @@ const App = () => {
         return lineups
     }
 
-    async function fitSalaries(lineups){
+    function fitSalaries(lineups){
 
         // Lineups received from most to least expensive
         lineups.forEach(function(lineup){
@@ -153,11 +153,13 @@ const App = () => {
 
         let counter = 0
         
-        while(counter < 2000 && lineups[0].salary > 50000){
-            let indexes = await findAutoCompleteSlotsToSwitch(lineups)
-            lineups = await switchAutoCompleteSlots(lineups, indexes)
-            lineups = orderBy(lineups, 'salary', ['desc'])
+        while(counter < 10000 && lineups[0].salary > 50000){
             counter ++
+            let indexes = findAutoCompleteSlotsToSwitch(lineups)
+            if(indexes){
+                lineups = switchAutoCompleteSlots(lineups, indexes)
+                lineups = orderBy(lineups, 'salary', ['desc'])
+            } else break
         }
         console.log(counter)
 
@@ -203,6 +205,9 @@ const App = () => {
         // console.log(l)
         let swappedLineups = fitSalaries(l)
         console.log(swappedLineups)
+        for(var i=0; i < swappedLineups.length; i++){
+            //console.log(swappedLineups[i].roster)
+        }
         // Time to reorder ideas
         // 1. Lottery type weighted randomness to take expensive player from expensive lineup but not always most expensive
         // 2. Add locked spots as part of initial lineups to make sure user's selections stay put
@@ -273,9 +278,9 @@ const App = () => {
             {pid: 14718300, pct: 30},
             {pid: 14718305, pct: 35},
             {pid: 14718307, pct: 10},
-            {pid: 14718310, pct: 5},
+            {pid: 14718310, pct: 20},
             {pid: 14718312, pct: 15},
-            {pid: 14718315, pct: 20},
+            {pid: 14718315, pct: 5},
             {pid: 14718317, pct: 10},
             {pid: 14718325, pct: 10},
             {pid: 14718327, pct: 25},
