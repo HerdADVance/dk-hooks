@@ -3,6 +3,7 @@ import './App.css';
 //import axios from 'axios'
 import pull from 'lodash/pull'
 import orderBy from 'lodash/orderBy'
+import merge from 'lodash/merge'
 
 // DATA
 import POSITIONS from './data/POSITIONS'
@@ -152,16 +153,21 @@ const App = () => {
         })
 
         let counter = 0
+        let lineupsRemoved = []
         
-        while(counter < 10000 && lineups[0].salary > 50000){
+        while(counter < 750 && lineups[0].salary > 50000){
             counter ++
             let indexes = findAutoCompleteSlotsToSwitch(lineups)
             if(indexes){
-                lineups = switchAutoCompleteSlots(lineups, indexes)
+                let loop = switchAutoCompleteSlots(lineups, indexes)
+                lineupsRemoved = merge(lineupsRemoved, loop.lineupsRemoved)
+                lineups = loop.lineups
                 lineups = orderBy(lineups, 'salary', ['desc'])
+                
             } else break
         }
         console.log(counter)
+        console.log(lineupsRemoved)
 
         // let indexes = findAutoCompleteSlotsToSwitch(lineups)
         // lineups = switchAutoCompleteSlots(lineups, indexes)

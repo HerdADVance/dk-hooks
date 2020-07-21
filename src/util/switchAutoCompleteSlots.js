@@ -1,5 +1,6 @@
 import orderBy from 'lodash/orderBy'
 import shuffle from 'lodash/shuffle'
+import removeByIndex from './removeByIndex'
 import returnRandomInteger from './returnRandomInteger'
 import areSlotsSwappable from './areSlotsSwappable'
 
@@ -36,7 +37,22 @@ const switchAutoCompleteSlots = (lineups, indexes) => {
 	lineups[firstLineupIndex].roster = orderBy(lineups[firstLineupIndex].roster, 'player.salary', ['desc'])
 	lineups[lineups.length - lastLineupIndex].roster = orderBy(lineups[lineups.length - lastLineupIndex].roster, 'player.salary', ['desc'])
 
-	return lineups
+
+	// Remove lineups from sorting if they're at 49900 or 50000
+	let lineupsRemoved = []
+	if(lineups[firstLineupIndex].salary > 49800 && lineups[firstLineupIndex].salary < 50100){
+		lineups = removeByIndex(lineups, firstLineupIndex)
+		lineupsRemoved.push(lineups[firstLineupIndex])
+	}
+	if(lineups[lineups.length - lastLineupIndex].salary > 49800 && lineups[lineups.length - lastLineupIndex].salary < 50100){
+		lineups = removeByIndex(lineups, lineups.length - lastLineupIndex)
+		lineupsRemoved.push(lineups[lineups.length - lastLineupIndex])
+	}
+
+	return {
+		lineups,
+		lineupsRemoved
+	}
 }
 
 export default switchAutoCompleteSlots
