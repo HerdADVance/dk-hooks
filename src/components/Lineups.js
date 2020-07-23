@@ -10,7 +10,8 @@ const Lineups = ({ lineups, referencePlayers, handleSlotClick }) => {
             {
             lineups?
                 lineups.map((lineup, index) => (
-                    <Lineup 
+                    <Lineup
+                        key={lineup.id}
                         lineup={lineup}
                         orderNumber={index}
                         referencePlayers={referencePlayers}

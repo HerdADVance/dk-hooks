@@ -38,7 +38,7 @@ const Players = ({ filteredPlayers, numLineups, selectedSlots, handlePlayerActio
 
                         <>
                        
-                        <Player 
+                        <Player
                             player={player}
                             numLineups={numLineups}
                             handlePlayerClick={handlePlayerClick}

@@ -4,6 +4,7 @@ import includes from 'lodash/includes'
 import uniq from 'lodash/uniq'
 import returnRandomInteger from './returnRandomInteger'
 import areSlotsSwappable from './areSlotsSwappable'
+import returnRandomLineupIndexes from './returnRandomLineupIndexes'
 
 const findAutoCompleteSlotsToSwitch = (lineups) => {
 
@@ -14,9 +15,9 @@ const findAutoCompleteSlotsToSwitch = (lineups) => {
 	let lastRosterIndex = null
 
 	// Randomizing lineups and roster spot. Looking to take one of the more expensive slots in an expensive lineup and replace it with a cheape slot in cheap lineup
-	let firstLineupIndexes = uniq(shuffle([0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,5,5,5,5,6,6,6,7,7,8]))
+	let firstLineupIndexes = returnRandomLineupIndexes(lineups.length, true)
 	let firstRosterIndexes = uniq(shuffle([0,0,0,0,0,0,1,1,1,1,2,2,3]))
-	let lastLineupIndexes = uniq(shuffle([1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,5,5,5,5,6,6,6,7,7,8]))
+	let lastLineupIndexes = returnRandomLineupIndexes(lineups.length, false)
 	let lastRosterIndexes = uniq(shuffle([7,7,7,7,7,7,6,6,6,6,5,5,4]))
 
 	//function findIndexes(firstLineupIndexes, firstRosterIndexes, lastLineupIndexes, lastRosterIndexes){
@@ -30,7 +31,10 @@ const findAutoCompleteSlotsToSwitch = (lineups) => {
 				let firstSlotToCheck = lineups[firstLineupIndex].roster[firstRosterIndex]
 
 				for(var k = 0; k < lastLineupIndexes.length; k++){
+					
 					let lastLineupIndex = lastLineupIndexes[k]
+					if(lineups[firstLineupIndex].id == lineups[lastLineupIndex].id) continue
+					
 					for(var l = 0; l < lastRosterIndexes.length; l++){
 						let lastRosterIndex = lastRosterIndexes[l]
 

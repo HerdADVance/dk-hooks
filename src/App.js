@@ -21,6 +21,7 @@ import findPlayerPositions from './util/findPlayerPositions'
 import calculateLineupSalary from './util/calculateLineupSalary'
 import findAutoCompleteSlotsToSwitch from './util/findAutoCompleteSlotsToSwitch'
 import switchAutoCompleteSlots from './util/switchAutoCompleteSlots'
+import fillEmptySlots from './util/fillEmptySlots'
 
 // COMPONENTS
 import Exposures from './components/Exposures'
@@ -32,7 +33,7 @@ import Lineups from './components/Lineups'
 
 const App = () => {
 
-    const numLineups = 50
+    const numLineups = 40
 
     const [showExposures, setShowExposures] = useState(false)
 
@@ -136,15 +137,15 @@ const App = () => {
         return lineups
     }
 
-    function fitSalaries(lineups){
+    function fitSalaries(l, p){
 
-        // Lineups received from most to least expensive
-        lineups.forEach(function(lineup){
+        // Adding info for each player and sorting roster for each by salary descending
+        l.forEach(function(lineup){
             lineup.roster.forEach(function(slot){
                 const pid = slot.player
-                const salary = findPlayerSalary(players, slot.player)
-                const team = findPlayerTeam(players, slot.player)
-                const positions = findPlayerPositions(players, slot.player)
+                const salary = findPlayerSalary(p, slot.player)
+                const team = findPlayerTeam(p, slot.player)
+                const positions = findPlayerPositions(p, slot.player)
 
                 slot.player = {pid, salary, team, positions}
             })
@@ -155,65 +156,94 @@ const App = () => {
         let counter = 0
         let lineupsRemoved = []
         
-        while(counter < 750 && lineups[0].salary > 50000){
+        while(counter < 5000 && l[0].salary > 50000){
             counter ++
-            let indexes = findAutoCompleteSlotsToSwitch(lineups)
+            let indexes = findAutoCompleteSlotsToSwitch(l)
             if(indexes){
-                let loop = switchAutoCompleteSlots(lineups, indexes)
-                lineupsRemoved = merge(lineupsRemoved, loop.lineupsRemoved)
-                lineups = loop.lineups
-                lineups = orderBy(lineups, 'salary', ['desc'])
+                let instance = switchAutoCompleteSlots(l, indexes)
+                for(var i=0; i < instance.lineupsRemoved.length; i++){
+                    lineupsRemoved.push(instance.lineupsRemoved[i])
+                    //console.log(instance.lineupsRemoved[i])
+                }
+                l = instance.lineups
+                l = orderBy(l, 'salary', ['desc'])
                 
             } else break
         }
+
+        lineupsRemoved = orderBy(lineupsRemoved, 'salary', ['desc'])
+        l = orderBy(l, 'salary', ['desc'])
+
         console.log(counter)
-        console.log(lineupsRemoved)
+        //console.log(lineupsRemoved)
 
-        // let indexes = findAutoCompleteSlotsToSwitch(lineups)
-        // lineups = switchAutoCompleteSlots(lineups, indexes)
-        lineups = orderBy(lineups, 'salary', ['desc'])
-
-        return lineups
+        return {l, lineupsRemoved}
     }
 
     function handleCompleteLineupsClick(){
 
-        let result = {...players}
+        // Getting players, sorting by lineupsIn, converting to array
+        let playersObject = {...players}
+        let p = orderBy(playersObject, 'lineupsIn', ['desc'])
+        
+        // Getting lineups
+        let result = [...lineups]
+        let l = result
 
-        let p = orderBy(result, 'lineupsIn', ['desc'])
-        let l = [...lineups]
-
+        // Figure out how many lineups players need to be in
         p.forEach(function(player){
             player.lineupsNeeded = Math.round( (player.exposure/100 * numLineups) - player.lineupsIn.length)
         })
 
-        p = orderBy(p, 'lineupsNeeded', ['desc'])
+        // Sort players by how many lineups they need to be in
+        p = orderBy(p, ['positions.length', 'lineupsNeeded'], ['asc', 'desc'])
 
+        console.log(p)
+
+        // Place players in lineups
+        let playersStillNeeded = []
         for(var i = 0; i < p.length; i++){
             if(p[i].lineupsNeeded > 0){
                 const toAdd = findLineupsToAdd(p[i].id, p[i].positions, 'random', p[i].lineupsNeeded, l, p[i].lineupsIn)
-                //console.log(toAdd)
+                console.log(toAdd)
                 l = addPlayerToTempLineups(p[i].id, toAdd, l)
-                //addLineupsInToPlayer(p[i].id, toAdd)
-            } else break
+                addLineupsInToPlayer(p[i].id, toAdd)
+
+                if(toAdd.length < p[i].lineupsNeeded){
+                    playersStillNeeded.push({
+                        player: p[i],
+                        numShort: p[i].lineupsNeeded - toAdd.length
+                    })
+                }
+
+                
+            } else continue
         }
 
-        // l.forEach(function(lineup){
-        //     lineup.salary = calculateLineupSalary(lineup.roster, result)
-        // })
+        // Swap until players can get to targeted number without being in same lineup
+        l = fillEmptySlots(l, playersStillNeeded)
 
+
+        // Calculate salary for each lineup
         for(var i = 0; i < l.length; i++){
-            l[i].salary = calculateLineupSalary(l[i].roster, result)
+            l[i].salary = calculateLineupSalary(l[i].roster, playersObject)
         }
 
+        // Order lineups by salaries
         l = orderBy(l, 'salary', ['desc'])
 
-        // console.log(l)
-        let swappedLineups = fitSalaries(l)
+
+        // Start Swapping players in lineup to fit under salary
+        let swappedLineups = fitSalaries(l, playersObject)
         console.log(swappedLineups)
-        for(var i=0; i < swappedLineups.length; i++){
-            //console.log(swappedLineups[i].roster)
+        let salary = 0
+        for(var i=0; i < swappedLineups['l'].length; i++){
+            salary += swappedLineups['l'][i].salary
         }
+        for(var i=0; i < swappedLineups['lineupsRemoved'].length; i++){
+            salary += swappedLineups['lineupsRemoved'][i].salary
+        }
+        console.log(salary)
         // Time to reorder ideas
         // 1. Lottery type weighted randomness to take expensive player from expensive lineup but not always most expensive
         // 2. Add locked spots as part of initial lineups to make sure user's selections stay put
@@ -269,7 +299,7 @@ const App = () => {
             {pid: 14718476, pct: 5},
             {pid: 14718527, pct: 15},
             {pid: 14718255, pct: 15}, // M
-            {pid: 14718257, pct: 20},
+            {pid: 14718257, pct: 25},
             {pid: 14718260, pct: 10},
             {pid: 14718263, pct: 10},
             {pid: 14718266, pct: 15},
@@ -286,7 +316,7 @@ const App = () => {
             {pid: 14718307, pct: 10},
             {pid: 14718310, pct: 20},
             {pid: 14718312, pct: 15},
-            {pid: 14718315, pct: 5},
+            {pid: 14718315, pct: 0},
             {pid: 14718317, pct: 10},
             {pid: 14718325, pct: 10},
             {pid: 14718327, pct: 25},
@@ -408,7 +438,7 @@ const App = () => {
                                     clickedTeam={clickedTeam}
                                 />
                             </div>
-                            <Players 
+                            <Players
                                 filteredPlayers={filteredPlayers}
                                 numLineups={numLineups}
                                 selectedSlots={selectedSlots}
