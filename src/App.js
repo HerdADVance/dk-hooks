@@ -3,7 +3,8 @@ import './App.css';
 //import axios from 'axios'
 import pull from 'lodash/pull'
 import orderBy from 'lodash/orderBy'
-import merge from 'lodash/merge'
+import concat from 'lodash/concat'
+import uniq from 'lodash/uniq'
 
 // DATA
 import POSITIONS from './data/POSITIONS'
@@ -22,6 +23,7 @@ import calculateLineupSalary from './util/calculateLineupSalary'
 import findAutoCompleteSlotsToSwitch from './util/findAutoCompleteSlotsToSwitch'
 import switchAutoCompleteSlots from './util/switchAutoCompleteSlots'
 import fillEmptySlots from './util/fillEmptySlots'
+import convertLineupsToOriginalFormat from './util/convertLineupsToOriginalFormat'
 
 // COMPONENTS
 import Exposures from './components/Exposures'
@@ -33,7 +35,7 @@ import Lineups from './components/Lineups'
 
 const App = () => {
 
-    const numLineups = 40
+    const numLineups = 20
 
     const [showExposures, setShowExposures] = useState(false)
 
@@ -171,13 +173,11 @@ const App = () => {
             } else break
         }
 
-        lineupsRemoved = orderBy(lineupsRemoved, 'salary', ['desc'])
+        console.log(counter)
+        l = concat (l, lineupsRemoved)
         l = orderBy(l, 'salary', ['desc'])
 
-        console.log(counter)
-        //console.log(lineupsRemoved)
-
-        return {l, lineupsRemoved}
+        return l
     }
 
     function handleCompleteLineupsClick(){
@@ -198,14 +198,13 @@ const App = () => {
         // Sort players by how many lineups they need to be in
         p = orderBy(p, ['positions.length', 'lineupsNeeded'], ['asc', 'desc'])
 
-        console.log(p)
-
         // Place players in lineups
         let playersStillNeeded = []
         for(var i = 0; i < p.length; i++){
             if(p[i].lineupsNeeded > 0){
+                
                 const toAdd = findLineupsToAdd(p[i].id, p[i].positions, 'random', p[i].lineupsNeeded, l, p[i].lineupsIn)
-                console.log(toAdd)
+
                 l = addPlayerToTempLineups(p[i].id, toAdd, l)
                 addLineupsInToPlayer(p[i].id, toAdd)
 
@@ -221,7 +220,7 @@ const App = () => {
         }
 
         // Swap until players can get to targeted number without being in same lineup
-        l = fillEmptySlots(l, playersStillNeeded)
+        // l = fillEmptySlots(l, playersStillNeeded)
 
 
         // Calculate salary for each lineup
@@ -232,25 +231,45 @@ const App = () => {
         // Order lineups by salaries
         l = orderBy(l, 'salary', ['desc'])
 
+        // for(var i = 0; i < l.length; i++){
+        //     let arr = []
+        //     for(var j= 0; j < l[i].roster.length; j++){
+        //         arr.push(l[i].roster[j].player)
+        //     }
+        //     console.log(uniq(arr))
+        // }
+
 
         // Start Swapping players in lineup to fit under salary
-        let swappedLineups = fitSalaries(l, playersObject)
-        console.log(swappedLineups)
-        let salary = 0
-        for(var i=0; i < swappedLineups['l'].length; i++){
-            salary += swappedLineups['l'][i].salary
-        }
-        for(var i=0; i < swappedLineups['lineupsRemoved'].length; i++){
-            salary += swappedLineups['lineupsRemoved'][i].salary
-        }
-        console.log(salary)
+        l = fitSalaries(l, playersObject)
+        
+        // console.log(swappedLineups)
+        // let salary = 0
+        // for(var i=0; i < swappedLineups['l'].length; i++){
+        //     salary += swappedLineups['l'][i].salary
+        // }
+        // for(var i=0; i < swappedLineups['lineupsRemoved'].length; i++){
+        //     salary += swappedLineups['lineupsRemoved'][i].salary
+        // }
+        // console.log(salary)
         // Time to reorder ideas
         // 1. Lottery type weighted randomness to take expensive player from expensive lineup but not always most expensive
         // 2. Add locked spots as part of initial lineups to make sure user's selections stay put
 
-        //setLineups(l)
 
-        //console.log(l)
+        for(var i = 0; i < l.length; i++){
+            let arr = []
+            for(var j= 0; j < l[i].roster.length; j++){
+                arr.push(l[i].roster[j].player.pid)
+            }
+            console.log(uniq(arr))
+        }
+
+        result = convertLineupsToOriginalFormat(result, l)
+        
+        
+
+        setLineups(result)
 
     }
 

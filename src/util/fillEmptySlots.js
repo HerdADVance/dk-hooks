@@ -34,7 +34,7 @@ const fillEmptySlots = (lineups, needed) => {
     //     }
     // }
 
-    return lineups
+    //return lineups
 }
 
 export default fillEmptySlots

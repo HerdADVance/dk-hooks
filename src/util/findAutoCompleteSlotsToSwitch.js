@@ -33,7 +33,7 @@ const findAutoCompleteSlotsToSwitch = (lineups) => {
 				for(var k = 0; k < lastLineupIndexes.length; k++){
 					
 					let lastLineupIndex = lastLineupIndexes[k]
-					if(lineups[firstLineupIndex].id == lineups[lastLineupIndex].id) continue
+					if(lineups[firstLineupIndex].id == lineups[lineups.length - lastLineupIndex].id) continue
 					
 					for(var l = 0; l < lastRosterIndexes.length; l++){
 						let lastRosterIndex = lastRosterIndexes[l]
@@ -51,7 +51,7 @@ const findAutoCompleteSlotsToSwitch = (lineups) => {
 							let dupePlayer = false
 							for(var m = 0; m < lineups[firstLineupIndex].roster.length; m++){
 								if(
-									firstSlotToCheck.player.pid == lineups[lastLineupIndex].roster[m].player.pid
+									firstSlotToCheck.player.pid == lineups[lineups.length - lastLineupIndex].roster[m].player.pid
 									||
 									lastSlotToCheck.player.pid == lineups[firstLineupIndex].roster[m].player.pid
 								){
