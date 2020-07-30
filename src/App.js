@@ -5,6 +5,7 @@ import pull from 'lodash/pull'
 import orderBy from 'lodash/orderBy'
 import concat from 'lodash/concat'
 import uniq from 'lodash/uniq'
+import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
 import POSITIONS from './data/POSITIONS'
@@ -35,7 +36,7 @@ import Lineups from './components/Lineups'
 
 const App = () => {
 
-    const numLineups = 20
+    const numLineups = 120
 
     const [showExposures, setShowExposures] = useState(false)
 
@@ -187,37 +188,62 @@ const App = () => {
         let p = orderBy(playersObject, 'lineupsIn', ['desc'])
         
         // Getting lineups
-        let result = [...lineups]
-        let l = result
+        let l = [...lineups]
+        let result = l
+        let lCopy = cloneDeep(l)
 
         // Figure out how many lineups players need to be in
         p.forEach(function(player){
             player.lineupsNeeded = Math.round( (player.exposure/100 * numLineups) - player.lineupsIn.length)
         })
 
-        // Sort players by how many lineups they need to be in
+        // Sort players by how many lineups they need to be in, then clone
         p = orderBy(p, ['positions.length', 'lineupsNeeded'], ['asc', 'desc'])
-
-        // Place players in lineups
+        let pCopy = cloneDeep(p)
+        
+        // Starting to place players in lineups. This array catches any that won't fit
         let playersStillNeeded = []
-        for(var i = 0; i < p.length; i++){
-            if(p[i].lineupsNeeded > 0){
-                
-                const toAdd = findLineupsToAdd(p[i].id, p[i].positions, 'random', p[i].lineupsNeeded, l, p[i].lineupsIn)
 
-                l = addPlayerToTempLineups(p[i].id, toAdd, l)
-                addLineupsInToPlayer(p[i].id, toAdd)
+        // Going to attempt 20 times to fit all players in
+        let attempts = 20
+        for(var h = 0; h < attempts; h++){
+            // Looping through each player
+            for(var i = 0; i < p.length; i++){
+                if(p[i].lineupsNeeded > 0){
+                    
+                    // Finds lineups player should be in
+                    const toAdd = findLineupsToAdd(p[i].id, p[i].positions, 'random', p[i].lineupsNeeded, l, p[i].lineupsIn)
+                    // Changes the lineupsIn property of player in state
+                    addLineupsInToPlayer(p[i].id, toAdd)
+                    // Adds the player to the lineup in state
+                    l = addPlayerToTempLineups(p[i].id, toAdd, l)
 
-                if(toAdd.length < p[i].lineupsNeeded){
-                    playersStillNeeded.push({
-                        player: p[i],
-                        numShort: p[i].lineupsNeeded - toAdd.length
-                    })
-                }
+                    // Push the player into the failed array if necessary
+                    if(toAdd.length < p[i].lineupsNeeded){
+                        playersStillNeeded.push({
+                            player: p[i],
+                            numShort: p[i].lineupsNeeded - toAdd.length
+                        })
+                    }
+                    
+                } else continue
+            }
 
-                
-            } else continue
+            // At least one instance of a player didn't fit so reset and try again (unless last time through)
+            if(playersStillNeeded.length > 0 && h !== attempts - 1){
+                console.log('trying again')
+                p = pCopy
+                l = lCopy
+                playersStillNeeded = []
+            } else break
+
+            console.log(h)
+            
         }
+
+        console.log(p)
+
+
 
         // Swap until players can get to targeted number without being in same lineup
         // l = fillEmptySlots(l, playersStillNeeded)
@@ -257,13 +283,13 @@ const App = () => {
         // 2. Add locked spots as part of initial lineups to make sure user's selections stay put
 
 
-        for(var i = 0; i < l.length; i++){
-            let arr = []
-            for(var j= 0; j < l[i].roster.length; j++){
-                arr.push(l[i].roster[j].player.pid)
-            }
-            console.log(uniq(arr))
-        }
+        // for(var i = 0; i < l.length; i++){
+        //     let arr = []
+        //     for(var j= 0; j < l[i].roster.length; j++){
+        //         arr.push(l[i].roster[j].player.pid)
+        //     }
+        //     console.log(uniq(arr))
+        // }
 
         result = convertLineupsToOriginalFormat(result, l)
         
@@ -317,15 +343,15 @@ const App = () => {
             {pid: 14718448, pct: 20},
             {pid: 14718476, pct: 5},
             {pid: 14718527, pct: 15},
-            {pid: 14718255, pct: 15}, // M
+            {pid: 14718255, pct: 20}, // M
             {pid: 14718257, pct: 25},
             {pid: 14718260, pct: 10},
-            {pid: 14718263, pct: 10},
-            {pid: 14718266, pct: 15},
+            {pid: 14718263, pct: 20},
+            {pid: 14718266, pct: 5},
             {pid: 14718271, pct: 10},
             {pid: 14718276, pct: 15},
             {pid: 14718280, pct: 20},
-            {pid: 14718283, pct: 25},
+            {pid: 14718283, pct: 20},
             {pid: 14718285, pct: 5},
             {pid: 14718288, pct: 5},
             {pid: 14718293, pct: 5},
