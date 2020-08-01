@@ -23,7 +23,7 @@ import findPlayerPositions from './util/findPlayerPositions'
 import calculateLineupSalary from './util/calculateLineupSalary'
 import findAutoCompleteSlotsToSwitch from './util/findAutoCompleteSlotsToSwitch'
 import switchAutoCompleteSlots from './util/switchAutoCompleteSlots'
-import fillEmptySlots from './util/fillEmptySlots'
+import placeAutoCompleteSlots from './util/placeAutoCompleteSlots'
 import convertLineupsToOriginalFormat from './util/convertLineupsToOriginalFormat'
 
 // COMPONENTS
@@ -123,6 +123,15 @@ const App = () => {
 
     }
 
+    function addTempLineupsInToPlayer(pid, toAdd){
+        let result = {...players}
+        toAdd.forEach(function(slot){
+            result[pid].lineupsIn.push(slot.lid)
+        })
+        setPlayers(result)
+
+    }
+
     function addPlayerToLineups(pid, toAdd){
         let result = [...lineups]
         toAdd.forEach(function(slot){
@@ -183,70 +192,27 @@ const App = () => {
 
     function handleCompleteLineupsClick(){
 
-        // Getting players, sorting by lineupsIn, converting to array
+        // Getting players, cloning, sorting by lineupsIn, converting to array
         let playersObject = {...players}
-        let p = orderBy(playersObject, 'lineupsIn', ['desc'])
+        let p = cloneDeep(playersObject)
+        let p = orderBy(p, 'lineupsIn', ['desc'])
         
-        // Getting lineups
-        let l = [...lineups]
-        let result = l
-        let lCopy = cloneDeep(l)
+        // Getting lineups, cloning
+        let lineupsArray = [...lineups]
+        let l = cloneDeep(lineupsArray)
 
         // Figure out how many lineups players need to be in
         p.forEach(function(player){
             player.lineupsNeeded = Math.round( (player.exposure/100 * numLineups) - player.lineupsIn.length)
         })
 
-        // Sort players by how many lineups they need to be in, then clone
+        // Sort players by least position flexible and most lineups needed to be in
         p = orderBy(p, ['positions.length', 'lineupsNeeded'], ['asc', 'desc'])
-        let pCopy = cloneDeep(p)
-        
-        // Starting to place players in lineups. This array catches any that won't fit
-        let playersStillNeeded = []
 
-        // Going to attempt 20 times to fit all players in
-        let attempts = 20
-        for(var h = 0; h < attempts; h++){
-            // Looping through each player
-            for(var i = 0; i < p.length; i++){
-                if(p[i].lineupsNeeded > 0){
-                    
-                    // Finds lineups player should be in
-                    const toAdd = findLineupsToAdd(p[i].id, p[i].positions, 'random', p[i].lineupsNeeded, l, p[i].lineupsIn)
-                    // Changes the lineupsIn property of player in state
-                    addLineupsInToPlayer(p[i].id, toAdd)
-                    // Adds the player to the lineup in state
-                    l = addPlayerToTempLineups(p[i].id, toAdd, l)
+        // Will attempt to exactly place players in num lineups that matches their exposure. 
+        // 3rd arg is number of tries to get perfect before moving on
+        let {p, l} = placeAutoCompleteSlots(p, l, 20)
 
-                    // Push the player into the failed array if necessary
-                    if(toAdd.length < p[i].lineupsNeeded){
-                        playersStillNeeded.push({
-                            player: p[i],
-                            numShort: p[i].lineupsNeeded - toAdd.length
-                        })
-                    }
-                    
-                } else continue
-            }
-
-            // At least one instance of a player didn't fit so reset and try again (unless last time through)
-            if(playersStillNeeded.length > 0 && h !== attempts - 1){
-                console.log('trying again')
-                p = pCopy
-                l = lCopy
-                playersStillNeeded = []
-            } else break
-
-            console.log(h)
-            
-        }
-
-        console.log(p)
-
-
-
-        // Swap until players can get to targeted number without being in same lineup
-        // l = fillEmptySlots(l, playersStillNeeded)
 
 
         // Calculate salary for each lineup
