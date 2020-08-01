@@ -211,8 +211,9 @@ const App = () => {
 
         // Will attempt to exactly place players in num lineups that matches their exposure. 
         // 3rd arg is number of tries to get perfect before moving on
-        let {p, l} = placeAutoCompleteSlots(p, l, 20)
-
+        let placed = placeAutoCompleteSlots(p, l, 20)
+        p = placed.p
+        l = placed.l
 
 
         // Calculate salary for each lineup

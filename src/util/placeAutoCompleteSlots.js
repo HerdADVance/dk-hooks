@@ -1,3 +1,7 @@
+import findLineupsToAdd from './findLineupsToAdd'
+import addLineupsInToTempPlayer from './AddLineupsInToTempPlayer'
+import addPlayerToTempLineups from './addPlayerToTempLineups'
+
 const placeAutoCompleteSlots = (p, l, numTries) => {
 
     // Starting to place players in lineups. This array catches any that won't fit
@@ -14,7 +18,7 @@ const placeAutoCompleteSlots = (p, l, numTries) => {
                 // Finds lineups player should be in
                 const toAdd = findLineupsToAdd(p[i].id, p[i].positions, 'random', p[i].lineupsNeeded, l, p[i].lineupsIn)
                 // Changes the lineupsIn property of player in state
-                addLineupsInToPlayer(p[i].id, toAdd)
+                p[i].lineupsIn = toAdd
                 // Adds the player to the lineup in state
                 l = addPlayerToTempLineups(p[i].id, toAdd, l)
 
@@ -26,19 +30,38 @@ const placeAutoCompleteSlots = (p, l, numTries) => {
                     })
                 }
                 
-            } else continue
+            } else{
+                p[i].lineupsIn = []
+            }
         }
+
+        // HERE. Only need to reset lineups and players-lineupsIn
 
         // At least one instance of a player didn't fit so reset and try again (unless last time through)
         if(playersStillNeeded.length > 0 && h !== numTries){
             console.log('trying again')
-            p = pCopy
-            l = lCopy
+            
             playersStillNeeded = []
+
+            // Reset lineups
+            // Change this to forEach?
+            for(var j = 0; j < l.length; j++){
+                for(var k = 0; k < l[j].roster.length; k++){
+                    l[j].roster[k].player = null  // This will need to work differently if some slots are locked
+                }
+            }
+
         } else break
 
         console.log(h)
         
+    }
+
+    // Need to add what to do if playersStillNeeded has requirements
+
+    return{
+        p,
+        l
     }
 }
 
