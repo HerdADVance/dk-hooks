@@ -2,6 +2,7 @@ import findLineupIndex from './findLineupIndex'
 import findSlotIndex from './findSlotIndex'
 import orderBy from 'lodash/orderBy'
 
+// also need to use this loop to put lineups in to right player
 const convertLineupsToOriginalFormat = (original, filled) => {
 	
 	for(var i = 0; i < original.length; i++){

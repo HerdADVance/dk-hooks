@@ -1,5 +1,4 @@
 import findLineupsToAdd from './findLineupsToAdd'
-import addLineupsInToTempPlayer from './AddLineupsInToTempPlayer'
 import addPlayerToTempLineups from './addPlayerToTempLineups'
 
 const placeAutoCompleteSlots = (p, l, numTries) => {
@@ -12,8 +11,6 @@ const placeAutoCompleteSlots = (p, l, numTries) => {
         // Looping through each player
         for(var i = 0; i < p.length; i++){
             if(p[i].lineupsNeeded > 0){
-                
-                // CHANGE ALL THIS SO STATE DOESN'T CHANGE UNTIL VERY END
 
                 // Finds lineups player should be in
                 const toAdd = findLineupsToAdd(p[i].id, p[i].positions, 'random', p[i].lineupsNeeded, l, p[i].lineupsIn)

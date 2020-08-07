@@ -25,6 +25,7 @@ import findAutoCompleteSlotsToSwitch from './util/findAutoCompleteSlotsToSwitch'
 import switchAutoCompleteSlots from './util/switchAutoCompleteSlots'
 import placeAutoCompleteSlots from './util/placeAutoCompleteSlots'
 import convertLineupsToOriginalFormat from './util/convertLineupsToOriginalFormat'
+import convertPlayersToOriginalFormat from './util/convertPlayersToOriginalFormat'
 
 // COMPONENTS
 import Exposures from './components/Exposures'
@@ -36,7 +37,7 @@ import Lineups from './components/Lineups'
 
 const App = () => {
 
-    const numLineups = 120
+    const numLineups = 40
 
     const [showExposures, setShowExposures] = useState(false)
 
@@ -195,7 +196,7 @@ const App = () => {
         // Getting players, cloning, sorting by lineupsIn, converting to array
         let playersObject = {...players}
         let p = cloneDeep(playersObject)
-        let p = orderBy(p, 'lineupsIn', ['desc'])
+        p = orderBy(p, 'lineupsIn', ['desc'])
         
         // Getting lineups, cloning
         let lineupsArray = [...lineups]
@@ -215,7 +216,6 @@ const App = () => {
         p = placed.p
         l = placed.l
 
-
         // Calculate salary for each lineup
         for(var i = 0; i < l.length; i++){
             l[i].salary = calculateLineupSalary(l[i].roster, playersObject)
@@ -223,6 +223,9 @@ const App = () => {
 
         // Order lineups by salaries
         l = orderBy(l, 'salary', ['desc'])
+
+        //console.log(p)
+        //console.log(l)
 
         // for(var i = 0; i < l.length; i++){
         //     let arr = []
@@ -258,11 +261,15 @@ const App = () => {
         //     console.log(uniq(arr))
         // }
 
-        result = convertLineupsToOriginalFormat(result, l)
-        
-        
+        // Also convert players
+        lineupsArray = convertLineupsToOriginalFormat(lineupsArray, l)
+        playersObject = convertPlayersToOriginalFormat(playersObject, p)
 
-        setLineups(result)
+        console.log(l)
+        console.log(playersObject)
+        
+        setLineups(lineupsArray)
+        setPlayers(playersObject)
 
     }
 
