@@ -1,3 +1,6 @@
+// TODO: Get working with basketball
+// TODO: Account for locked slots before auto complete
+
 import React, { useState, useEffect } from "react";
 import './App.css';
 //import axios from 'axios'
@@ -192,7 +195,7 @@ const App = () => {
         return l
     }
 
-    function handleCompleteLineupsClick(){
+    async function handleCompleteLineupsClick(){
 
         // Getting players, cloning, sorting by lineupsIn, converting to array
         let playersObject = {...players}
@@ -264,11 +267,9 @@ const App = () => {
 
         // Also convert players
         lineupsArray = convertLineupsToOriginalFormat(lineupsArray, l)
+        lineupsArray = orderBy(lineupsArray, 'salary', ['desc'])
         playersObject = convertPlayersToOriginalFormat(playersObject, p)
         playersObject = addLineupsInToPlayerFromLineups(playersObject, l)
-
-        console.log(l)
-        console.log(playersObject)
         
         setLineups(lineupsArray)
         setPlayers(playersObject)

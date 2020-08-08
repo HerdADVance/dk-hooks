@@ -1,7 +1,5 @@
 
 const convertPlayersToOriginalFormat = (playersObject, p) => {
-
-	console.log(p)
 	
 	for(var i = 0; i < p.length; i++){
 
