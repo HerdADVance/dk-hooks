@@ -26,6 +26,7 @@ import switchAutoCompleteSlots from './util/switchAutoCompleteSlots'
 import placeAutoCompleteSlots from './util/placeAutoCompleteSlots'
 import convertLineupsToOriginalFormat from './util/convertLineupsToOriginalFormat'
 import convertPlayersToOriginalFormat from './util/convertPlayersToOriginalFormat'
+import addLineupsInToPlayerFromLineups from './util/addLineupsInToPlayerFromLineups'
 
 // COMPONENTS
 import Exposures from './components/Exposures'
@@ -264,6 +265,7 @@ const App = () => {
         // Also convert players
         lineupsArray = convertLineupsToOriginalFormat(lineupsArray, l)
         playersObject = convertPlayersToOriginalFormat(playersObject, p)
+        playersObject = addLineupsInToPlayerFromLineups(playersObject, l)
 
         console.log(l)
         console.log(playersObject)

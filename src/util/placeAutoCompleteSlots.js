@@ -14,8 +14,8 @@ const placeAutoCompleteSlots = (p, l, numTries) => {
 
                 // Finds lineups player should be in
                 const toAdd = findLineupsToAdd(p[i].id, p[i].positions, 'random', p[i].lineupsNeeded, l, p[i].lineupsIn)
-                // Changes the lineupsIn property of player in state
-                p[i].lineupsIn = toAdd
+                // Changes the lineupsIn property of player in state (removing this for now because it's irrelevant until the end)
+                // p[i].lineupsIn = toAdd
                 // Adds the player to the lineup in state
                 l = addPlayerToTempLineups(p[i].id, toAdd, l)
 
@@ -28,7 +28,8 @@ const placeAutoCompleteSlots = (p, l, numTries) => {
                 }
                 
             } else{
-                p[i].lineupsIn = []
+                // Remove this for now (see above) because also irrelevant
+                // p[i].lineupsIn = []
             }
         }
 
