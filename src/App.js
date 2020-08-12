@@ -1,5 +1,11 @@
-// TODO: Get working with basketball
-// TODO: Account for locked slots before auto complete
+// Seed exposures for basketball
+// Make sure options like defender in util only taken away for basketball
+// Account for exposure percentages not being whole numbers
+// Fix games display
+// Account for locked slots before auto complete
+// Lineup bottom row only green if all slots filled
+// Sort final lineups by time before converting to spreadsheet
+// Convert to spreadsheet
 
 import React, { useState, useEffect } from "react";
 import './App.css';
@@ -11,12 +17,12 @@ import uniq from 'lodash/uniq'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import POSITIONS from './data/POSITIONS'
-import PLAYERS from './data/PLAYERS'
+import POSITIONS from './data/POSITIONSBB'
+import PLAYERS from './data/PLAYERSBB'
 
 // UTILS
-import makeLineups from './util/makeLineups'
-import initializePlayersAndGames from './util/initializePlayersAndGames'
+import makeLineups from './util/makeLineupsBB'
+import initializePlayersAndGames from './util/initializePlayersAndGamesBB'
 import findLineupsToAdd from './util/findLineupsToAdd'
 import findLineupIndex from './util/findLineupIndex'
 import findPlayerIndex from './util/findPlayerIndex'

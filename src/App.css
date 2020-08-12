@@ -69,12 +69,12 @@ button{
   float: left;
   min-height: 100%;
   position: fixed;
-  width: 49.5%;
+  width: 40%;
 }
 .lineups{
   color: #FFF;
   float: right;
-  width: 49.5%;
+  width: 59%;
 }
 .list-wrap{
   clear: both;
@@ -150,7 +150,7 @@ button{
 }
 
 .game span.selected{
-  background: steelblue;
+  background: #9AE200;
 }
 
 .players-wrap{
@@ -163,10 +163,12 @@ button{
 
 /* PLAYERS TABLE ROWS AND CELLS */
 .players th{
-  background: hotpink;
+  background: #333;
+  border-top: 1px solid white;
   color: white;
   font-size: 14px;
   padding: 10px 1px;
+  position: sticky;
 }
 .players tr{
   background: #FFF;
@@ -471,4 +473,27 @@ tr.player td.gameinfo{
 .SVW{background: darkgreen; color: white !important;}
 .SCP{background: black; color: dodgerblue !important;}
 .SCF{background: red; color: black !important;}
+
+/* NBA TEAMS */
+.LAL{background: #f7b63e; color: #542e84 !important;}
+.LAC{background: white; color: #d63f3d !important;}
+.HOU{background: #cd3b2c; color: white !important;}
+.OKC{background: #ee5032; color: #002d62 !important;}
+.ORL{background: black; color: #1d72bc !important;}
+.TOR{background: #be3734; color: black !important;}
+.SA{background: #8c8e8c; color: black !important;}
+.BOS{background: #387a33; color: white !important;}
+.NO{background: #bc9a5b; color: #0b1e3c !important;}
+.POR{background: black; color: #c43a3c !important;}
+.WAS{background: #042244; color: #cd3c2c!important;}
+.BKN{background: black; color: white !important;}
+.PHI{background: #043ea4; color: #d63f34 !important;}
+.MEM{background: #7c9ac4; color: #0c223c !important;}
+.SAC{background: #542e7b; color: #94969b !important;}
+.{background: ; color: !important;}
+.{background: ; color: !important;}
+.{background: ; color: !important;}
+.{background: ; color: !important;}
+.{background: ; color: !important;}
+.{background: ; color: !important;}
 

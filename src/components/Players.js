@@ -29,8 +29,6 @@ const Players = ({ filteredPlayers, numLineups, selectedSlots, handlePlayerActio
                 <th>Salary</th>
                 <th>Currently In</th>
                 <th>Target</th>
-                <th>PPG</th>
-                <th>Game</th>
             </tr></thead><tbody>
                 {
                 filteredPlayers?

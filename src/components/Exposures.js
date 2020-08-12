@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import orderBy from 'lodash/orderBy'
 
 // DATA
-import EXPOSUREOPTIONS from '../data/EXPOSUREOPTIONS'
+import EXPOSUREOPTIONS from '../data/EXPOSUREOPTIONSBB'
 
 // UTIL
 import findExposureGroupIndex from '../util/findExposureGroupIndex'
@@ -44,9 +44,9 @@ const Exposures = ({ players, handleExposureChange, numLineups }) => {
             group.players.forEach(function(player){
                 let salary = (player.exposure * player.salary / 100)
                 let exposure = parseInt(player.exposure)
-                if (player.positions.length > 2){
-                    salary = salary * 0.5
-                    exposure = exposure * 0.5
+                if (player.actualPositions.length > 1){
+                    salary = salary * (1 / (player.actualPositions.length))
+                    exposure = exposure * (1 / (player.actualPositions.length))
                 }
                 salaryTotal  += salary
                 exposureTotal += exposure
