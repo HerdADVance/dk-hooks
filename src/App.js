@@ -4,9 +4,12 @@
 // Fix games display
 // Remove from X lineups button
 // Account for locked slots before auto complete
-// Lineup bottom row only green if all slots filled
 // Sort final lineups by time before converting to spreadsheet
 // Convert to spreadsheet
+
+// Correlations
+// Limit number of players on team in one lineup
+// Target stacks
 
 import React, { useState, useEffect } from "react";
 import './App.css';
