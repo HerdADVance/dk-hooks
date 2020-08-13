@@ -3,16 +3,20 @@ import React, { useState, useEffect } from 'react';
 const Lineup = ({ lineup, orderNumber, referencePlayers, handleSlotClick }) => {
 
     const [salary, setSalary] = useState(0)
+    const [isFull, setIsFull] = useState(false)
 
     // Do salary math
     useEffect(() => {
 
         let total = 0
+        let isFull = true
         lineup.roster.forEach(function(slot){
-            if(slot.player) total += referencePlayers[slot.player].salary
+            if(slot.player)total += referencePlayers[slot.player].salary
+                else isFull = false
         })
 
         setSalary(total)
+        setIsFull(isFull)
 
 
     }, [JSON.stringify(lineup.roster)]) // is there a better way to catch updates than stringify?
@@ -47,7 +51,7 @@ const Lineup = ({ lineup, orderNumber, referencePlayers, handleSlotClick }) => {
             ))
             }
 
-            <tr className={"total " + (salary > 50000 ? 'negative' : 'positive') }>
+            <tr className={"total " + (salary > 50000 ? 'negative' : (isFull && salary <= 50000 ? 'positive' : '') ) }>
                 <td colSpan="2">Remaining: {50000 - salary}</td>
                 <td colSpan="2">{salary}</td>
             </tr>
