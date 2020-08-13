@@ -19,7 +19,7 @@ const ExposureTotals = ({ exposureGroups, numLineups }) => {
 
         exposureGroups.forEach(function(group){
             salaryTotal += group.salaryTotal
-            exposureTotal += parseInt(group.exposureTotal)
+            exposureTotal += group.exposureTotal
         })
 
         setTotalSalary(salaryTotal)

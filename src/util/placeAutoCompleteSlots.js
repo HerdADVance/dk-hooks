@@ -5,8 +5,9 @@ const placeAutoCompleteSlots = (p, l, numTries) => {
 
     // Starting to place players in lineups. This array catches any that won't fit
     let playersStillNeeded = []
+    numTries = 1
 
-    // Going to attempt 20 times to fit all players in
+    // Going to attempt {numTries} times to fit all players in
     for(var h = 0; h < numTries; h++){
         // Looping through each player
         for(var i = 0; i < p.length; i++){
@@ -35,19 +36,38 @@ const placeAutoCompleteSlots = (p, l, numTries) => {
 
         // HERE. Only need to reset lineups and players-lineupsIn
 
-        // At least one instance of a player didn't fit so reset and try again (unless last time through)
-        if(playersStillNeeded.length > 0 && h !== numTries){
-            console.log('trying again')
-            
-            playersStillNeeded = []
+        
 
-            // Reset lineups
-            // Change this to forEach?
+        // At least one instance of a player didn't fit so reset and try again (unless last time through)
+        if(playersStillNeeded.length > 0){
+            console.log('slots still open')
+
+            let slotsStillOpen = []
             for(var j = 0; j < l.length; j++){
                 for(var k = 0; k < l[j].roster.length; k++){
-                    l[j].roster[k].player = null  // This will need to work differently if some slots are locked
+                    if(!l[j].roster[k].player){
+                        console.log('adding open slot to list')
+                        slotsStillOpen.push({
+                            lid: l[j].id,
+                            sid: l[j].roster[k].id,
+                            pos: l[j].roster[k].position
+                        })
+                    }
                 }
             }
+
+            console.log(playersStillNeeded)
+            console.log(slotsStillOpen)
+
+            // Reset lineups and PlayersNeeded
+            // Change this to forEach?
+            // for(var j = 0; j < l.length; j++){
+            //     for(var k = 0; k < l[j].roster.length; k++){
+            //         l[j].roster[k].player = null  // This will need to work differently if some slots are locked
+            //     }
+            // }
+
+            // playersStillNeeded = []
 
         } else break
 
