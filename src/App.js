@@ -1,4 +1,5 @@
-// Seed exposures for basketball
+// Fill in all auto complete slots before sorting salaries
+// Fix weird number thingy
 // Make sure options like defender in util only taken away for basketball
 // Account for exposure percentages not being whole numbers
 // Fix games display
@@ -21,8 +22,10 @@ import uniq from 'lodash/uniq'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import POSITIONS from './data/POSITIONSBB'
 import PLAYERS from './data/PLAYERSBB'
+import POSITIONS from './data/POSITIONSBB'
+import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSBB'
+import EXPOSUREOPTIONSBBCLONE from './data/EXPOSUREOPTIONSBBCLONE'
 
 // UTILS
 import makeLineups from './util/makeLineupsBB'
@@ -40,6 +43,7 @@ import placeAutoCompleteSlots from './util/placeAutoCompleteSlots'
 import convertLineupsToOriginalFormat from './util/convertLineupsToOriginalFormat'
 import convertPlayersToOriginalFormat from './util/convertPlayersToOriginalFormat'
 import addLineupsInToPlayerFromLineups from './util/addLineupsInToPlayerFromLineups'
+import findExposureGroupIndex from './util/findExposureGroupIndex'
 
 // SEEDERS
 import SOCCERSEEDER from './seeders/SOCCERSEEDER'
@@ -220,10 +224,21 @@ const App = () => {
         let lineupsArray = [...lineups]
         let l = cloneDeep(lineupsArray)
 
-        // Figure out how many lineups players need to be in
+        // Getting Exposure Groups (not synced to actual - just to use to count totals bewlow)
+        let e = EXPOSUREOPTIONSBBCLONE.groups
+
+
         p.forEach(function(player){
+            // Figure out how many lineups players need to be in
             player.lineupsNeeded = Math.round( (player.exposure/100 * numLineups) - player.lineupsIn.length)
+            
+            // Count the totals for the exposure groups
+            player.actualPositions.forEach(function(actualPosition){
+                let index = findExposureGroupIndex(actualPosition, e)
+                e[index].exposureTotal += (player.exposure/player.actualPositions.length)
+            })
         })
+
 
         // Sort players by least position flexible and most lineups needed to be in
         p = orderBy(p, ['positions.length', 'lineupsNeeded'], ['asc', 'desc'])
