@@ -241,11 +241,11 @@ const App = () => {
 
 
         // Sort players by least position flexible and most lineups needed to be in
-        p = orderBy(p, ['positions.length', 'lineupsNeeded'], ['asc', 'desc'])
+        //p = orderBy(p, ['positions.length', 'lineupsNeeded'], ['asc', 'desc'])
 
         // Will attempt to exactly place players in num lineups that matches their exposure. 
         // 3rd arg is number of tries to get perfect before moving on
-        let placed = placeAutoCompleteSlots(p, l, 20)
+        let placed = placeAutoCompleteSlots(p, l, e, 20)
         p = placed.p
         l = placed.l
 

@@ -1,7 +1,20 @@
 import findLineupsToAdd from './findLineupsToAdd'
 import addPlayerToTempLineups from './addPlayerToTempLineups'
+import orderBy from 'lodash/orderBy'
+import sortBy from 'lodash/sortBy'
 
-const placeAutoCompleteSlots = (p, l, numTries) => {
+const placeAutoCompleteSlots = (p, l, e, numTries) => {
+
+    console.log(e)
+
+    e = orderBy(e, ['exposureTotal'], ['asc'])
+    p = orderBy(p, ['positions.length', 'lineupsNeeded'], ['asc', 'desc'])
+
+    p = sortBy(p, function(item){
+      return e.indexOf(item.name)
+    });
+
+    console.log(p)
 
     // Starting to place players in lineups. This array catches any that won't fit
     let playersStillNeeded = []
