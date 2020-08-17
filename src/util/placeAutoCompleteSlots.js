@@ -5,16 +5,23 @@ import sortBy from 'lodash/sortBy'
 
 const placeAutoCompleteSlots = (p, l, e, numTries) => {
 
-    console.log(e)
-
     e = orderBy(e, ['exposureTotal'], ['asc'])
     p = orderBy(p, ['positions.length', 'lineupsNeeded'], ['asc', 'desc'])
 
-    p = sortBy(p, function(item){
-      return e.indexOf(item.name)
-    });
-
     console.log(p)
+
+    let sortedPlayers = []
+    for(var i = 0; i < e.length; i++){
+        for(var j = 0; j < p.length; j++){
+            if(e[i].name == p[j].position){
+                sortedPlayers.push(p[j])
+                // pop player
+            }
+            // restart with players with more than 1 position but also 1st position
+        }
+    }
+
+    console.log(sortedPlayers)
 
     // Starting to place players in lineups. This array catches any that won't fit
     let playersStillNeeded = []
