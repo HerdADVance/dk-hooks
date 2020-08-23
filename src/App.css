@@ -479,7 +479,7 @@ tr.player td.gameinfo{
 .LAC{background: white; color: #d63f3d !important;}
 .HOU{background: #cd3b2c; color: white !important;}
 .OKC{background: #ee5032; color: #002d62 !important;}
-.ORL{background: black; color: #1d72bc !important;}
+.ORL{background: #222; color: #1d72bc !important;}
 .TOR{background: #be3734; color: black !important;}
 .SA{background: #8c8e8c; color: black !important;}
 .BOS{background: #387a33; color: white !important;}
@@ -490,8 +490,9 @@ tr.player td.gameinfo{
 .PHI{background: #043ea4; color: #d63f34 !important;}
 .MEM{background: #7c9ac4; color: #0c223c !important;}
 .SAC{background: #542e7b; color: #94969b !important;}
-.{background: ; color: !important;}
-.{background: ; color: !important;}
+.UTA{background: #0c2240; color: #f5a231 !important;}
+.DAL{background: #247dc5; color: #bababa !important;}
+.DEN{background: #f8bb32; color: #458ecc !important;}
 .{background: ; color: !important;}
 .{background: ; color: !important;}
 .{background: ; color: !important;}
