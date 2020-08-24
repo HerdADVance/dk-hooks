@@ -22,7 +22,7 @@ import uniq from 'lodash/uniq'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import PLAYERS from './data/PLAYERSBB'
+import PLAYERS from './data/PLAYERSBB824'
 import POSITIONS from './data/POSITIONSBB'
 import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSBB'
 import EXPOSUREOPTIONSBBCLONE from './data/EXPOSUREOPTIONSBBCLONE'
@@ -59,7 +59,7 @@ import Lineups from './components/Lineups'
 
 const App = () => {
 
-    const numLineups = 40
+    const numLineups = 80
 
     const [showExposures, setShowExposures] = useState(false)
 
@@ -305,6 +305,19 @@ const App = () => {
 
     }
 
+    function handleExportLineupsClick(){
+        let l = [...lineups]
+        let output = 'PG,SG,SF,PF,C,G,F,UTIL\n'
+        for(var i = 0; i < lineups.length; i++){
+            for(var j = 0; j < lineups[i].roster.length; j++){
+                output += lineups[i].roster[j].player
+                if(j != lineups[i].roster.length - 1) output += ','
+            }
+            output += '\n'
+        }
+        console.log(output)
+    }
+
     function handleExposureChange(pid, pct){
         let result = {...players}
         result[pid].exposure = pct
@@ -412,6 +425,7 @@ const App = () => {
                 <button onClick={handleSwitchViewClick}>Switch View</button>
                 <button onClick={handleSeedExposuresClick}>Seed Exposures</button>
                 <button onClick={handleCompleteLineupsClick}>Complete Lineups</button>
+                <button onClick={handleExportLineupsClick}>Export Lineups</button>
             </div>
 
             {showExposures ?

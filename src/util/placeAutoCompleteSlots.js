@@ -19,7 +19,7 @@ const placeAutoCompleteSlots = (origP, l, e, numTries) => {
     }
 
     // Starting to place players in lineups. This array catches any that won't fit
-    numTries = 10
+    numTries = 50
     let p = []
 
     // Going to attempt {numTries} times to fit all players in
@@ -179,6 +179,7 @@ const placeAutoCompleteSlots = (origP, l, e, numTries) => {
     }
 
     // Need to add what to do if playersStillNeeded has requirements
+    // Look in other lineups for player to switch to empty slot
 
     return{
         p,

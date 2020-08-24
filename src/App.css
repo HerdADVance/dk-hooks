@@ -476,10 +476,10 @@ tr.player td.gameinfo{
 
 /* NBA TEAMS */
 .LAL{background: #f7b63e; color: #542e84 !important;}
-.LAC{background: white; color: #d63f3d !important;}
+.LAC{background: #EEE; color: #d63f3d !important;}
 .HOU{background: #cd3b2c; color: white !important;}
 .OKC{background: #ee5032; color: #002d62 !important;}
-.ORL{background: #222; color: #1d72bc !important;}
+.ORL{background: #030e1a; color: #1d72bc !important;}
 .TOR{background: #be3734; color: black !important;}
 .SA{background: #8c8e8c; color: black !important;}
 .BOS{background: #387a33; color: white !important;}
@@ -493,8 +493,8 @@ tr.player td.gameinfo{
 .UTA{background: #0c2240; color: #f5a231 !important;}
 .DAL{background: #247dc5; color: #bababa !important;}
 .DEN{background: #f8bb32; color: #458ecc !important;}
-.{background: ; color: !important;}
-.{background: ; color: !important;}
-.{background: ; color: !important;}
+.MIL{background: #1e471c; color: #eee1c6  !important;}
+.IND{background: #002d62; color: #f9c433 !important;}
+.MIA{background: #992b2e; color: #f49f31 !important;}
 .{background: ; color: !important;}
 
