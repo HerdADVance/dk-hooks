@@ -1,11 +1,10 @@
 // Fill in all auto complete slots before sorting salaries
-// Fix weird number thingy
 // Make sure options like defender in util only taken away for basketball
 // Account for exposure percentages not being whole numbers
 // Fix games display
 // Remove from X lineups button
 // Account for locked slots before auto complete
-// Sort Players table by any column
+// Sort Players table by any column (need to convert players to array to do this)
 // Sort final lineups by time before converting to spreadsheet
 
 // Correlations
@@ -386,6 +385,10 @@ const App = () => {
         }
     }
 
+    function handleSortPlayersClick(category){
+        console.log(category)
+    }
+
     function handleSwitchViewClick(){
         setShowExposures(!showExposures)
     }
@@ -480,6 +483,7 @@ const App = () => {
                                 selectedSlots={selectedSlots}
                                 handlePlayerActionClick={handlePlayerActionClick}
                                 handlePlayerAddToSelectedClick={handlePlayerAddToSelectedClick}
+                                handleSortPlayersClick={handleSortPlayersClick}
                             />
 
                         </div>

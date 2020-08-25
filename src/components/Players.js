@@ -3,7 +3,14 @@ import React, { useState } from "react";
 import Player from './Player'
 import ClickedPlayer from './ClickedPlayer'
 
-const Players = ({ filteredPlayers, numLineups, selectedSlots, handlePlayerActionClick, handlePlayerAddToSelectedClick }) => {
+const Players = ({ 
+    filteredPlayers, 
+    numLineups, 
+    selectedSlots, 
+    handlePlayerActionClick, 
+    handlePlayerAddToSelectedClick,
+    handleSortPlayersClick 
+}) => {
 
     const [clickedPlayer, setClickedPlayer] = useState(null)
     const [randomValue, setRandomValue] = useState(false)
@@ -23,12 +30,12 @@ const Players = ({ filteredPlayers, numLineups, selectedSlots, handlePlayerActio
                                     
             <table className="players clickable">
             <thead><tr>
-                <th>Pos</th>
-                <th>Player</th>
-                <th>Team</th>
-                <th>Salary</th>
-                <th>Currently In</th>
-                <th>Target</th>
+                <th onClick={() => handleSortPlayersClick('position')}>Pos</th>
+                <th onClick={() => handleSortPlayersClick('player')}>Player</th>
+                <th onClick={() => handleSortPlayersClick('team')}>Team</th>
+                <th onClick={() => handleSortPlayersClick('salary')}>Salary</th>
+                <th onClick={() => handleSortPlayersClick('lineupsIn')}>Currently In</th>
+                <th onClick={() => handleSortPlayersClick('exposure')}>Target</th>
             </tr></thead><tbody>
                 {
                 filteredPlayers?
