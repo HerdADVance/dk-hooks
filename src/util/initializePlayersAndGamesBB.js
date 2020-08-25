@@ -1,5 +1,6 @@
 import includes from 'lodash/includes'
 import orderBy from 'lodash/orderBy'
+import extractDateFromGameInfo from './extractDateFromGameInfo'
 
 const initializePlayers = (players) => {
 
@@ -20,6 +21,7 @@ const initializePlayers = (players) => {
 		formattedPlayer.team = player.TeamAbbrev
 		formattedPlayer.salary = player.Salary
 		formattedPlayer.gameInfo = player['Game Info']
+		formattedPlayer.date = extractDateFromGameInfo(player['Game Info'])
 		formattedPlayer.ppg = player.AvgPointsPerGame
 		formattedPlayer.lineupsIn = []
 		formattedPlayer.exposure = 0

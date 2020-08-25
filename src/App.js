@@ -6,6 +6,7 @@
 // Account for locked slots before auto complete
 // Sort Players table by any column (need to convert players to array to do this)
 // Sort final lineups by time before converting to spreadsheet
+// Extract dates at initialization for non-BB sports
 
 // Correlations
 // Limit number of players on team in one lineup
@@ -332,6 +333,12 @@ const App = () => {
         return output
     }
 
+    function handleExportLineupsClickTest(){
+        let l = [...lineups]
+        let p = {...players}
+        l = optimizeLineupStartTimes(l, p)
+    }
+
     function handleExposureChange(pid, pct){
         let result = {...players}
         result[pid].exposure = pct
@@ -443,6 +450,7 @@ const App = () => {
                 <button onClick={handleSwitchViewClick}>Switch View</button>
                 <button onClick={handleSeedExposuresClick}>Seed Exposures</button>
                 <button onClick={handleCompleteLineupsClick}>Complete Lineups</button>
+                <button onClick={handleExportLineupsClickTest}>Export Test</button>
                 <DownloadLink
                     label="Export Lineups"
                     filename="dk-lineups.csv"
