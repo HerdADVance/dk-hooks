@@ -18,6 +18,7 @@ const ExposureTotals = ({ exposureGroups, numLineups }) => {
         let exposureTotal = 0
 
         exposureGroups.forEach(function(group){
+            console.log(parseFloat(group.exposureTotal))
             salaryTotal += group.salaryTotal
             exposureTotal += group.exposureTotal
         })

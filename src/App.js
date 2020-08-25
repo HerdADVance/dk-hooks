@@ -5,16 +5,20 @@
 // Fix games display
 // Remove from X lineups button
 // Account for locked slots before auto complete
+// Sort Players table by any column
 // Sort final lineups by time before converting to spreadsheet
-// Convert to spreadsheet
 
 // Correlations
 // Limit number of players on team in one lineup
 // Target stacks
 
+// PACKAGES
 import React, { useState, useEffect } from "react";
 import './App.css';
 //import axios from 'axios'
+import DownloadLink from "react-download-link";
+
+// LODASH
 import pull from 'lodash/pull'
 import orderBy from 'lodash/orderBy'
 import concat from 'lodash/concat'
@@ -22,7 +26,7 @@ import uniq from 'lodash/uniq'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import PLAYERS from './data/PLAYERSBB824'
+import PLAYERS from './data/PLAYERSBB'
 import POSITIONS from './data/POSITIONSBB'
 import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSBB'
 import EXPOSUREOPTIONSBBCLONE from './data/EXPOSUREOPTIONSBBCLONE'
@@ -44,6 +48,7 @@ import convertLineupsToOriginalFormat from './util/convertLineupsToOriginalForma
 import convertPlayersToOriginalFormat from './util/convertPlayersToOriginalFormat'
 import addLineupsInToPlayerFromLineups from './util/addLineupsInToPlayerFromLineups'
 import findExposureGroupIndex from './util/findExposureGroupIndex'
+import optimizeLineupStartTimes from './util/optimizeLineupStartTimes'
 
 // SEEDERS
 import SOCCERSEEDER from './seeders/SOCCERSEEDER'
@@ -307,7 +312,16 @@ const App = () => {
 
     function handleExportLineupsClick(){
         let l = [...lineups]
-        let output = 'PG,SG,SF,PF,C,G,F,UTIL\n'
+        let output = ''
+
+        l = optimizeLineupStartTimes(l)
+
+        for(var i = 0; i < POSITIONS.length; i++){
+            output += POSITIONS[i]
+            if(i != POSITIONS.length - 1) output += ','
+            else output += '\n'
+        }
+        
         for(var i = 0; i < lineups.length; i++){
             for(var j = 0; j < lineups[i].roster.length; j++){
                 output += lineups[i].roster[j].player
@@ -316,6 +330,7 @@ const App = () => {
             output += '\n'
         }
         console.log(output)
+        return output
     }
 
     function handleExposureChange(pid, pct){
@@ -425,7 +440,12 @@ const App = () => {
                 <button onClick={handleSwitchViewClick}>Switch View</button>
                 <button onClick={handleSeedExposuresClick}>Seed Exposures</button>
                 <button onClick={handleCompleteLineupsClick}>Complete Lineups</button>
-                <button onClick={handleExportLineupsClick}>Export Lineups</button>
+                <DownloadLink
+                    label="Export Lineups"
+                    filename="dk-lineups.csv"
+                    tagName="button"
+                    exportFile={() => Promise.resolve(handleExportLineupsClick())}
+                />
             </div>
 
             {showExposures ?

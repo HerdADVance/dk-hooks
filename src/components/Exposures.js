@@ -42,11 +42,11 @@ const Exposures = ({ players, handleExposureChange, numLineups }) => {
             let salaryTotal = 0
             let exposureTotal = 0
             group.players.forEach(function(player){
-                let salary = (player.exposure * player.salary / 100)
-                let exposure = player.exposure
+                let salary = parseFloat((player.exposure * player.salary / 100))
+                let exposure = parseFloat(player.exposure)
                 if (player.actualPositions.length > 1){
-                    salary = salary * (1 / (player.actualPositions.length))
-                    exposure = exposure * (1 / (player.actualPositions.length))
+                    salary = parseFloat(salary * (1 / (player.actualPositions.length)))
+                    exposure = parseFloat(exposure * (1 / (player.actualPositions.length)))
                 }
                 salaryTotal  += salary
                 exposureTotal += exposure
