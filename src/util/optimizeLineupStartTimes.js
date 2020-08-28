@@ -1,30 +1,52 @@
+import orderBy from 'lodash/orderBy'
 import findPlayerPositions from './findPlayerPositions'
 
 const optimizeLineupStartTimes = (l, p) => {
 
+    // Looping through each lineup
     for(var i = 0; i < l.length; i++){
 
-        let rosterPlayers = []
-        let positions = []
-        let dates = []
+        let emptyRoster = [null, null, null, null, null, null, null, null]
 
+        // Replacing pid in roster.player with full player info
         for(var j = 0; j < l[i].roster.length; j++){
-            let rosterPlayer = p[l[i].roster[j].player]
-            rosterPlayers.push(rosterPlayer)
-            positions.push(rosterPlayer.positions)
-            //08/09/2020 05:00PM ET
-            dates.push(new Date('08/09/2020 12:30'))
+            l[i].roster[j].player = p[l[i].roster[j].player]
         }
 
-        console.log(rosterPlayers)
-        console.log(positions)
-        console.log(dates)
+        // Creating a separate list ordered by date
+        let rosterByDate = orderBy(l[i].roster, 'player.date', ['desc'])
 
-        dates.sort(function compare(a, b) {
-            return a - b
-        });
+        // Looping through list to add order property to actual roster
+        let groups = []
+        let count = -1
+        let lastDate = new Date('1-1-1970')
 
-        console.log(dates)
+        for(var j = 0; j < rosterByDate.length; j++){
+        
+            let sid = rosterByDate[j].id
+            let date = l[i].roster[sid].player.date
+
+            if(lastDate.getTime() !== date.getTime() || j == 0){
+                groups.push([sid])
+                count ++
+            } else groups[groups.length - 1].push(sid)
+
+            l[i].roster[sid].player.orderGroup = count
+
+            lastDate = date
+        }
+
+        console.log(groups)
+        console.log(rosterByDate)
+
+        
+        // Check for double center
+        // Put earliest in util, check to see if viable by:
+            // See if any positions are missing
+            // Start putting most restrictive into emptyRoster slots
+
+
+
 
         if (i === 0) break
 
