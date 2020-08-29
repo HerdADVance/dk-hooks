@@ -26,13 +26,13 @@ import uniq from 'lodash/uniq'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import PLAYERS from './data/PLAYERSBB'
-import POSITIONS from './data/POSITIONSBB'
-import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSBB'
-import EXPOSUREOPTIONSBBCLONE from './data/EXPOSUREOPTIONSBBCLONE'
+import PLAYERS from './data/PLAYERSFB'
+import POSITIONS from './data/POSITIONSFB'
+import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSFB'
+import EXPOSUREOPTIONSCLONE from './data/EXPOSUREOPTIONSFBCLONE'
 
 // UTILS
-import makeLineups from './util/makeLineupsBB'
+import makeLineups from './util/makeLineupsFB'
 import initializePlayersAndGames from './util/initializePlayersAndGamesBB'
 import findLineupsToAdd from './util/findLineupsToAdd'
 import findLineupIndex from './util/findLineupIndex'
@@ -48,7 +48,7 @@ import convertLineupsToOriginalFormat from './util/convertLineupsToOriginalForma
 import convertPlayersToOriginalFormat from './util/convertPlayersToOriginalFormat'
 import addLineupsInToPlayerFromLineups from './util/addLineupsInToPlayerFromLineups'
 import findExposureGroupIndex from './util/findExposureGroupIndex'
-import optimizeLineupStartTimes from './util/optimizeLineupStartTimes'
+import optimizeLineupStartTimes from './util/optimizeLineupStartTimesFB'
 
 // SEEDERS
 import SOCCERSEEDER from './seeders/SOCCERSEEDER'
@@ -230,7 +230,7 @@ const App = () => {
         let l = cloneDeep(lineupsArray)
 
         // Getting Exposure Groups (not synced to actual - just to use to count totals bewlow)
-        let e = EXPOSUREOPTIONSBBCLONE.groups
+        let e = EXPOSUREOPTIONSCLONE.groups
 
 
         p.forEach(function(player){

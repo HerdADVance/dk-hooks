@@ -37,7 +37,7 @@ const switchAutoCompleteSlots = (lineups, indexes) => {
 	lineups[firstLineupIndex].roster = orderBy(lineups[firstLineupIndex].roster, 'player.salary', ['desc'])
 	lineups[lineups.length - lastLineupIndex].roster = orderBy(lineups[lineups.length - lastLineupIndex].roster, 'player.salary', ['desc'])
 
-	// Remove lineups from sorting if they're at 49900 or 50000
+	// Remove lineups from sorting if they're at 50000
 	let lineupsRemoved = []
 	if(lineups[firstLineupIndex].salary > 49900 && lineups[firstLineupIndex].salary < 50100){
 		lineupsRemoved.push(lineups[firstLineupIndex])

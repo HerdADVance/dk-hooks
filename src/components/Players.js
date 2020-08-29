@@ -16,7 +16,6 @@ const Players = ({
     const [randomValue, setRandomValue] = useState(false)
 
     function handlePlayerClick(id) {
-        console.log(id)
         setClickedPlayer(id)
     }
 

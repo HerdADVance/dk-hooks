@@ -41,7 +41,7 @@ const Lineup = ({ lineup, orderNumber, referencePlayers, handleSlotClick }) => {
                         <>
                         <td>{referencePlayers[slot.player].name}</td>
                         <td className={`team ${referencePlayers[slot.player].team}`}>{referencePlayers[slot.player].team}</td>
-                        <td>{referencePlayers[slot.player].actualPositions}</td>
+                        <td>{referencePlayers[slot.player].salary}</td>
                         </>
                     :
                         <><td></td><td></td><td></td></>

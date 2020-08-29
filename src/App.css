@@ -125,7 +125,7 @@ button{
 .game{
   border-right: 1px solid #CCC;
   float: left;
-  width: 33.3333%;
+  width: 25%;
 }
 .game span{
   background: #333;
@@ -497,4 +497,38 @@ tr.player td.gameinfo{
 .IND{background: #002d62; color: #f9c433 !important;}
 .MIA{background: #992b2e; color: #f49f31 !important;}
 .{background: ; color: !important;}
+
+/* NFL TEAMS */
+.WAS{background: #521812; color: #f6c832 !important;}
+.PHI{background: #123534; color: #FFF !important;}
+.NYG{background: #25316a; color: #b33435 !important;}
+.DAL{background: #182c6a; color: #CCC !important;}
+.MIN{background: #381b5f; color: #f6cc32 !important;}
+.GB{background: #29443b; color: #e8b62e !important;}
+.DET{background: #196db9; color: #adb0bd !important;}
+.CHI{background: #dc642b; color: #1d2342 !important;}
+.ATL{background: #b13442; color: #000 !important;}
+.NO{background: #cbac78; color: #090a04 !important;}
+.TB{background: #b4b2b0; color: #d13d29 !important;}
+.CAR{background: #080609; color: #3a9ed2 !important;}
+.SF{background: #d0af7f; color: #c93a27 !important;}
+.LAR{background: #20398f; color: #f2d131 !important;}
+.ARI{background: #b3343d; color: #f0c530 !important;}
+.SEA{background: #012144; color: #69b441 !important;}
+.BUF{background: #cd3c30; color: #233c80 !important;}
+.NE{background: #092244; color: #d13d2b !important;}
+.MIA{background: #368998; color: #f17d30 !important;}
+.NYJ{background: #e5e7ea; color: #1d332e !important;}
+.PIT{background: #f7b832; color: #000 !important;}
+.CIN{background: #ed502f; color: #030101 !important;}
+.CLE{background: #361a0b; color: #ed4630 !important;}
+.BAL{background: #010600; color: #a79ac5 !important;}
+.IND{background: #043876; color: #FFF !important;}
+.TEN{background: #4494ce; color: #082d5b !important;}
+.JAX{background: #d8a02a; color: #2e737b !important;}
+.HOU{background: #d13e3c; color: #00143c !important;}
+.KC{background: #b63430; color: #FFF !important;}
+.DEN{background: #0b2344; color: #ed4930 !important;}
+.LV{background: #040205; color: #bfc4c7 !important;}
+.LAC{background: #1c68a5; color: #f9c132 !important;}
 

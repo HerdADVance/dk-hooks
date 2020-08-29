@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import orderBy from 'lodash/orderBy'
 
 // DATA
-import EXPOSUREOPTIONS from '../data/EXPOSUREOPTIONSBB'
+import EXPOSUREOPTIONS from '../data/EXPOSUREOPTIONSFB'
 
 // UTIL
 import findExposureGroupIndex from '../util/findExposureGroupIndex'
