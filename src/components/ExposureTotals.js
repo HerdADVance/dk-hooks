@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 // DATA
-import EXPOSUREOPTIONS from '../data/EXPOSUREOPTIONS'
+import EXPOSUREOPTIONS from '../data/EXPOSUREOPTIONSFB'
 
 
 const ExposureTotals = ({ exposureGroups, numLineups }) => {
@@ -18,7 +18,6 @@ const ExposureTotals = ({ exposureGroups, numLineups }) => {
         let exposureTotal = 0
 
         exposureGroups.forEach(function(group){
-            console.log(parseFloat(group.exposureTotal))
             salaryTotal += group.salaryTotal
             exposureTotal += group.exposureTotal
         })

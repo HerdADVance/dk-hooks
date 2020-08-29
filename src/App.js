@@ -51,8 +51,7 @@ import findExposureGroupIndex from './util/findExposureGroupIndex'
 import optimizeLineupStartTimes from './util/optimizeLineupStartTimesFB'
 
 // SEEDERS
-import SOCCERSEEDER from './seeders/SOCCERSEEDER'
-import BBSEEDER from './seeders/BBSEEDER'
+import SEEDER from './seeders/FBSEEDER'
 
 // COMPONENTS
 import Exposures from './components/Exposures'
@@ -64,7 +63,7 @@ import Lineups from './components/Lineups'
 
 const App = () => {
 
-    const numLineups = 80
+    const numLineups = 100
 
     const [showExposures, setShowExposures] = useState(false)
 
@@ -196,7 +195,7 @@ const App = () => {
         let counter = 0
         let lineupsRemoved = []
         
-        while(counter < 5000 && l[0].salary > 50000){
+        while(counter < 10000 && l[0].salary > 50000){
             counter ++
             let indexes = findAutoCompleteSlotsToSwitch(l)
             if(indexes){
@@ -208,7 +207,10 @@ const App = () => {
                 l = instance.lineups
                 l = orderBy(l, 'salary', ['desc'])
                 
-            } else break
+            } else{
+                console.log('no indexes')
+                break
+            }
         }
 
         console.log(counter)
@@ -367,7 +369,7 @@ const App = () => {
     function handleSeedExposuresClick(){
         let result = {...players}
 
-        const seeder = BBSEEDER
+        const seeder = SEEDER
 
         for(var i = 0; i < seeder.length; i++){
             const pid = seeder[i].pid

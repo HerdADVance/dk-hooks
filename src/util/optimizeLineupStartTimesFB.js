@@ -49,8 +49,6 @@ const optimizeLineupStartTimes = (l, p) => {
 
         console.log(slotsToCompare)
 
-        if(i == 0) break 
-
 
     }
     
