@@ -7,6 +7,7 @@
 // Sort Players table by any column (need to convert players to array to do this)
 // Sort final lineups by time before converting to spreadsheet
 // Extract dates at initialization for non-BB sports
+// Account for AM dates
 
 // Correlations
 // Limit number of players on team in one lineup
@@ -26,13 +27,13 @@ import uniq from 'lodash/uniq'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import PLAYERS from './data/PLAYERSFB'
-import POSITIONS from './data/POSITIONSFB'
-import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSFB'
-import EXPOSUREOPTIONSCLONE from './data/EXPOSUREOPTIONSFBCLONE'
+import PLAYERS from './data/PLAYERSCFB'
+import POSITIONS from './data/POSITIONSCFB'
+import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSCFB'
+import EXPOSUREOPTIONSCLONE from './data/EXPOSUREOPTIONSCFBCLONE'
 
 // UTILS
-import makeLineups from './util/makeLineupsFB'
+import makeLineups from './util/makeLineupsCFB'
 import initializePlayersAndGames from './util/initializePlayersAndGamesBB'
 import findLineupsToAdd from './util/findLineupsToAdd'
 import findLineupIndex from './util/findLineupIndex'

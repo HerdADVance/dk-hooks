@@ -33,21 +33,33 @@ const optimizeLineupStartTimes = (l, p) => {
         }
 
         let flexPosition = l[i].roster[7].player.position
-        let slotsToCompare = [7]
+        let slotsToCompare = [l[i].roster[7].player]
         switch(flexPosition){
             case 'RB':
-                slotsToCompare.push(1,2)
+                slotsToCompare.push(
+                    l[i].roster[1].player,
+                    l[i].roster[2].player
+                )
                 break
             case 'WR':
-                slotsToCompare.push(3,4,5)
+                slotsToCompare.push(
+                    l[i].roster[3].player,
+                    l[i].roster[4].player,
+                    l[i].roster[5].player,
+                )
                 break
             case 'TE':
-                slotsToCompare.push(6)
+                slotsToCompare.push(
+                    l[i].roster[6].player
+                )
                 break
             default: console.log('error')
         }
 
+        slotsToCompare = orderBy(slotsToCompare, 'dateOrder', ['asc'])
         console.log(slotsToCompare)
+
+        //slotsToCompare[0] needs to go in flex
 
 
     }
