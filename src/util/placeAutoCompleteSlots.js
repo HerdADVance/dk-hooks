@@ -29,6 +29,8 @@ const placeAutoCompleteSlots = (origP, l, e, numTries) => {
         let playersStillNeeded = []
         let unsortedP = cloneDeep(origP)
         unsortedP = orderBy(unsortedP, ['lineupsNeeded'], ['asc'])
+
+        console.log(unsortedP)
     
         
 
@@ -128,6 +130,8 @@ const placeAutoCompleteSlots = (origP, l, e, numTries) => {
                         let lineupIndex = findLineupIndex(l, slotsStillOpen[k].lid)
                         let sid = slotsStillOpen[k].sid
                         let slotPosition = l[lineupIndex].roster[sid].position
+                        let slotLocked = l[lineupIndex].roster[sid].locked
+                        console.log(slotLocked)
 
                         if( isPlayerInLineupWithRoster(shortPlayerId, l[lineupIndex].roster) ) continue
 
@@ -135,11 +139,15 @@ const placeAutoCompleteSlots = (origP, l, e, numTries) => {
                             
                             let playerPositions = findPlayerPositions(p, l[lineupIndex].roster[m].player)
                             let playerSlot = l[lineupIndex].roster[m].position
-
+                            let playerLocked = l[lineupIndex].roster[m].locked
+                            console.log(playerLocked)
                             
                             // See if both slots and players can be swapped
                             if(playerSlot && playerPositions){
-                                if( playerPositions.includes(slotPosition) && shortPlayerPositions.includes(playerSlot) ){
+                                if(
+                                    playerPositions.includes(slotPosition) && 
+                                    shortPlayerPositions.includes(playerSlot) 
+                                ){
                                     console.log("swappable")
                                     // Empty slot will be foundPlayer
                                     l[lineupIndex].roster[sid].player = l[lineupIndex].roster[m].player

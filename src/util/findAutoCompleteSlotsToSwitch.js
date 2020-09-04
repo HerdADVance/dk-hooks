@@ -29,6 +29,7 @@ const findAutoCompleteSlotsToSwitch = (lineups) => {
 				let firstRosterIndex = firstRosterIndexes[j]
 				
 				let firstSlotToCheck = lineups[firstLineupIndex].roster[firstRosterIndex]
+				if(firstSlotToCheck.locked) continue
 
 				for(var k = 0; k < lastLineupIndexes.length; k++){
 					
@@ -39,6 +40,7 @@ const findAutoCompleteSlotsToSwitch = (lineups) => {
 						let lastRosterIndex = lastRosterIndexes[l]
 
 						let lastSlotToCheck = lineups[lineups.length - lastLineupIndex].roster[lastRosterIndex]
+						if(lastSlotToCheck.locked) continue
 
 						//console.log(firstSlotToCheck)
 						//console.log(lastSlotToCheck)

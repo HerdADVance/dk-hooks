@@ -27,7 +27,7 @@ import uniq from 'lodash/uniq'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import PLAYERS from './data/PLAYERSCFB'
+import PLAYERS from './data/PLAYERSCFB905'
 import POSITIONS from './data/POSITIONSCFB'
 import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSCFB'
 import EXPOSUREOPTIONSCLONE from './data/EXPOSUREOPTIONSCFBCLONE'
@@ -50,9 +50,10 @@ import convertPlayersToOriginalFormat from './util/convertPlayersToOriginalForma
 import addLineupsInToPlayerFromLineups from './util/addLineupsInToPlayerFromLineups'
 import findExposureGroupIndex from './util/findExposureGroupIndex'
 import optimizeLineupStartTimes from './util/optimizeLineupStartTimesFB'
+import markSlotsAsLocked from './util/markSlotsAsLocked'
 
 // SEEDERS
-import SEEDER from './seeders/FBSEEDER'
+import SEEDER from './seeders/CFBSEEDER'
 
 // COMPONENTS
 import Exposures from './components/Exposures'
@@ -64,7 +65,7 @@ import Lineups from './components/Lineups'
 
 const App = () => {
 
-    const numLineups = 100
+    const numLineups = 20
 
     const [showExposures, setShowExposures] = useState(false)
 
@@ -196,7 +197,7 @@ const App = () => {
         let counter = 0
         let lineupsRemoved = []
         
-        while(counter < 10000 && l[0].salary > 50000){
+        while(counter < 100000 && l[0].salary > 50000){
             counter ++
             let indexes = findAutoCompleteSlotsToSwitch(l)
             if(indexes){
@@ -228,8 +229,9 @@ const App = () => {
         let p = cloneDeep(playersObject)
         p = orderBy(p, 'lineupsIn', ['desc'])
         
-        // Getting lineups, cloning
+        // Getting lineups, marking as locked, cloning
         let lineupsArray = [...lineups]
+        lineupsArray = markSlotsAsLocked(lineupsArray)
         let l = cloneDeep(lineupsArray)
 
         // Getting Exposure Groups (not synced to actual - just to use to count totals bewlow)
@@ -246,6 +248,7 @@ const App = () => {
                 e[index].exposureTotal += (player.exposure/player.actualPositions.length)
             })
         })
+
 
 
         // Sort players by least position flexible and most lineups needed to be in
@@ -317,7 +320,7 @@ const App = () => {
         let l = [...lineups]
         let output = ''
 
-        l = optimizeLineupStartTimes(l)
+        //l = optimizeLineupStartTimes(l)
 
         for(var i = 0; i < POSITIONS.length; i++){
             output += POSITIONS[i]

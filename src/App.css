@@ -336,9 +336,9 @@ tr.player td.gameinfo{
 /* LINEUP TABLES */
 .lineup{
   float: left;
-  margin: 0 0.66% 20px 0.66%;
+  margin: 0 0.5% 20px 0.5%;
   user-select: none;
-  width: 32%;
+  width: 24%;
 }
 .lineup th{
   background: #333;
@@ -537,3 +537,15 @@ tr.player td.gameinfo{
 .CARK{background: #431f77; color: #9ca3a9 !important;}
 .SALA{background: #00205b; color: #bf133e !important;}
 .USM{background: #ffd045; color: #000 !important;}
+.SMU{background: #344a9c; color: #c61233 !important;}
+.UTEP{background: #f77b3f; color: #102b62 !important;}
+.TXST{background: #571c1f; color: #ac9156 !important;}
+.SFA{background: #5e21a0; color: #b1b5b5 !important;}
+.MRSHL{background: #00984d; color: #FFF !important;}
+.EKU{background: #842742; color: #c7d3d6 !important;}
+.MTSU{background: #004987; color: #c3c5c8 !important;}
+.ARMY{background: #d5b98b; color: #17171b !important;}
+.UNT{background: #00a84e; color: #000 !important;}
+.HOUB{background: #00529c; color: #f47837 !important;}
+.MEM{background: #9fa1a3; color: #01488f !important;}
+.ARST{background: #d02030; color: #000 !important;}

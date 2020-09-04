@@ -10,49 +10,57 @@ const makeLineups = (num) => {
                 position: 'QB',
                 player: null,
                 id: 0,
-                selected: false
+                selected: false,
+                locked: false
             },
             {
                 position: 'RB',
                 player: null,
                 id: 1,
-                selected: false
+                selected: false,
+                locked: false
             },
             {
                 position: 'RB',
                 player: null,
                 id: 2,
-                selected: false
+                selected: false,
+                locked: false
             },
             {
                 position: 'WR',
                 player: null,
                 id: 3,
-                selected: false
+                selected: false,
+                locked: false
             },
             {
                 position: 'WR',
                 player: null,
                 id: 4,
-                selected: false
+                selected: false,
+                locked: false
             },
             {
                 position: 'WR',
                 player: null,
                 id: 5,
-                selected: false
+                selected: false,
+                locked: false
             },
             {
                 position: 'FLEX',
                 player: null,
                 id: 6,
-                selected: false
+                selected: false,
+                locked: false
             },
             {
                 position: 'S-FLEX',
                 player: null,
                 id: 7,
-                selected: false
+                selected: false,
+                locked: false
             }
         ]
         lineups.push(lineup)
