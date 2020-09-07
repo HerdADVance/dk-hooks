@@ -27,8 +27,9 @@ import uniq from 'lodash/uniq'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import PLAYERS from './data/PLAYERSCFB905'
+import PLAYERS from './data/PLAYERSCFB'
 import POSITIONS from './data/POSITIONSCFB'
+import HEADERS from './data/HEADERSCFB'
 import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSCFB'
 import EXPOSUREOPTIONSCLONE from './data/EXPOSUREOPTIONSCFBCLONE'
 
@@ -44,7 +45,7 @@ import findPlayerPositions from './util/findPlayerPositions'
 import calculateLineupSalary from './util/calculateLineupSalary'
 import findAutoCompleteSlotsToSwitch from './util/findAutoCompleteSlotsToSwitch'
 import switchAutoCompleteSlots from './util/switchAutoCompleteSlots'
-import placeAutoCompleteSlots from './util/placeAutoCompleteSlots'
+import placeAutoCompleteSlots from './util/placeAutoCompleteSlotsCFB'
 import convertLineupsToOriginalFormat from './util/convertLineupsToOriginalFormat'
 import convertPlayersToOriginalFormat from './util/convertPlayersToOriginalFormat'
 import addLineupsInToPlayerFromLineups from './util/addLineupsInToPlayerFromLineups'
@@ -65,7 +66,7 @@ import Lineups from './components/Lineups'
 
 const App = () => {
 
-    const numLineups = 20
+    const numLineups = 40
 
     const [showExposures, setShowExposures] = useState(false)
 
@@ -222,7 +223,7 @@ const App = () => {
         return l
     }
 
-    async function handleCompleteLineupsClick(){
+    function handleCompleteLineupsClick(){
 
         // Getting players, cloning, sorting by lineupsIn, converting to array
         let playersObject = {...players}
@@ -237,7 +238,7 @@ const App = () => {
         // Getting Exposure Groups (not synced to actual - just to use to count totals bewlow)
         let e = EXPOSUREOPTIONSCLONE.groups
 
-
+        // Calculate lineups needed for each player and exposure totals
         p.forEach(function(player){
             // Figure out how many lineups players need to be in
             player.lineupsNeeded = Math.round( (player.exposure/100 * numLineups) - player.lineupsIn.length)
@@ -249,16 +250,11 @@ const App = () => {
             })
         })
 
-
-
-        // Sort players by least position flexible and most lineups needed to be in
-        //p = orderBy(p, ['positions.length', 'lineupsNeeded'], ['asc', 'desc'])
+        // Sort players by most lineups needed to be in.
+        p = orderBy(p, ['lineupsIn.length', 'lineupsNeeded'], ['desc', 'desc'])
 
         // Will attempt to exactly place players in num lineups that matches their exposure. 
-        // 3rd arg is number of tries to get perfect before moving on
-        let placed = placeAutoCompleteSlots(p, l, e, 20)
-        p = placed.p
-        l = placed.l
+        l = placeAutoCompleteSlots(p, l, e)
 
         // Calculate salary for each lineup
         for(var i = 0; i < l.length; i++){
@@ -268,48 +264,13 @@ const App = () => {
         // Order lineups by salaries
         l = orderBy(l, 'salary', ['desc'])
 
-        //console.log(p)
-        //console.log(l)
-
-        // for(var i = 0; i < l.length; i++){
-        //     let arr = []
-        //     for(var j= 0; j < l[i].roster.length; j++){
-        //         arr.push(l[i].roster[j].player)
-        //     }
-        //     console.log(uniq(arr))
-        // }
-
-
         // Start Swapping players in lineup to fit under salary
         l = fitSalaries(l, playersObject)
-        
-        // console.log(swappedLineups)
-        // let salary = 0
-        // for(var i=0; i < swappedLineups['l'].length; i++){
-        //     salary += swappedLineups['l'][i].salary
-        // }
-        // for(var i=0; i < swappedLineups['lineupsRemoved'].length; i++){
-        //     salary += swappedLineups['lineupsRemoved'][i].salary
-        // }
-        // console.log(salary)
-        // Time to reorder ideas
-        // 1. Lottery type weighted randomness to take expensive player from expensive lineup but not always most expensive
-        // 2. Add locked spots as part of initial lineups to make sure user's selections stay put
 
-
-        // for(var i = 0; i < l.length; i++){
-        //     let arr = []
-        //     for(var j= 0; j < l[i].roster.length; j++){
-        //         arr.push(l[i].roster[j].player.pid)
-        //     }
-        //     console.log(uniq(arr))
-        // }
-
-        // Also convert players
         lineupsArray = convertLineupsToOriginalFormat(lineupsArray, l)
-        lineupsArray = orderBy(lineupsArray, 'salary', ['desc'])
-        playersObject = convertPlayersToOriginalFormat(playersObject, p)
-        playersObject = addLineupsInToPlayerFromLineups(playersObject, l)
+        //lineupsArray = orderBy(lineupsArray, 'salary', ['desc'])
+        playersObject = convertPlayersToOriginalFormat(playersObject, p, l)
+        //playersObject = addLineupsInToPlayerFromLineups(playersObject, l)
         
         setLineups(lineupsArray)
         setPlayers(playersObject)
@@ -322,12 +283,14 @@ const App = () => {
 
         //l = optimizeLineupStartTimes(l)
 
-        for(var i = 0; i < POSITIONS.length; i++){
-            output += POSITIONS[i]
-            if(i != POSITIONS.length - 1) output += ','
+        // Header Row
+        for(var i = 0; i < HEADERS.length; i++){
+            output += HEADERS[i]
+            if(i != HEADERS.length - 1) output += ','
             else output += '\n'
         }
         
+        // Each Lineup
         for(var i = 0; i < lineups.length; i++){
             for(var j = 0; j < lineups[i].roster.length; j++){
                 output += lineups[i].roster[j].player
@@ -335,7 +298,7 @@ const App = () => {
             }
             output += '\n'
         }
-        console.log(output)
+
         return output
     }
 

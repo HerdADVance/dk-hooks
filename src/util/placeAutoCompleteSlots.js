@@ -12,11 +12,15 @@ import cloneDeep from 'lodash/cloneDeep'
 
 const placeAutoCompleteSlots = (origP, l, e, numTries) => {
 
+    console.log(e)
+
     e = orderBy(e, ['exposureTotal'], ['asc'])
     let eOrder = []
     for(var i = 0; i < e.length; i++){
         eOrder.push(e[i].name)
     }
+
+    console.log(eOrder)
 
     // Starting to place players in lineups. This array catches any that won't fit
     numTries = 50
@@ -29,10 +33,7 @@ const placeAutoCompleteSlots = (origP, l, e, numTries) => {
         let playersStillNeeded = []
         let unsortedP = cloneDeep(origP)
         unsortedP = orderBy(unsortedP, ['lineupsNeeded'], ['asc'])
-
-        console.log(unsortedP)
     
-        
 
         for(var i = 0; i < e.length; i++){
             for(var j = unsortedP.length -1; j >= 0; j--){
