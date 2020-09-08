@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 // DATA
-import EXPOSUREOPTIONS from '../data/EXPOSUREOPTIONSCFB'
+import EXPOSUREOPTIONS from '../data/EXPOSUREOPTIONSFB'
 
 
 const ExposureTotals = ({ exposureGroups, numLineups }) => {

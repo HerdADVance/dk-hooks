@@ -27,14 +27,14 @@ import uniq from 'lodash/uniq'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import PLAYERS from './data/PLAYERSCFB'
-import POSITIONS from './data/POSITIONSCFB'
-import HEADERS from './data/HEADERSCFB'
-import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSCFB'
-import EXPOSUREOPTIONSCLONE from './data/EXPOSUREOPTIONSCFBCLONE'
+import PLAYERS from './data/PLAYERSFB'
+import POSITIONS from './data/POSITIONSFB'
+import HEADERS from './data/HEADERSFB'
+import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSFB'
+import EXPOSUREOPTIONSCLONE from './data/EXPOSUREOPTIONSFBCLONE'
 
 // UTILS
-import makeLineups from './util/makeLineupsCFB'
+import makeLineups from './util/makeLineupsFB'
 import initializePlayersAndGames from './util/initializePlayersAndGamesBB'
 import findLineupsToAdd from './util/findLineupsToAdd'
 import findLineupIndex from './util/findLineupIndex'
@@ -54,7 +54,7 @@ import optimizeLineupStartTimes from './util/optimizeLineupStartTimesFB'
 import markSlotsAsLocked from './util/markSlotsAsLocked'
 
 // SEEDERS
-import SEEDER from './seeders/CFBSEEDER'
+import SEEDER from './seeders/FBSEEDER'
 
 // COMPONENTS
 import Exposures from './components/Exposures'
@@ -80,6 +80,7 @@ const App = () => {
     const [referencePlayers, setReferencePlayers] = useState({})
     const [lineups, setLineups] = useState([])
     const [selectedSlots, setSelectedSlots] = useState([])
+    const [saved, setSaved] = useState([])
 
     // Init
     useEffect(() => {
@@ -302,12 +303,6 @@ const App = () => {
         return output
     }
 
-    function handleExportLineupsClickTest(){
-        let l = [...lineups]
-        let p = {...players}
-        l = optimizeLineupStartTimes(l, p)
-    }
-
     function handleExposureChange(pid, pct){
         let result = {...players}
         result[pid].exposure = pct
@@ -331,6 +326,34 @@ const App = () => {
 
     function handlePositionClick(position){
         setClickedPosition(position)
+    }
+
+    function handleSaveClick(){
+        let l = lineups
+        let p = players
+
+        let output = ''
+
+        let lineupData = []
+        for(var i = 0; i < l.length; i++){
+            for(var j = 0; j < l[i].roster.length; j++){
+                output += l[i].roster[j].player
+                output += ','
+            }
+        }
+
+        output = output.slice(0, -1)
+        output += '|'
+
+        let playersSorted = orderBy(p, 'id', ['asc'])
+        for(var i = 0; i < playersSorted.length; i++){
+            output += playersSorted[i].exposure
+            output += ','
+        }
+
+        output = output.slice(0, -1)
+
+        return output
     }
 
     function handleSeedExposuresClick(){
@@ -419,7 +442,12 @@ const App = () => {
                 <button onClick={handleSwitchViewClick}>Switch View</button>
                 <button onClick={handleSeedExposuresClick}>Seed Exposures</button>
                 <button onClick={handleCompleteLineupsClick}>Complete Lineups</button>
-                <button onClick={handleExportLineupsClickTest}>Export Test</button>
+                <DownloadLink 
+                    label="Save Lineups & Exposures"
+                    filename="dk-saved-progress.csv"
+                    tagName="button"
+                    exportFile={() => Promise.resolve(handleSaveClick())}
+                />
                 <DownloadLink
                     label="Export Lineups"
                     filename="dk-lineups.csv"
