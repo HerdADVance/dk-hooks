@@ -27,7 +27,6 @@ const ExposureGroup = ({ group, handleExposureChange }) => {
             <table className="exposure-players">
                 <thead>
                     <tr>
-                        <th>Pos</th>
                         <th>Name</th>
                         <th>Team</th>
                         <th>Salary</th>
@@ -38,8 +37,7 @@ const ExposureGroup = ({ group, handleExposureChange }) => {
                     {
                         group.players.map((player, index) => (
                             <tr>
-                                <td>{player.position}</td>
-                                <td>{player.name} {player.id}</td>
+                                <td>{player.name}</td>
                                 <td className={`team ${player.team}`}>{player.team}</td>
                                 <td>{player.salary}</td>
                                 <td>

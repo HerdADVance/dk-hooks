@@ -9,6 +9,7 @@ const optimizeLineupStartTimes = (l, p) => {
         // Replacing pid in roster.player with full player info
         for(var j = 0; j < l[i].roster.length; j++){
             l[i].roster[j].player = p[l[i].roster[j].player]
+            l[i].roster[j].player.originalSlot = j
         }
 
         // Creating a separate list ordered by date
@@ -57,12 +58,28 @@ const optimizeLineupStartTimes = (l, p) => {
         }
 
         slotsToCompare = orderBy(slotsToCompare, 'dateOrder', ['asc'])
+        
         console.log(slotsToCompare)
 
-        //slotsToCompare[0] needs to go in flex
+        // Switch if need be
+        if(slotsToCompare[0].id != l[i].roster[7].player.id){
+            
+            let originalSlot = slotsToCompare[0].originalSlot
+            
+            l[i].roster[originalSlot].player = l[i].roster[7].player
+            l[i].roster[7].player = slotsToCompare[0]
+            
+        }
+
+        // Convert back from player object to just player id in each roter slot
+        for(var j = 0; j < l[i].roster.length; j++){
+            l[i].roster[j].player = parseInt(l[i].roster[j].player.id)
+        }
 
 
     }
+
+    return l
     
 }
 

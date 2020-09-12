@@ -13,6 +13,11 @@
 // Limit number of players on team in one lineup
 // Target stacks
 
+
+// Num lineups
+// Prevent QB & D
+// Showdown
+
 // PACKAGES
 import React, { useState, useEffect } from "react";
 import './App.css';
@@ -52,23 +57,32 @@ import addLineupsInToPlayerFromLineups from './util/addLineupsInToPlayerFromLine
 import findExposureGroupIndex from './util/findExposureGroupIndex'
 import optimizeLineupStartTimes from './util/optimizeLineupStartTimesFB'
 import markSlotsAsLocked from './util/markSlotsAsLocked'
+import processImportData from './util/processImportData'
+import processImportLineups from './util/processImportLineups'
+import processImportExposures from './util/processImportExposures'
+import emptyLineups from './util/emptyLineups'
+import emptyLineupsIn from './util/emptyLineupsIn'
 
 // SEEDERS
 import SEEDER from './seeders/FBSEEDER'
 
 // COMPONENTS
+import Init from './components/Init'
 import Exposures from './components/Exposures'
 import Positions from './components/Positions'
 import Games from './components/Games'
 import Players from './components/Players'
 import Lineups from './components/Lineups'
-
+import ImportProgress from './components/ImportProgress'
 
 const App = () => {
 
-    const numLineups = 40
+    //const numLineups = 100
 
+    const [showInit, setShowInit] = useState(true)
     const [showExposures, setShowExposures] = useState(false)
+    const [showImport, setShowImport] = useState(false)
+    const [numLineups, setNumLineups] = useState(0)
 
     const [clickedPosition, setClickedPosition] = useState('ALL')
     const [clickedTeam, setClickedTeam] = useState('ALL')
@@ -92,7 +106,7 @@ const App = () => {
         setPlayers(init.players)
         setFilteredPlayers(init.players)
         setReferencePlayers(init.players)
-        setLineups(makeLineups(numLineups))
+        //setLineups(makeLineups(numLineups))
 
     }, [])
 
@@ -278,11 +292,24 @@ const App = () => {
 
     }
 
+    function handleEmptyLineupsClick(){
+        let l = [...lineups]
+        let p = {...players}
+        
+        l = emptyLineups(l)
+        p = emptyLineupsIn(p)
+
+        setLineups(l)
+        setPlayers(p)
+    }
+
     function handleExportLineupsClick(){
         let l = [...lineups]
+        let p = {...players}
         let output = ''
 
-        //l = optimizeLineupStartTimes(l)
+        l = optimizeLineupStartTimes(l, p)
+        setLineups(l)
 
         // Header Row
         for(var i = 0; i < HEADERS.length; i++){
@@ -307,6 +334,34 @@ const App = () => {
         let result = {...players}
         result[pid].exposure = pct
         setPlayers(result)
+    }
+
+    function handleImportCancelClick(){
+        setShowImport(false)
+    }
+
+    function handleImportClick(){
+        setShowImport(true)
+    }
+
+    function handleImportSubmitClick(csv){
+        let l = [...lineups]
+        let p = {...players}
+        let {lineupsData, exposuresData} = processImportData(csv)
+        
+        l = processImportLineups(l, lineupsData)
+        setLineups(l)
+
+        p = processImportExposures(p, l, exposuresData)
+        setPlayers(p)
+
+        setShowImport(false)
+    }
+
+    function handleInitClick(num){
+        setNumLineups(num)
+        setLineups(makeLineups(num))
+        setShowInit(false)
     }
 
     function handlePlayerActionClick(pid, positions, random, delta) {
@@ -438,10 +493,17 @@ const App = () => {
 
     return (
         <div>
+            {showInit ? 
+                <Init
+                    handleInitClick={handleInitClick}
+                /> 
+            : ''}
+
             <div className="top">
                 <button onClick={handleSwitchViewClick}>Switch View</button>
-                <button onClick={handleSeedExposuresClick}>Seed Exposures</button>
                 <button onClick={handleCompleteLineupsClick}>Complete Lineups</button>
+                <button onClick={handleEmptyLineupsClick}>Empty Lineups</button>
+                <button onClick={handleImportClick}>Import Progress</button>
                 <DownloadLink 
                     label="Save Lineups & Exposures"
                     filename="dk-saved-progress.csv"
@@ -504,6 +566,13 @@ const App = () => {
                     </div>
                 </div>
             }
+
+            {showImport ? 
+                <ImportProgress
+                    handleImportSubmitClick={handleImportSubmitClick}
+                    handleImportCancelClick={handleImportCancelClick}
+                /> 
+            : ''}
 
         </div>
     );

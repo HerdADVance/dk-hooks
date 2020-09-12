@@ -37,10 +37,10 @@ const initializePlayers = (players) => {
 	games.forEach(function(game){
 		let formattedGame = {}
 
-		formattedGame.home = game.substr(0, game.indexOf('v')).slice(0, -1)
+		formattedGame.away = game.substr(0, game.indexOf('v')).slice(0, -1)
 
-		let awayString = game.split('s').pop().substr(1).substr(0)
-		formattedGame.away = awayString.substr(0, awayString.indexOf(' '))
+		let homeString = game.split('s').pop().substr(1).substr(0)
+		formattedGame.home = homeString.substr(0, homeString.indexOf(' '))
 
 		let dateArray = game.split(' ')
 		formattedGame.date = dateArray.slice(Math.max(dateArray.length - 2, 1)).shift()
