@@ -44,6 +44,9 @@ td{
 button{
   cursor: pointer;
 }
+button:focus{
+  outline: none
+}
 .clickable tr:hover, .clickable li:hover{
   cursor: pointer;
 }
@@ -93,6 +96,35 @@ button{
   position: fixed;
 }
 
+/* TOP */
+.top{
+  margin: 0 20px;
+}
+.top button{
+  background: #333;
+  border: none;
+  color: white !important;
+  font-size: 14px;
+  margin: 10px 5px 0 0 !important;
+  padding: 10px;
+  text-decoration: none !important;
+}
+.top button:hover{
+  background: #444;
+}
+
+.top button:last-child{
+  background: crimson;
+  border-radius: 5px;
+  float: right;
+  font-size: 18px;
+  margin-right: 0 !important;
+  padding: 10px 15px;
+  width: 180px;
+}
+.top button:last-child:hover{
+  background: red;
+}
 
 /* PLAYERS TABLE HEADERS AND WRAP */
 .sticky{

@@ -32,14 +32,14 @@ import uniq from 'lodash/uniq'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import PLAYERS from './data/PLAYERSFB'
-import POSITIONS from './data/POSITIONSFB'
-import HEADERS from './data/HEADERSFB'
-import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSFB'
-import EXPOSUREOPTIONSCLONE from './data/EXPOSUREOPTIONSFBCLONE'
+import PLAYERS from './data/PLAYERSCFB912NIGHT'
+import POSITIONS from './data/POSITIONSCFB'
+import HEADERS from './data/HEADERSCFB'
+import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSCFB'
+import EXPOSUREOPTIONSCLONE from './data/EXPOSUREOPTIONSCFBCLONE'
 
 // UTILS
-import makeLineups from './util/makeLineupsFB'
+import makeLineups from './util/makeLineupsCFB'
 import initializePlayersAndGames from './util/initializePlayersAndGamesBB'
 import findLineupsToAdd from './util/findLineupsToAdd'
 import findLineupIndex from './util/findLineupIndex'
@@ -95,6 +95,7 @@ const App = () => {
     const [lineups, setLineups] = useState([])
     const [selectedSlots, setSelectedSlots] = useState([])
     const [saved, setSaved] = useState([])
+    const [swapMode, setSwapMode] = useState(false)
 
     // Init
     useEffect(() => {
@@ -425,11 +426,21 @@ const App = () => {
     }
 
     function handleSlotClick(lid, sid, pid, selected){
-        if(pid){
-            removePlayerFromLineup(lid, sid, pid)
-            removeLineupInFromPlayer(pid, lid)
+        if(pid){ // Contains player
+            
+            if(swapMode){ // Look for swap
+                //if(isAnotherSlotMarked)
+                    // swap OR unmark previous slots and mark this one 
+                //else markSlotAsSelected(lid, sid)
+            
+            } else{ //Remove player
+                removePlayerFromLineup(lid, sid, pid)
+                removeLineupInFromPlayer(pid, lid)
+            }
+            
         }
-        else{
+        else{ // Empty slot
+            
             if(selected){
                 markSlotAsUnselected(lid, sid)
             } else{
@@ -441,6 +452,10 @@ const App = () => {
 
     function handleSortPlayersClick(category){
         console.log(category)
+    }
+
+    function handleSwapModeClick(){
+        setSwapMode(!swapMode)
     }
 
     function handleSwitchViewClick(){
@@ -516,6 +531,11 @@ const App = () => {
                     tagName="button"
                     exportFile={() => Promise.resolve(handleExportLineupsClick())}
                 />
+                <button
+                    onClick={handleSwapModeClick}
+                >
+                    {swapMode ? 'Swap Mode' : 'Add/Delete Mode'}
+                </button>
             </div>
 
             {showExposures ?
