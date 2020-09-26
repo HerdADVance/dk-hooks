@@ -634,13 +634,47 @@ tr.player td.gameinfo{
 .MEM{background: #9fa1a3; color: #01488f !important;}
 .ARST{background: #d02030; color: #000 !important;}
 .CLEM{background: #4f2682; color: #f2682b !important;}
-.WAKE{background: #d1b888; color: #000 !important;}
+.WAKE{background: #000; color: #d1b888 !important;}
 .UL{background: #1c1c1a; color: #c5122d !important;}
 .WKU{background: #acaeac; color: #c4133b !important;}
-.OU{background: #e1d7cd; color: #a51c36 !important;}
+.OU{background: #a51c36; color: #e1d7cd !important;}
 .MZST{background: #5e0409; color: #FFF !important;}
 .C-C{background: #006f71; color: #c5a576 !important;}
 .KU{background: #0050bb; color: #e91505 !important;}
 .UT{background: #c05600; color: #FFF !important;}
 .TTU{background: #e22b28; color: #1c2122 !important;}
-
+.NCST{background: #cc3e3b; color: #fcfefc!important;}
+.LT{background: #1e51a8; color: #d31307!important;}
+.ULM{background: #6f082a; color: #b08445 !important;}
+.CFB .MIA{background: #004f2f; color: #f47320 !important;}
+.ABICH{background: #4f2682; color:#b2b3b2 !important;}
+.OKST{background: #e3712a; color: #221e1f !important;}
+.WVU{background: #002752; color: #e3a500 !important;}
+.ND{background: #c29101; color: #0e2240 !important;}
+.CINCY{background: #d52a1f; color: #262728 !important;}
+.UF{background: #03408d; color: #f24414 !important;}
+.LSU{background: #4b257f; color: #f7be22 !important;}
+.AUB{background: #03234b; color: #e9642f !important;}
+.MSST{background: #5a1624; color: #bbc0c2!important;}
+.UGA{background: #d11100; color: #CCC !important;}
+.SYR{background: #f75c02; color: #072e69 !important;}
+.UV{background: #212a4a; color: #f04c1c !important;}
+.PITT{background: #f7b317; color: #00338f !important;}
+.MISS{background: #5bade2; color: darkred !important;}
+.UK{background: #1f3c91; color: #FFF !important;}
+.ARK{background: #982133; color: #FFF !important;}
+.GT{background: #a08c51; color: #001f44 !important;}
+.DUKE{background: #253676; color: #FFF !important;}
+.KSU{background: #4e2783; color: #c1c2c4 !important;}
+.TA\&M{background: #4e0200; color: #f7f7f7 !important;}
+.BAMA{background: #a6193b; color: #f2f5f6 !important;}
+.CFB .BAY{background: #f4b43e; color: #134532 !important;}
+.TENN{background: #f09327; color: #FFF !important;}
+.VT{background: #ec872e; color: #800c3a !important;}
+.BYU{background: #033c95; color: #FFF !important;}
+.MIZZ{background: #e5aa14; color: #000 !important;}
+.FSU{background: #742e3e; color: #c8b284 !important;}
+.SCAR{background: #262825; color: #a30e32 !important;}
+.TROY{background: #afb0b3; color: #5e0410 !important;}
+.VAND{background: #231d1f; color: #c9b390 !important;}
+.{background: ; color: !important;}

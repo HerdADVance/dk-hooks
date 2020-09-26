@@ -32,7 +32,7 @@ import uniq from 'lodash/uniq'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import PLAYERS from './data/PLAYERSCFB912NIGHT'
+import PLAYERS from './data/PLAYERSCFB926DAY'
 import POSITIONS from './data/POSITIONSCFB'
 import HEADERS from './data/HEADERSCFB'
 import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSCFB'
@@ -62,6 +62,8 @@ import processImportLineups from './util/processImportLineups'
 import processImportExposures from './util/processImportExposures'
 import emptyLineups from './util/emptyLineups'
 import emptyLineupsIn from './util/emptyLineupsIn'
+import markAllSlotsAsUnselected from './util/markAllSlotsAsUnselected'
+import isAnotherSlotSelected from './util/isAnotherSlotSelected'
 
 // SEEDERS
 import SEEDER from './seeders/FBSEEDER'
@@ -426,26 +428,59 @@ const App = () => {
     }
 
     function handleSlotClick(lid, sid, pid, selected){
-        if(pid){ // Contains player
-            
-            if(swapMode){ // Look for swap
-                //if(isAnotherSlotMarked)
-                    // swap OR unmark previous slots and mark this one 
-                //else markSlotAsSelected(lid, sid)
-            
-            } else{ //Remove player
+        let l = [...lineups]
+        
+        if(swapMode){
+            let selectedSlot = isAnotherSlotSelected(l)
+            if(selectedSlot){
+                if(pid){ 
+
+                    // Players are the same so no reason to swap. Check to see if unselecting old slot or switching to new slot
+                    if(pid == selectedSlot.pid){
+
+                        // Same slot so mark as unselected
+                        if(lid == selectedSlot.lid){
+                            markSlotAsUnselected(lid, sid)
+                        } else{ // mark new as selected and old as unselected
+                            markSlotAsSelected(lid, sid)
+                            markSlotAsUnselected(selectedSlot.lid, selectedSlot.sid)
+                        }
+                        
+                    } else{
+                        
+                        // Check player on player swap  
+                        if(selectedSlot.pid){
+
+                        } else{ // Check player on blank swap  
+
+                        }
+                    }
+                } else{ 
+
+                    // Check player on blank swap
+                    if(selectedSlot.pid){
+
+                    } else{ // Check player on player swap  
+
+                    }
+                }
+
+            } else{
+                markSlotAsSelected(lid, sid)
+            }
+        
+        } else{ // Add/Delete mode
+            if(pid){ // Remove player
                 removePlayerFromLineup(lid, sid, pid)
                 removeLineupInFromPlayer(pid, lid)
-            }
-            
-        }
-        else{ // Empty slot
-            
-            if(selected){
-                markSlotAsUnselected(lid, sid)
             } else{
-                markOtherSlotsAsUnselected(lid)
-                markSlotAsSelected(lid, sid)
+
+                if(selected){ // Mark unselected
+                    markSlotAsUnselected(lid, sid)
+                } else{ // Mark selected and mark other slots in same lineup unselected
+                    markOtherSlotsAsUnselected(lid)
+                    markSlotAsSelected(lid, sid)
+                }
             }
         }
     }
@@ -455,6 +490,9 @@ const App = () => {
     }
 
     function handleSwapModeClick(){
+        let l = [...lineups]
+        l = markAllSlotsAsUnselected(l)
+        setLineups(l)
         setSwapMode(!swapMode)
     }
 
@@ -507,7 +545,7 @@ const App = () => {
     }
 
     return (
-        <div>
+        <div className="CFB">
             {showInit ? 
                 <Init
                     handleInitClick={handleInitClick}
