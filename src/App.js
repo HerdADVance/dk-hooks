@@ -32,7 +32,7 @@ import uniq from 'lodash/uniq'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import PLAYERS from './data/PLAYERSCFB926DAY'
+import PLAYERS from './data/PLAYERSCFB1024NIGHT'
 import POSITIONS from './data/POSITIONSCFB'
 import HEADERS from './data/HEADERSCFB'
 import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSCFB'
@@ -216,7 +216,7 @@ const App = () => {
         let counter = 0
         let lineupsRemoved = []
         
-        while(counter < 100000 && l[0].salary > 50000){
+        while(counter < 50000 && l[0].salary > 50000){
             counter ++
             let indexes = findAutoCompleteSlotsToSwitch(l)
             if(indexes){
@@ -229,8 +229,8 @@ const App = () => {
                 l = orderBy(l, 'salary', ['desc'])
                 
             } else{
-                console.log('no indexes')
-                break
+                //console.log('no indexes')
+                continue
             }
         }
 
@@ -314,20 +314,45 @@ const App = () => {
         l = optimizeLineupStartTimes(l, p)
         setLineups(l)
 
-        // Header Row
+        //Header Row
         for(var i = 0; i < HEADERS.length; i++){
             output += HEADERS[i]
             if(i != HEADERS.length - 1) output += ','
             else output += '\n'
         }
+
+        // output += 'Entry ID,'
+        // output += 'Contest Name,'
+        // output += 'Contest ID,'
+        // output += 'Entry Fee,'
+        // output += 'QB,'
+        // output += 'RB,'
+        // output += 'RB,'
+        // output += 'WR,'
+        // output += 'WR,'
+        // output += 'WR,'
+        // output += 'FLEX,'
+        // output += 'S-FLEX'
+        // output += '\n'
         
-        // Each Lineup
+        // // Each Lineup
+        var ids = [2290197397,2290197494,2290208091,2290208092]
+        var id = 0
         for(var i = 0; i < lineups.length; i++){
+            // if(i < 4) output += ids[i]
+            // if(i == 4) id = 2290211579
+            // if(i >= 4) output += id
+            // output += ','
+            // output += 'CFB $20K Air Raid [$5K to 1st],'
+            // output += '15617388,'
+            // output += '$10,'
             for(var j = 0; j < lineups[i].roster.length; j++){
                 output += lineups[i].roster[j].player
                 if(j != lineups[i].roster.length - 1) output += ','
+                
             }
             output += '\n'
+            id ++
         }
 
         return output

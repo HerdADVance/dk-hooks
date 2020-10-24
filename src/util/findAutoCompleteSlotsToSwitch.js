@@ -16,9 +16,9 @@ const findAutoCompleteSlotsToSwitch = (lineups) => {
 
 	// Randomizing lineups and roster spot. Looking to take one of the more expensive slots in an expensive lineup and replace it with a cheape slot in cheap lineup
 	let firstLineupIndexes = returnRandomLineupIndexes(lineups.length, true)
-	let firstRosterIndexes = uniq(shuffle([0,0,0,0,0,0,1,1,1,1,2,2,3]))
+	let firstRosterIndexes = uniq(shuffle([0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,2,2,2,2,2,2,3,3,3,3,4,4,4,5,5,5,6,6]))
 	let lastLineupIndexes = returnRandomLineupIndexes(lineups.length, false)
-	let lastRosterIndexes = uniq(shuffle([7,7,7,7,7,7,6,6,6,6,5,5,4]))
+	let lastRosterIndexes = uniq(shuffle([7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,6,6,6,6,6,6,6,6,6,5,5,5,5,5,5,5,5,4,4,4,4,4,4,3,3,3,3,2,2,2,1,1]))
 
 	//function findIndexes(firstLineupIndexes, firstRosterIndexes, lastLineupIndexes, lastRosterIndexes){
 		loop1:

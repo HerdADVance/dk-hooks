@@ -617,7 +617,7 @@ tr.player td.gameinfo{
 .LAC{background: #1c68a5; color: #f9c132 !important;}
 
 /* CFB TEAMS */
-.UAB{background: #0f6141; color: #c1b35f !important;}
+.UAB{background: #c1b35f; color: #0f6141 !important;}
 .CARK{background: #431f77; color: #9ca3a9 !important;}
 .SALA{background: #00205b; color: #bf133e !important;}
 .USM{background: #ffd045; color: #000 !important;}
@@ -642,7 +642,7 @@ tr.player td.gameinfo{
 .C-C{background: #006f71; color: #c5a576 !important;}
 .KU{background: #0050bb; color: #e91505 !important;}
 .UT{background: #c05600; color: #FFF !important;}
-.TTU{background: #e22b28; color: #1c2122 !important;}
+.TTU{background: #1c2122; color: #e22b28 !important;}
 .NCST{background: #cc3e3b; color: #fcfefc!important;}
 .LT{background: #1e51a8; color: #d31307!important;}
 .ULM{background: #6f082a; color: #b08445 !important;}
@@ -650,7 +650,7 @@ tr.player td.gameinfo{
 .ABICH{background: #4f2682; color:#b2b3b2 !important;}
 .OKST{background: #e3712a; color: #221e1f !important;}
 .WVU{background: #002752; color: #e3a500 !important;}
-.ND{background: #c29101; color: #0e2240 !important;}
+.ND{background: #0e2240; color: #c29101 !important;}
 .CINCY{background: #d52a1f; color: #262728 !important;}
 .UF{background: #03408d; color: #f24414 !important;}
 .LSU{background: #4b257f; color: #f7be22 !important;}
@@ -677,4 +677,18 @@ tr.player td.gameinfo{
 .SCAR{background: #262825; color: #a30e32 !important;}
 .TROY{background: #afb0b3; color: #5e0410 !important;}
 .VAND{background: #231d1f; color: #c9b390 !important;}
-.{background: ; color: !important;}
+.UNC{background: #96b8dd; color: #0e2c5e !important;}
+.USF{background: #006349; color: #b7ab79 !important;}
+.BC{background: #882130; color: #c0b07b !important;}
+.TCU{background: #4b1875; color: #FFF !important;}
+.CAMP{background: #ec7c24; color: #221e1f !important;}
+.UCF{background: #ab8f52; color: #00010a !important;}
+.TLSA{background: #00478c; color: #e73841 !important;}
+.ISU{background: #f7c22f; color: #b21135 !important;}
+.UTSA{background: #00285a; color: #ea7121 !important;}
+.ECU{background: #e5b73d; color: #59358f !important;}
+.UH{background: #c32937; color: #FFF !important;}
+.TUL{background: #0c6a54; color: #50c2e1 !important;}
+.ULL{background: darkred; color: white !important;}
+.JACST{background: red; color: white !important;}
+.FIU{background: navy; color: gold !important;}
