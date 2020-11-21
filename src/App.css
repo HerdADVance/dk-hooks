@@ -705,3 +705,21 @@ tr.player td.gameinfo{
 .OSU{background: #c0c5c9; color: #c8143b !important;}
 .PSU{background: #15284f; color: white !important;}
 .NAVY{background: #b0a278; color: #1c2756 !important;}
+.MINN{background: maroon; color: gold !important;}
+.IOWA{background: black; color: gold !important;}
+.FAU{background: darkblue; color: red !important;}
+.USC{background: darkred; color: yellow!important;}
+.ARIZ{background: darkblue; color: red!important;}
+.UMD{background: gold; color: red!important;}
+.ORST{background: black; color: orange !important;}
+.NW{background: purple; color: white !important;}
+.CAL{background: navy; color: gold !important;}
+.APPST{background: black; color: gold !important;}
+.IL{background: darkorange; color: navy !important;}
+
+.EMU{background: green; color: white!important;}
+.CMU{background: maroon; color: gold!important;}
+.WMU{background: tan; color: black!important;}
+.TOL{background: navy; color: yellow!important;}
+.NIU{background: black; color: red!important;}
+.BALL{background: crimson; color: white!important;}

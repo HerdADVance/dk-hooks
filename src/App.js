@@ -32,7 +32,7 @@ import uniq from 'lodash/uniq'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import PLAYERS from './data/PLAYERSCFB1031AFTERNOON'
+import PLAYERS from './data/PLAYERSCFB1121'
 import POSITIONS from './data/POSITIONSCFB'
 import HEADERS from './data/HEADERSCFB'
 import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSCFB'
@@ -336,16 +336,14 @@ const App = () => {
         output += '\n'
         
         // // Each Lineup
-        var ids = [2318130356,2318130357,2318130358,2318130359,2318144659,2318144700,2318153728,2318153729,2318153730,2318153731,2318153732,2318153733]
-        var id = 0
+
+        var id = 2364166614
         for(var i = 0; i < lineups.length; i++){
-            // if(i < 4) output += ids[i]
-            // if(i == 4) id = 2290211579
-            output += ids[i]
+            output += id
             output += ','
-            output += 'CFB $10K Air Raid [$2K to 1st],'
-            output += '15682998,'
-            output += '$10,'
+            output += 'CFB $10K Redshirt [$2K to 1st],'
+            output += '96787620,'
+            output += '$6,'
             for(var j = 0; j < lineups[i].roster.length; j++){
                 output += lineups[i].roster[j].player
                 if(j != lineups[i].roster.length - 1) output += ','
