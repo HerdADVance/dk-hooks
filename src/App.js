@@ -32,14 +32,14 @@ import uniq from 'lodash/uniq'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import PLAYERS from './data/PLAYERSCFB1121'
-import POSITIONS from './data/POSITIONSCFB'
-import HEADERS from './data/HEADERSCFB'
-import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSCFB'
-import EXPOSUREOPTIONSCLONE from './data/EXPOSUREOPTIONSCFBCLONE'
+import PLAYERS from './data/PLAYERSFB1126'
+import POSITIONS from './data/POSITIONSFB'
+import HEADERS from './data/HEADERSFB'
+import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSFB'
+import EXPOSUREOPTIONSCLONE from './data/EXPOSUREOPTIONSFBCLONE'
 
 // UTILS
-import makeLineups from './util/makeLineupsCFB'
+import makeLineups from './util/makeLineupsFB'
 import initializePlayersAndGames from './util/initializePlayersAndGamesBB'
 import findLineupsToAdd from './util/findLineupsToAdd'
 import findLineupIndex from './util/findLineupIndex'
@@ -50,7 +50,7 @@ import findPlayerPositions from './util/findPlayerPositions'
 import calculateLineupSalary from './util/calculateLineupSalary'
 import findAutoCompleteSlotsToSwitch from './util/findAutoCompleteSlotsToSwitch'
 import switchAutoCompleteSlots from './util/switchAutoCompleteSlots'
-import placeAutoCompleteSlots from './util/placeAutoCompleteSlotsCFB'
+import placeAutoCompleteSlots from './util/placeAutoCompleteSlotsFB'
 import convertLineupsToOriginalFormat from './util/convertLineupsToOriginalFormat'
 import convertPlayersToOriginalFormat from './util/convertPlayersToOriginalFormat'
 import addLineupsInToPlayerFromLineups from './util/addLineupsInToPlayerFromLineups'
@@ -315,35 +315,35 @@ const App = () => {
         setLineups(l)
 
         //Header Row
-        // for(var i = 0; i < HEADERS.length; i++){
-        //     output += HEADERS[i]
-        //     if(i != HEADERS.length - 1) output += ','
-        //     else output += '\n'
-        // }
+        for(var i = 0; i < HEADERS.length; i++){
+            output += HEADERS[i]
+            if(i != HEADERS.length - 1) output += ','
+            else output += '\n'
+        }
 
-        output += 'Entry ID,'
-        output += 'Contest Name,'
-        output += 'Contest ID,'
-        output += 'Entry Fee,'
-        output += 'QB,'
-        output += 'RB,'
-        output += 'RB,'
-        output += 'WR,'
-        output += 'WR,'
-        output += 'WR,'
-        output += 'FLEX,'
-        output += 'S-FLEX'
-        output += '\n'
+        // output += 'Entry ID,'
+        // output += 'Contest Name,'
+        // output += 'Contest ID,'
+        // output += 'Entry Fee,'
+        // output += 'QB,'
+        // output += 'RB,'
+        // output += 'RB,'
+        // output += 'WR,'
+        // output += 'WR,'
+        // output += 'WR,'
+        // output += 'FLEX,'
+        // output += 'S-FLEX'
+        // output += '\n'
         
         // // Each Lineup
 
         var id = 2364166614
         for(var i = 0; i < lineups.length; i++){
-            output += id
-            output += ','
-            output += 'CFB $10K Redshirt [$2K to 1st],'
-            output += '96787620,'
-            output += '$6,'
+            // output += id
+            // output += ','
+            // output += 'FB $10K Redshirt [$2K to 1st],'
+            // output += '96787620,'
+            // output += '$6,'
             for(var j = 0; j < lineups[i].roster.length; j++){
                 output += lineups[i].roster[j].player
                 if(j != lineups[i].roster.length - 1) output += ','
@@ -568,7 +568,7 @@ const App = () => {
     }
 
     return (
-        <div className="CFB">
+        <div className="FB">
             {showInit ? 
                 <Init
                     handleInitClick={handleInitClick}
