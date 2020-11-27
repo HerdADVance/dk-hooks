@@ -32,14 +32,14 @@ import uniq from 'lodash/uniq'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import PLAYERS from './data/PLAYERSFB1126'
-import POSITIONS from './data/POSITIONSFB'
-import HEADERS from './data/HEADERSFB'
-import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSFB'
-import EXPOSUREOPTIONSCLONE from './data/EXPOSUREOPTIONSFBCLONE'
+import PLAYERS from './data/PLAYERSCFB1127'
+import POSITIONS from './data/POSITIONSCFB'
+import HEADERS from './data/HEADERSCFB'
+import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSCFB'
+import EXPOSUREOPTIONSCLONE from './data/EXPOSUREOPTIONSCFBCLONE'
 
 // UTILS
-import makeLineups from './util/makeLineupsFB'
+import makeLineups from './util/makeLineupsCFB'
 import initializePlayersAndGames from './util/initializePlayersAndGamesBB'
 import findLineupsToAdd from './util/findLineupsToAdd'
 import findLineupIndex from './util/findLineupIndex'
@@ -50,7 +50,7 @@ import findPlayerPositions from './util/findPlayerPositions'
 import calculateLineupSalary from './util/calculateLineupSalary'
 import findAutoCompleteSlotsToSwitch from './util/findAutoCompleteSlotsToSwitch'
 import switchAutoCompleteSlots from './util/switchAutoCompleteSlots'
-import placeAutoCompleteSlots from './util/placeAutoCompleteSlotsFB'
+import placeAutoCompleteSlots from './util/placeAutoCompleteSlotsCFB'
 import convertLineupsToOriginalFormat from './util/convertLineupsToOriginalFormat'
 import convertPlayersToOriginalFormat from './util/convertPlayersToOriginalFormat'
 import addLineupsInToPlayerFromLineups from './util/addLineupsInToPlayerFromLineups'
@@ -66,7 +66,7 @@ import markAllSlotsAsUnselected from './util/markAllSlotsAsUnselected'
 import isAnotherSlotSelected from './util/isAnotherSlotSelected'
 
 // SEEDERS
-import SEEDER from './seeders/FBSEEDER'
+import SEEDER from './seeders/CFBSEEDER'
 
 // COMPONENTS
 import Init from './components/Init'
@@ -311,39 +311,39 @@ const App = () => {
         let p = {...players}
         let output = ''
 
-        l = optimizeLineupStartTimes(l, p)
+        //l = optimizeLineupStartTimes(l, p)
         setLineups(l)
 
         //Header Row
-        for(var i = 0; i < HEADERS.length; i++){
-            output += HEADERS[i]
-            if(i != HEADERS.length - 1) output += ','
-            else output += '\n'
-        }
+        // for(var i = 0; i < HEADERS.length; i++){
+        //     output += HEADERS[i]
+        //     if(i != HEADERS.length - 1) output += ','
+        //     else output += '\n'
+        // }
 
-        // output += 'Entry ID,'
-        // output += 'Contest Name,'
-        // output += 'Contest ID,'
-        // output += 'Entry Fee,'
-        // output += 'QB,'
-        // output += 'RB,'
-        // output += 'RB,'
-        // output += 'WR,'
-        // output += 'WR,'
-        // output += 'WR,'
-        // output += 'FLEX,'
-        // output += 'S-FLEX'
-        // output += '\n'
+        output += 'Entry ID,'
+        output += 'Contest Name,'
+        output += 'Contest ID,'
+        output += 'Entry Fee,'
+        output += 'QB,'
+        output += 'RB,'
+        output += 'RB,'
+        output += 'WR,'
+        output += 'WR,'
+        output += 'WR,'
+        output += 'FLEX,'
+        output += 'S-FLEX'
+        output += '\n'
         
         // // Each Lineup
 
-        var id = 2364166614
+        var id = 2378518164
         for(var i = 0; i < lineups.length; i++){
-            // output += id
-            // output += ','
-            // output += 'FB $10K Redshirt [$2K to 1st],'
-            // output += '96787620,'
-            // output += '$6,'
+            output += id
+            output += ','
+            output += 'CFB $150K Turkey Hangover Special [$50K to 1st],'
+            output += '96931680,'
+            output += '$15,'
             for(var j = 0; j < lineups[i].roster.length; j++){
                 output += lineups[i].roster[j].player
                 if(j != lineups[i].roster.length - 1) output += ','
@@ -568,7 +568,7 @@ const App = () => {
     }
 
     return (
-        <div className="FB">
+        <div className="CFB">
             {showInit ? 
                 <Init
                     handleInitClick={handleInitClick}
