@@ -32,7 +32,7 @@ import uniq from 'lodash/uniq'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import PLAYERS from './data/PLAYERSCFB1127'
+import PLAYERS from './data/PLAYERSCFB1212AFTERNOON'
 import POSITIONS from './data/POSITIONSCFB'
 import HEADERS from './data/HEADERSCFB'
 import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSCFB'
@@ -337,13 +337,13 @@ const App = () => {
         
         // // Each Lineup
 
-        var id = 2378518164
+        var id = 2408114542
         for(var i = 0; i < lineups.length; i++){
             output += id
             output += ','
-            output += 'CFB $150K Turkey Hangover Special [$50K to 1st],'
-            output += '96931680,'
-            output += '$15,'
+            output += 'CFB $30K Air Raid [$10K to 1st] (Afternoon),'
+            output += '98356944,'
+            output += '$10,'
             for(var j = 0; j < lineups[i].roster.length; j++){
                 output += lineups[i].roster[j].player
                 if(j != lineups[i].roster.length - 1) output += ','
