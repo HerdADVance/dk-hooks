@@ -15,7 +15,9 @@ const convertLineupsToOriginalFormat = (original, filled) => {
 			let sid = original[i].roster[j].id
 			let slotIndex = findSlotIndex(filled[lineupIndex].roster, sid)
 			
-			original[i].roster[j].player = filled[lineupIndex].roster[slotIndex].player.pid
+			if(original[i].roster[j].player){
+				original[i].roster[j].player = filled[lineupIndex].roster[slotIndex].player.pid
+			}
 		}
 
 		original[i].roster = orderBy(original[i].roster, 'id', ['asc'])

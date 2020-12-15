@@ -4,7 +4,7 @@ const calculateLineupSalary = (roster, players) => {
 	let salary = 0
 
 	roster.forEach(function(slot){
-		salary += players[slot.player].salary
+		if(players[slot.player]) salary += players[slot.player].salary
 	})
 
 	return salary

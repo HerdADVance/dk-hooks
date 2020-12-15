@@ -26,20 +26,21 @@ import DownloadLink from "react-download-link";
 
 // LODASH
 import pull from 'lodash/pull'
+import filter from 'lodash/filter'
 import orderBy from 'lodash/orderBy'
 import concat from 'lodash/concat'
 import uniq from 'lodash/uniq'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import PLAYERS from './data/PLAYERSCFB1212AFTERNOON'
-import POSITIONS from './data/POSITIONSCFB'
-import HEADERS from './data/HEADERSCFB'
-import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSCFB'
-import EXPOSUREOPTIONSCLONE from './data/EXPOSUREOPTIONSCFBCLONE'
+import PLAYERS from './data/PLAYERS1213'
+import POSITIONS from './data/POSITIONSFB'
+import HEADERS from './data/HEADERSFB'
+import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSFB'
+import EXPOSUREOPTIONSCLONE from './data/EXPOSUREOPTIONSFBCLONE'
 
 // UTILS
-import makeLineups from './util/makeLineupsCFB'
+import makeLineups from './util/makeLineupsFB'
 import initializePlayersAndGames from './util/initializePlayersAndGamesBB'
 import findLineupsToAdd from './util/findLineupsToAdd'
 import findLineupIndex from './util/findLineupIndex'
@@ -64,6 +65,7 @@ import emptyLineups from './util/emptyLineups'
 import emptyLineupsIn from './util/emptyLineupsIn'
 import markAllSlotsAsUnselected from './util/markAllSlotsAsUnselected'
 import isAnotherSlotSelected from './util/isAnotherSlotSelected'
+import placeQBs from './util/placeQBs'
 
 // SEEDERS
 import SEEDER from './seeders/CFBSEEDER'
@@ -79,12 +81,12 @@ import ImportProgress from './components/ImportProgress'
 
 const App = () => {
 
-    //const numLineups = 100
+    const [numLineups, setNumLineups] = useState(150)
 
-    const [showInit, setShowInit] = useState(true)
+    const [showInit, setShowInit] = useState(false)
     const [showExposures, setShowExposures] = useState(false)
     const [showImport, setShowImport] = useState(false)
-    const [numLineups, setNumLineups] = useState(0)
+    //const [numLineups, setNumLineups] = useState(0)
 
     const [clickedPosition, setClickedPosition] = useState('ALL')
     const [clickedTeam, setClickedTeam] = useState('ALL')
@@ -109,6 +111,7 @@ const App = () => {
         setPlayers(init.players)
         setFilteredPlayers(init.players)
         setReferencePlayers(init.players)
+        setLineups(makeLineups(numLineups))
         //setLineups(makeLineups(numLineups))
 
     }, [])
@@ -241,6 +244,57 @@ const App = () => {
         return l
     }
 
+    function handleFillQBsClick(){
+
+        // Getting players, cloning, filtering non-QB's, order by exposure
+        let playersObject = {...players}
+        let p = cloneDeep(playersObject)
+        p = filter(p, ['position', 'QB'])
+        p = orderBy(p, 'exposure', ['desc'])
+        
+         // Getting lineups and cloning
+        let lineupsArray = [...lineups]
+        let l = cloneDeep(lineupsArray)
+
+        // Putting QB's in lineups
+        l = placeQBs(p,l)
+
+        console.log(l)
+        
+        // Calculate salary for each lineup
+        for(var i = 0; i < l.length; i++){
+            l[i].salary = calculateLineupSalary(l[i].roster, playersObject)
+        }
+
+        // Convert to original format
+        //lineupsArray = convertLineupsToOriginalFormat(lineupsArray, l)
+        // = convertPlayersToOriginalFormat(playersObject, p, l)
+        lineupsArray = convertLineupsToOriginalFormat(lineupsArray, l)
+
+        // Emptying lineups in for each player
+        for(var i = 0; i < p.length; i++){
+            let pid = p[i].id
+            playersObject[pid].lineupsIn = []
+        }
+
+        // Looping through all lineups to add lineupsIn to players
+        for (var i = 0; i < l.length; i++){
+            let lid = l[i].id
+            for(var j = 0; j < l[i].roster.length; j++){
+                if(l[i].roster[j].player){
+                    let pid = l[i].roster[j].player
+                    playersObject[pid].lineupsIn.push(lid)
+                }
+            }
+        }
+
+        
+        // Set State
+        console.log(lineupsArray)
+        setLineups(lineupsArray)
+        setPlayers(playersObject)
+    }
+
     function handleCompleteLineupsClick(){
 
         // Getting players, cloning, sorting by lineupsIn, converting to array
@@ -273,6 +327,8 @@ const App = () => {
 
         // Will attempt to exactly place players in num lineups that matches their exposure. 
         l = placeAutoCompleteSlots(p, l, e)
+
+        console.log(l)
 
         // Calculate salary for each lineup
         for(var i = 0; i < l.length; i++){
@@ -568,7 +624,7 @@ const App = () => {
     }
 
     return (
-        <div className="CFB">
+        <div className="FB">
             {showInit ? 
                 <Init
                     handleInitClick={handleInitClick}
@@ -577,6 +633,7 @@ const App = () => {
 
             <div className="top">
                 <button onClick={handleSwitchViewClick}>Switch View</button>
+                <button onClick={handleFillQBsClick}>Fill QB's</button>
                 <button onClick={handleCompleteLineupsClick}>Complete Lineups</button>
                 <button onClick={handleEmptyLineupsClick}>Empty Lineups</button>
                 <button onClick={handleImportClick}>Import Progress</button>
