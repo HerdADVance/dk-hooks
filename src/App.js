@@ -33,7 +33,11 @@ import uniq from 'lodash/uniq'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
+<<<<<<< HEAD
 import PLAYERS from './data/PLAYERS1220'
+=======
+import PLAYERS from './data/PLAYERS1213'
+>>>>>>> f92614c65b069806881a7b9453fb8668fcf69656
 import POSITIONS from './data/POSITIONSFB'
 import HEADERS from './data/HEADERSFB'
 import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSFB'
@@ -41,7 +45,11 @@ import EXPOSUREOPTIONSCLONE from './data/EXPOSUREOPTIONSFBCLONE'
 
 // UTILS
 import makeLineups from './util/makeLineupsFB'
+<<<<<<< HEAD
 import initializePlayersAndGames from './util/initializePlayersAndGamesBB' //using BB for all
+=======
+import initializePlayersAndGames from './util/initializePlayersAndGamesBB'
+>>>>>>> f92614c65b069806881a7b9453fb8668fcf69656
 import findLineupsToAdd from './util/findLineupsToAdd'
 import findLineupIndex from './util/findLineupIndex'
 import findPlayerIndex from './util/findPlayerIndex'
@@ -244,10 +252,13 @@ const App = () => {
         return l
     }
 
+<<<<<<< HEAD
     function handleStackWRsClick(){
 
     }
 
+=======
+>>>>>>> f92614c65b069806881a7b9453fb8668fcf69656
     function handleFillQBsClick(){
 
         // Getting players, cloning, filtering non-QB's, order by exposure
@@ -255,8 +266,11 @@ const App = () => {
         let p = cloneDeep(playersObject)
         p = filter(p, ['position', 'QB'])
         p = orderBy(p, 'exposure', ['desc'])
+<<<<<<< HEAD
 
         console.log(p)
+=======
+>>>>>>> f92614c65b069806881a7b9453fb8668fcf69656
         
          // Getting lineups and cloning
         let lineupsArray = [...lineups]
@@ -275,7 +289,11 @@ const App = () => {
         // Convert to original format
         //lineupsArray = convertLineupsToOriginalFormat(lineupsArray, l)
         // = convertPlayersToOriginalFormat(playersObject, p, l)
+<<<<<<< HEAD
         lineupsArray = convertLineupsToOriginalFormat(lineupsArray, l, true)
+=======
+        lineupsArray = convertLineupsToOriginalFormat(lineupsArray, l)
+>>>>>>> f92614c65b069806881a7b9453fb8668fcf69656
 
         // Emptying lineups in for each player
         for(var i = 0; i < p.length; i++){
@@ -641,7 +659,10 @@ const App = () => {
 
                 <button onClick={handleSwitchViewClick}>Switch View</button>
                 <button onClick={handleFillQBsClick}>Fill QB's</button>
+<<<<<<< HEAD
                 <button onClick={handleStackWRsClick}>Stack WR's</button>
+=======
+>>>>>>> f92614c65b069806881a7b9453fb8668fcf69656
                 <button onClick={handleCompleteLineupsClick}>Complete Lineups</button>
                 {/*<button onClick={handleEmptyLineupsClick}>Empty Lineups</button*/}
                 <button onClick={handleImportClick}>Import Progress</button>

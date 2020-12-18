@@ -15,11 +15,15 @@ const convertLineupsToOriginalFormat = (original, filled, idOnly) => {
 			let sid = original[i].roster[j].id
 			let slotIndex = findSlotIndex(filled[lineupIndex].roster, sid)
 			
+<<<<<<< HEAD
 			if(idOnly){
 				if(filled[lineupIndex].roster[slotIndex].player){
 					original[i].roster[j].player = filled[lineupIndex].roster[slotIndex].player
 				}
 			} else{
+=======
+			if(original[i].roster[j].player){
+>>>>>>> f92614c65b069806881a7b9453fb8668fcf69656
 				original[i].roster[j].player = filled[lineupIndex].roster[slotIndex].player.pid
 			}
 		}
