@@ -1,0 +1,128 @@
+56 KC  TB  +3
+44 SF  LAR -6
+36 NO  DEN +6
+
+53 LV  ATL -3
+52 LAC BUF -4
+51 TEN IND -3
+50 CAR MIN -3
+49 ARI NE  +2
+48 CLE JAX +7
+44 MIA NYJ +7
+44 NYG CIN +6
+
+
+Fitz     5500 1
+Baker    5300 3
+D Jones  5500 3
+Ryan     5900 7
+Herbert  7200 11
+TAnnehil 5800 3
+Allen    7600 15
+Carr     5700 7
+Kyler    8200 11
+Rivers   6100 1
+CAm      6400 3
+Cousins  6100 3
+
+
+Cook     9500 36
+Hines    4600 --
+Ekeler   6100 --
+Hill     4000 28
+Jacobs   7200 19
+J-Rob    6300 15
+WIlkins  4000 --
+Chubb    7100 15
+Breida   4000 7
+White    4300 3
+Henry    7900 19
+Hunt     5600 11
+Mike D   6900 11
+Singlet  4200 1
+Drake    5400 3
+Gio      5700 7
+
+
+J-Jeff   6300 28
+Ridley   7100 23
+Meyers   5300 7
+Diggs    7600 19
+Moore    6200 3
+Allen    8000 23
+Gabe D   3000 19
+Cole     3600 11
+AJB      6700 11
+Parker   5900 3
+Mims     3500 7
+Isabella 3000 23
+Shenault 3300 7
+Anderson 6100 7
+Jarvis   5200 7
+Boyd     5000 3
+SAmuel   5100 7
+Corey D  4900 3
+Hilton   3900 3
+Perriman 4200 3
+Mike W   5000 7
+Tee      4700 3
+Agholor  4900 3
+Grant    3700 1
+Hopkins  8100 11
+
+
+Rudolph  2800 11
+Waller   6000 19
+Hurst    3900 7
+Engram   4500 7
+Hooper   3800 3
+EIfert   2600 1
+Henry    4800 7
+Gesicki  4300 3
+Firsker  2600 1
+Jonnu    4100 1
+Burton   3200 1
+Cox      2700 1
+Arnold   2900 1
+Bryant   2500 1
+
+
+CLE 3100 11
+NYG 3200 11
+NYJ 2100 11
+MIN 2300 3
+CIN 2500 3
+JAX 2000 3
+LV  2300 3
+BUF 2700 3
+ARI 2900 3
+NE  2500 3
+TEN 2400 1
+LAC 2400 3
+IND 3000 3
+CAR 2600 3
+ATL 2200 3
+MIA 4200 7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
