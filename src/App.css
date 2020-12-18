@@ -525,6 +525,24 @@ tr.player td.gameinfo{
 }
 
 
+/* PLAYER STACKS TABLE */
+.player-stacks table{
+  margin-top: 15px;
+}
+.player-stacks table tr{
+  background: #CCC;
+}
+.player-stacks table tr:nth-child(even){
+  background: #DDD;
+}
+.stack-num{
+  height: 40px;
+  text-align: center;
+  width: 40px;
+}
+.mini{font-size: 12px; margin-right: 6px;}
+
+
 /* PREMIER LEAGUE TEAMS */
 .TOT{background: navy; color: white !important;}
 .MU{background: red; color: black !important;}

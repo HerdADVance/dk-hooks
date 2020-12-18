@@ -3,7 +3,7 @@ import findSlotIndex from './findSlotIndex'
 import orderBy from 'lodash/orderBy'
 
 // Adds Players and total salary to lineups
-const convertLineupsToOriginalFormat = (original, filled) => {
+const convertLineupsToOriginalFormat = (original, filled, idOnly) => {
 	
 	for(var i = 0; i < original.length; i++){
 
@@ -15,7 +15,13 @@ const convertLineupsToOriginalFormat = (original, filled) => {
 			let sid = original[i].roster[j].id
 			let slotIndex = findSlotIndex(filled[lineupIndex].roster, sid)
 			
-			original[i].roster[j].player = filled[lineupIndex].roster[slotIndex].player.pid
+			if(idOnly){
+				if(filled[lineupIndex].roster[slotIndex].player){
+					original[i].roster[j].player = filled[lineupIndex].roster[slotIndex].player
+				}
+			} else{
+				original[i].roster[j].player = filled[lineupIndex].roster[slotIndex].player.pid
+			}
 		}
 
 		original[i].roster = orderBy(original[i].roster, 'id', ['asc'])

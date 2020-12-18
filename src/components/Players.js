@@ -3,20 +3,54 @@ import React, { useState } from "react";
 import Player from './Player'
 import ClickedPlayer from './ClickedPlayer'
 
-const Players = ({ 
+import filter from 'lodash/filter'
+
+const Players = ({
+    players,
+    lineups, 
     filteredPlayers, 
     numLineups, 
     selectedSlots, 
     handlePlayerActionClick, 
     handlePlayerAddToSelectedClick,
-    handleSortPlayersClick 
+    handleSortPlayersClick
 }) => {
 
-    const [clickedPlayer, setClickedPlayer] = useState(null)
     const [randomValue, setRandomValue] = useState(false)
+    const [clickedPlayer, setClickedPlayer] = useState(null)
+    const [stackable, setStackable] = useState(null)
 
     function handlePlayerClick(id) {
         setClickedPlayer(id)
+
+        let teammates = []
+        let opponents = []
+
+        // Filter to team
+        let ts = filter(players, ['team', players[id].team])
+        let os = filter(players, ['team', players[id].opponent])
+        
+        // Filter to those in lineups
+        ts.forEach(function(t){
+            if(t.lineupsIn.length > 0) teammates.push(t)
+        })
+        os.forEach(function(o){
+            if(o.lineupsIn.length > 0) opponents.push(o)
+        })
+
+        let stackable = {}
+        stackable.teammates = teammates
+        stackable.teammates.qbs = filter(teammates, ['position', 'QB']) 
+        stackable.teammates.rbs = filter(teammates, ['position', 'RB'])
+        stackable.teammates.wrs = filter(teammates, ['position', 'WR']) 
+        stackable.teammates.tes = filter(teammates, ['position', 'TE']) 
+        stackable.opponents = opponents
+        stackable.opponents.qbs = filter(opponents, ['position', 'QB']) 
+        stackable.opponents.rbs = filter(opponents, ['position', 'RB'])
+        stackable.opponents.wrs = filter(opponents, ['position', 'WR']) 
+        stackable.opponents.tes = filter(opponents, ['position', 'TE'])
+
+        setStackable(stackable)
     }
 
     function onRandomChange(val) {
@@ -52,6 +86,7 @@ const Players = ({
                         player.id === clickedPlayer?
                             
                             <ClickedPlayer
+                                stackable={stackable}
                                 player={player}
                                 numLineups={numLineups}
                                 random={randomValue}

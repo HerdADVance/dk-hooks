@@ -1,6 +1,7 @@
 import includes from 'lodash/includes'
 import orderBy from 'lodash/orderBy'
 import extractDateFromGameInfo from './extractDateFromGameInfo'
+import findPlayerOpponent from './findPlayerOpponent'
 
 const initializePlayers = (players) => {
 
@@ -18,8 +19,9 @@ const initializePlayers = (players) => {
 		formattedPlayer.position = player.Position
 		formattedPlayer.actualPositions = player['Position'].split('/') 
 		formattedPlayer.positions = player['Roster Position'].split('/')
-		formattedPlayer.team = player.TeamAbbrev
 		formattedPlayer.salary = player.Salary
+		formattedPlayer.team = player.TeamAbbrev
+		formattedPlayer.opponent = findPlayerOpponent(player.TeamAbbrev, player['Game Info'])
 		formattedPlayer.gameInfo = player['Game Info']
 		formattedPlayer.date = extractDateFromGameInfo(player['Game Info'])
 		formattedPlayer.ppg = player.AvgPointsPerGame
