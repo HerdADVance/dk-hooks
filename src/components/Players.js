@@ -13,7 +13,8 @@ const Players = ({
     selectedSlots, 
     handlePlayerActionClick, 
     handlePlayerAddToSelectedClick,
-    handleSortPlayersClick
+    handleSortPlayersClick,
+    handleStackAddToLineupsClick
 }) => {
 
     const [randomValue, setRandomValue] = useState(false)
@@ -94,6 +95,7 @@ const Players = ({
                                 selectedSlots={selectedSlots}
                                 handlePlayerActionClick={handlePlayerActionClick}
                                 handlePlayerAddToSelectedClick={handlePlayerAddToSelectedClick}
+                                handleStackAddToLineupsClick={handleStackAddToLineupsClick}
                             />
                         :
                             ''

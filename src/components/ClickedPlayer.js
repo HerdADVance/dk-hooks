@@ -14,7 +14,8 @@ const ClickedPlayer = ({
     onRandomChange, 
     selectedSlots,
     handlePlayerActionClick, 
-    handlePlayerAddToSelectedClick
+    handlePlayerAddToSelectedClick,
+    handleStackAddToLineupsClick
 }) => {
 
 
@@ -45,17 +46,23 @@ const ClickedPlayer = ({
 
     // FUNCTIONS
 
-    function handleStackAddToLineupsClick(){
-        console.log(stackedPlayers)
-        console.log(player.id)
-    }
+    // function handleStackAddToLineupsClick(){
+    //     console.log(stackedPlayers)
+    //     console.log(player.id)
+    // }
 
     function onStackInputChange(val, pid){
         let sp = {...stackedPlayers}
-        console.log(sp)
 
         if(pid){
-            sp[pid] = parseInt(val)
+            sp[pid] = {
+                pid: parseInt(pid),
+                num: parseInt(val)
+            }
+        } else{
+            sp['random'] = {
+                num: parseInt(val)
+            }
         }
         
         setStackedPlayers(sp)
@@ -135,7 +142,7 @@ const ClickedPlayer = ({
                         <p>{player.name} is in {player.lineupsIn.length} lineups. Needs added to {player.exposure * 1.5 - player.lineupsIn.length} lineups.</p> 
                         <table><thead></thead><tbody>
                             {stackable.teammates.qbs.map((p, index) => (
-                                <tr>
+                                <tr key={p.id}>
                                     <td>QB</td>
                                     <td>{p.name}</td>
                                     <td>
@@ -145,7 +152,7 @@ const ClickedPlayer = ({
                                             onChange={(e) => onStackInputChange(e.target.value, p.id) }
                                         /> 
                                     </td>
-                                    <td><span class="mini">max</span>{p.lineupsIn.length}</td>
+                                    <td><span className="mini">max</span>{p.lineupsIn.length}</td>
                                 </tr>
                             ))}
                             {stackable.opponents.qbs.map((p, index) => (
@@ -159,29 +166,17 @@ const ClickedPlayer = ({
                                             onChange={(e) => onStackInputChange(e.target.value, p.id) }
                                         /> 
                                     </td>
-                                    <td><span class="mini">max</span>{p.lineupsIn.length}</td>
+                                    <td><span className="mini">max</span>{p.lineupsIn.length}</td>
                                 </tr>
                             ))}
                             <tr>
-                                <td>Random QB</td>
-                                <td>---</td>
-                                <td>
-                                    <input 
-                                        className="stack-num" 
-                                        type="text"
-                                        onChange={(e) => onStackInputChange(e.target.value) }
-                                    /> 
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr>
                                 <td colSpan="2"></td>
-                                <td>{player.exposure * 1.5 - player.lineupsIn.length}</td>
+                                <td><span className="mini">max</span>{player.exposure * 1.5 - player.lineupsIn.length}</td>
                             </tr>
                         </tbody></table>
 
                         <button 
-                            onClick={() => handleStackAddToLineupsClick() }
+                            onClick={() => handleStackAddToLineupsClick(stackedPlayers, player.id) }
                         >
                             Add to Lineups
                         </button>

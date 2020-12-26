@@ -30,10 +30,13 @@ import filter from 'lodash/filter'
 import orderBy from 'lodash/orderBy'
 import concat from 'lodash/concat'
 import uniq from 'lodash/uniq'
+import pullAllBy from 'lodash/pullAllBy'
+import includes from 'lodash/includes'
+import shuffle from 'lodash/shuffle'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import PLAYERS from './data/PLAYERS1220'
+import PLAYERS from './data/PLAYERS1226'
 import POSITIONS from './data/POSITIONSFB'
 import HEADERS from './data/HEADERSFB'
 import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSFB'
@@ -202,6 +205,8 @@ const App = () => {
 
     function fitSalaries(l, p){
 
+        console.log(l)
+
         // Adding info for each player and sorting roster for each by salary descending
         l.forEach(function(lineup){
             lineup.roster.forEach(function(slot){
@@ -244,9 +249,119 @@ const App = () => {
         return l
     }
 
-    function handleStackWRsClick(){
+    function handleStackAddToLineupsClick(stacks, clickedPlayer){
+
+        console.log(stacks)
+
+        let lineupsArray = [...lineups]
+        let l = cloneDeep(lineupsArray)
+        let playersObject = {...players}
+        let p = cloneDeep(playersObject)
+        p = orderBy(p, 'exposure', ['desc'])
+
+
+        let possibleLids = []
+        l.forEach(function(l){
+            possibleLids.push(l.id)
+        })
+
+        // Converting to array so easier to loop
+        stacks = orderBy(stacks, 'num', ['desc'])
+
+        const playerPosition = playersObject[clickedPlayer].position
+        const playerTeam = playersObject[clickedPlayer].team
+
+        let sids = []
+        switch(playerPosition){
+            case 'RB': sids = [1,2,7]; break;
+            case 'WR': sids = [3,4,5,7]; break;
+            case 'TE': sids = [6]; break;
+            default: sids = []; break;
+
+        }
+
+        stacks.forEach(function(sp){
+
+            if(sp.pid){
+
+                let lids = playersObject[sp.pid].lineupsIn
+                possibleLids = pullAllBy(possibleLids, lids)
+
+                let qbTeam = playersObject[sp.pid].team
+
+                if(qbTeam != playerTeam) lids = shuffle(lids)
+                
+                let count = 0
+
+                loop1:
+                for(var i = 0; i < lids.length; i++){
+                    let lid = findLineupIndex(l, lids[i])
+
+                    for(j = 0; j < sids.length; j++){
+                        let sid = sids[j]
+                        
+                        if(l[lid].roster[sid].player){
+                            let slotPlayerId = l[lid].roster[sid].player
+                            let slotPlayerTeam = findPlayerTeam(playersObject, slotPlayerId)
+                            if(playerTeam == slotPlayerTeam){
+                                console.log('cont')
+                                continue loop1
+                            }
+                        }
+                    }
+
+                    for(j = 0; j < sids.length; j++){
+                        let sid = sids[j]
+                        
+                        if(!l[lid].roster[sid].player){
+                            l[lid].roster[sid].player = clickedPlayer
+                            count ++
+                            break
+                        }
+                    }
+                    
+                    if(count == sp.num) break 
+                }
+            } 
+
+            // add to random
+
+        })
+
+        possibleLids = shuffle(possibleLids)
+        
+        // let count = 0
+        // for(var i = 0; i < possibleLids.length; i++){
+        //     let lid = findLineupIndex(l, possibleLids[i])
+        //     l[lid].roster[3].player = clickedPlayer
+        //     count ++
+        //     if(count == randomNumber) break 
+        // }
+
+        l = convertLineupsToOriginalFormat(lineupsArray, l, true)
+
+        // Emptying lineups in for each player
+        for(var i = 0; i < p.length; i++){
+            let pid = p[i].id
+            playersObject[pid].lineupsIn = []
+        }
+
+        // Looping through all lineups to add lineupsIn to players
+        for (var i = 0; i < l.length; i++){
+            let lid = l[i].id
+            for(var j = 0; j < l[i].roster.length; j++){
+                if(l[i].roster[j].player){
+                    let pid = l[i].roster[j].player
+                    playersObject[pid].lineupsIn.push(lid)
+                }
+            }
+        }
+
+        setLineups(l)
+        setPlayers(playersObject)
 
     }
+
 
     function handleFillQBsClick(){
 
@@ -639,7 +754,6 @@ const App = () => {
 
                 <button onClick={handleSwitchViewClick}>Switch View</button>
                 <button onClick={handleFillQBsClick}>Fill QB's</button>
-                <button onClick={handleStackWRsClick}>Stack WR's</button>
                 <button onClick={handleCompleteLineupsClick}>Complete Lineups</button>
                 {/*<button onClick={handleEmptyLineupsClick}>Empty Lineups</button*/}
                 <button onClick={handleImportClick}>Import Progress</button>
@@ -697,6 +811,7 @@ const App = () => {
                                 handlePlayerActionClick={handlePlayerActionClick}
                                 handlePlayerAddToSelectedClick={handlePlayerAddToSelectedClick}
                                 handleSortPlayersClick={handleSortPlayersClick}
+                                handleStackAddToLineupsClick={handleStackAddToLineupsClick}
                             />
 
                         </div>
