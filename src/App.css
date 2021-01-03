@@ -734,6 +734,7 @@ tr.player td.gameinfo{
 .CAL{background: navy; color: gold !important;}
 .APPST{background: black; color: gold !important;}
 .IL{background: darkorange; color: navy !important;}
+.GAST{background: #3939c1; color: white !important;}
 
 .EMU{background: green; color: white!important;}
 .CMU{background: maroon; color: gold!important;}
@@ -747,4 +748,5 @@ tr.player td.gameinfo{
 .WYO{background: #442104; color: gold !important;}
 .UNLV{background: silver; color: crimson !important;}
 .UMASS{background: white; color: crimson!important;}
+.SJSU{background: dodgerblue; color: yellow!important;}
 

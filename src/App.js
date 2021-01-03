@@ -36,7 +36,7 @@ import shuffle from 'lodash/shuffle'
 import cloneDeep from 'lodash/cloneDeep'
 
 // DATA
-import PLAYERS from './data/PLAYERS1226'
+import PLAYERS from './data/PLAYERS0103EARLY'
 import POSITIONS from './data/POSITIONSFB'
 import HEADERS from './data/HEADERSFB'
 import EXPOSUREOPTIONS from './data/EXPOSUREOPTIONSFB'
